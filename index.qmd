@@ -1,0 +1,11 @@
+# Overview {.unnumbered}
+
+**Book Name**: Statistics and Research Design.
+
+**Summary**: Materials for the Statistics and Research Design course on the MSc Research Methods in Psychological Science programme, University of Glasgow School of Psychology & Neuroscience.
+
+**Authors**: James Bartlett, Guillaume Rousselet, and Lisa DeBruine.
+
+**Aim**: This course covers advanced statistics concepts you might need in psychological research, but you do not normally learn on standard curricula. The course is split into three segments for each lecturer to outline a core part of your advanced training. The first segment covers the general linear model, building up from simple linear regression to generalised linear regression (Bartlett). The second segment covers statistical fallacies, misconceptions, and bootstrapping (Rousselet). The third segment covers Bayesian approaches to hypothesis testing and estimation (Bartlett).
+
+**Contact**: This book is a living document and will be regularly checked and updated for improvements. Should you have any issues using the book or queries, please contact James Bartlett.
