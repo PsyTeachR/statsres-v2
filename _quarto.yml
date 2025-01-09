@@ -51,6 +51,7 @@ book:
   - index.qmd
   - 01-lm-continuous.qmd
   - 02-lm-categorical.qmd
+  - 03-lm-multiple.qmd
   - 04-screening-data.qmd
   appendices:
   - references.qmd

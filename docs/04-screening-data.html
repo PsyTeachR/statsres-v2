@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
-<title>3&nbsp; Missing data, outliers, and checking assumptions – Statistics and Research Design</title>
+<title>4&nbsp; Missing data, outliers, and checking assumptions – Statistics and Research Design</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,7 +81,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./02-lm-categorical.html" rel="prev">
+<link href="./03-lm-multiple.html" rel="prev">
 <link href="./images/logos/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -164,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-screening-data.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-screening-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -208,8 +208,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./03-lm-multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./04-screening-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -238,42 +244,42 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#chapter-preparation" id="toc-chapter-preparation" class="nav-link active" data-scroll-target="#chapter-preparation"><span class="header-section-number">3.1</span> Chapter preparation</a>
+<a href="#chapter-preparation" id="toc-chapter-preparation" class="nav-link active" data-scroll-target="#chapter-preparation"><span class="header-section-number">4.1</span> Chapter preparation</a>
   <ul class="collapse">
-<li><a href="#organising-your-files-and-project-for-the-chapter" id="toc-organising-your-files-and-project-for-the-chapter" class="nav-link" data-scroll-target="#organising-your-files-and-project-for-the-chapter"><span class="header-section-number">3.1.1</span> Organising your files and project for the chapter</a></li>
-  <li><a href="#activity-1---read-and-wrangle-the-data" id="toc-activity-1---read-and-wrangle-the-data" class="nav-link" data-scroll-target="#activity-1---read-and-wrangle-the-data"><span class="header-section-number">3.1.2</span> Activity 1 - Read and wrangle the data</a></li>
+<li><a href="#organising-your-files-and-project-for-the-chapter" id="toc-organising-your-files-and-project-for-the-chapter" class="nav-link" data-scroll-target="#organising-your-files-and-project-for-the-chapter"><span class="header-section-number">4.1.1</span> Organising your files and project for the chapter</a></li>
+  <li><a href="#activity-1---read-and-wrangle-the-data" id="toc-activity-1---read-and-wrangle-the-data" class="nav-link" data-scroll-target="#activity-1---read-and-wrangle-the-data"><span class="header-section-number">4.1.2</span> Activity 1 - Read and wrangle the data</a></li>
   </ul>
 </li>
   <li>
-<a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.2</span> Missing data</a>
+<a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">4.2</span> Missing data</a>
   <ul class="collapse">
-<li><a href="#activity-2---identifying-missing-data" id="toc-activity-2---identifying-missing-data" class="nav-link" data-scroll-target="#activity-2---identifying-missing-data"><span class="header-section-number">3.2.1</span> Activity 2 - Identifying missing data</a></li>
-  <li><a href="#activity-3---removing-missing-data" id="toc-activity-3---removing-missing-data" class="nav-link" data-scroll-target="#activity-3---removing-missing-data"><span class="header-section-number">3.2.2</span> Activity 3 - Removing missing data</a></li>
+<li><a href="#activity-2---identifying-missing-data" id="toc-activity-2---identifying-missing-data" class="nav-link" data-scroll-target="#activity-2---identifying-missing-data"><span class="header-section-number">4.2.1</span> Activity 2 - Identifying missing data</a></li>
+  <li><a href="#activity-3---removing-missing-data" id="toc-activity-3---removing-missing-data" class="nav-link" data-scroll-target="#activity-3---removing-missing-data"><span class="header-section-number">4.2.2</span> Activity 3 - Removing missing data</a></li>
   </ul>
 </li>
   <li>
-<a href="#outliers" id="toc-outliers" class="nav-link" data-scroll-target="#outliers"><span class="header-section-number">3.3</span> Outliers</a>
+<a href="#outliers" id="toc-outliers" class="nav-link" data-scroll-target="#outliers"><span class="header-section-number">4.3</span> Outliers</a>
   <ul class="collapse">
-<li><a href="#activity-4--identifying-error-outliers" id="toc-activity-4--identifying-error-outliers" class="nav-link" data-scroll-target="#activity-4--identifying-error-outliers"><span class="header-section-number">3.3.1</span> Activity 4- Identifying error outliers</a></li>
-  <li><a href="#activity-5--identifying-interesting-or-random-outliers" id="toc-activity-5--identifying-interesting-or-random-outliers" class="nav-link" data-scroll-target="#activity-5--identifying-interesting-or-random-outliers"><span class="header-section-number">3.3.2</span> Activity 5- Identifying interesting or random outliers</a></li>
+<li><a href="#activity-4--identifying-error-outliers" id="toc-activity-4--identifying-error-outliers" class="nav-link" data-scroll-target="#activity-4--identifying-error-outliers"><span class="header-section-number">4.3.1</span> Activity 4- Identifying error outliers</a></li>
+  <li><a href="#activity-5--identifying-interesting-or-random-outliers" id="toc-activity-5--identifying-interesting-or-random-outliers" class="nav-link" data-scroll-target="#activity-5--identifying-interesting-or-random-outliers"><span class="header-section-number">4.3.2</span> Activity 5- Identifying interesting or random outliers</a></li>
   </ul>
 </li>
   <li>
-<a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions"><span class="header-section-number">3.4</span> Checking assumptions</a>
+<a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions"><span class="header-section-number">4.4</span> Checking assumptions</a>
   <ul class="collapse">
-<li><a href="#activity-6---parametric-tests-are-robust" id="toc-activity-6---parametric-tests-are-robust" class="nav-link" data-scroll-target="#activity-6---parametric-tests-are-robust"><span class="header-section-number">3.4.1</span> Activity 6 - Parametric tests are robust</a></li>
-  <li><a href="#activity-7---treat-the-data-as-non-parametric" id="toc-activity-7---treat-the-data-as-non-parametric" class="nav-link" data-scroll-target="#activity-7---treat-the-data-as-non-parametric"><span class="header-section-number">3.4.2</span> Activity 7 - Treat the data as non-parametric</a></li>
-  <li><a href="#use-an-alternative-model" id="toc-use-an-alternative-model" class="nav-link" data-scroll-target="#use-an-alternative-model"><span class="header-section-number">3.4.3</span> Use an alternative model</a></li>
+<li><a href="#activity-6---parametric-tests-are-robust" id="toc-activity-6---parametric-tests-are-robust" class="nav-link" data-scroll-target="#activity-6---parametric-tests-are-robust"><span class="header-section-number">4.4.1</span> Activity 6 - Parametric tests are robust</a></li>
+  <li><a href="#activity-7---treat-the-data-as-non-parametric" id="toc-activity-7---treat-the-data-as-non-parametric" class="nav-link" data-scroll-target="#activity-7---treat-the-data-as-non-parametric"><span class="header-section-number">4.4.2</span> Activity 7 - Treat the data as non-parametric</a></li>
+  <li><a href="#use-an-alternative-model" id="toc-use-an-alternative-model" class="nav-link" data-scroll-target="#use-an-alternative-model"><span class="header-section-number">4.4.3</span> Use an alternative model</a></li>
   </ul>
 </li>
-  <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">3.5</span> Test yourself</a></li>
-  <li><a href="#words-from-this-chapter" id="toc-words-from-this-chapter" class="nav-link" data-scroll-target="#words-from-this-chapter"><span class="header-section-number">3.6</span> Words from this Chapter</a></li>
+  <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">4.5</span> Test yourself</a></li>
+  <li><a href="#words-from-this-chapter" id="toc-words-from-this-chapter" class="nav-link" data-scroll-target="#words-from-this-chapter"><span class="header-section-number">4.6</span> Words from this Chapter</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span>
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span>
 </h1>
 </div>
 
@@ -296,10 +302,10 @@ window.Quarto = {
 <li><p>Identify extreme values or outliers and justify your strategy for handling them.</p></li>
 <li><p>Justify your choice of statistical test or modelling approach given assumption checks.</p></li>
 </ul>
-<section id="chapter-preparation" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="chapter-preparation">
-<span class="header-section-number">3.1</span> Chapter preparation</h2>
-<section id="organising-your-files-and-project-for-the-chapter" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="organising-your-files-and-project-for-the-chapter">
-<span class="header-section-number">3.1.1</span> Organising your files and project for the chapter</h3>
+<section id="chapter-preparation" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="chapter-preparation">
+<span class="header-section-number">4.1</span> Chapter preparation</h2>
+<section id="organising-your-files-and-project-for-the-chapter" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="organising-your-files-and-project-for-the-chapter">
+<span class="header-section-number">4.1.1</span> Organising your files and project for the chapter</h3>
 <p>For this chapter, we are going to revisit the data sets you worked with in Chapters 1 <span class="citation" data-cites="dawtry_why_2015">(<a href="references.html#ref-dawtry_why_2015" role="doc-biblioref">Dawtry et al., 2015</a>)</span> and 2 <span class="citation" data-cites="lopez_visual_2023">(<a href="references.html#ref-lopez_visual_2023" role="doc-biblioref">Lopez et al., 2023</a>)</span>. They each presented some useful examples for checking modelling assumptions and the decisions that go into data analysis. We might not use both data sets for each topic we cover, but they will be useful to demonstrate some of the problems and decisions we highlighted in previous chapters, but did not explore solutions.</p>
 <p>Before we can get started, you need to organise your files and project for the chapter, so your working directory is in order.</p>
 <ol type="1">
@@ -309,8 +315,8 @@ window.Quarto = {
 <li><p>The <span class="citation" data-cites="dawtry_why_2015">Dawtry et al. (<a href="references.html#ref-dawtry_why_2015" role="doc-biblioref">2015</a>)</span> data wrangling steps were quite long, so please save this clean version of the data to focus on screening data in this chapter: <a href="data/Dawtry_2015_clean.csv">Dawtry_2015_clean.csv</a>. You will also need to save the data from <span class="citation" data-cites="lopez_visual_2023">Lopez et al. (<a href="references.html#ref-lopez_visual_2023" role="doc-biblioref">2023</a>)</span> if you have not downloaded it yet: <a href="data/Lopez_2023.csv">Lopez_2023.csv</a>. Right click the link and select “save link as”, or clicking the link will save the files to your Downloads. Make sure that you save the files as “.csv”. Save or copy the files to your <code>data/</code> folder within <code>Stats_Research_Design</code>.</p></li>
 </ol>
 <p>You are now ready to start working on the chapter!</p>
-</section><section id="activity-1---read-and-wrangle-the-data" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="activity-1---read-and-wrangle-the-data">
-<span class="header-section-number">3.1.2</span> Activity 1 - Read and wrangle the data</h3>
+</section><section id="activity-1---read-and-wrangle-the-data" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="activity-1---read-and-wrangle-the-data">
+<span class="header-section-number">4.1.2</span> Activity 1 - Read and wrangle the data</h3>
 <p>As the first activity, try and test yourself by completing the following task list to read and wrangle the two data files. There is nothing extra to do with this version of the Dawtry data and one small step for the Lopez data.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -375,8 +381,8 @@ Show me the solution
 </div>
 </div>
 </div>
-</section></section><section id="missing-data" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="missing-data">
-<span class="header-section-number">3.2</span> Missing data</h2>
+</section></section><section id="missing-data" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="missing-data">
+<span class="header-section-number">4.2</span> Missing data</h2>
 <p>Checking whether data are missing are relatively straight forward. <strong><a class="glossary">Missing values<span class="def">If a participant or observation contains no data for one or more cells, they have missing data.</span></a></strong> in a spreadsheet will be recorded as NA and there are a few ways of identifying them. The much more difficult part of missing data is considering <em>why</em> they are missing in the first place. For example, it might be because:</p>
 <ul>
 <li><p>Your participants accidentally missed a question.</p></li>
@@ -391,8 +397,8 @@ Show me the solution
 <li><p><strong><a class="glossary">Missing not at random<span class="def">Whether the data are missing or not is causally related to one or more other variables in the data.</span></a></strong>.</p></li>
 </ul>
 <p>For this course, we do not have time to investigate strategies to address missing data apart from focusing on complete cases and ignoring missing data, but you might find <span class="citation" data-cites="jakobsen_when_2017">Jakobsen et al. (<a href="references.html#ref-jakobsen_when_2017" role="doc-biblioref">2017</a>)</span> useful if you want to explore options like data imputation.</p>
-<section id="activity-2---identifying-missing-data" class="level3" data-number="3.2.1"><h3 data-number="3.2.1" class="anchored" data-anchor-id="activity-2---identifying-missing-data">
-<span class="header-section-number">3.2.1</span> Activity 2 - Identifying missing data</h3>
+<section id="activity-2---identifying-missing-data" class="level3" data-number="4.2.1"><h3 data-number="4.2.1" class="anchored" data-anchor-id="activity-2---identifying-missing-data">
+<span class="header-section-number">4.2.1</span> Activity 2 - Identifying missing data</h3>
 <p>Returning to data skills, the simplest way of getting an overview of whether any data are missing is using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function. For this part, we will focus on <code>dawtry_clean</code> from <span class="citation" data-cites="dawtry_why_2015">Dawtry et al. (<a href="references.html#ref-dawtry_why_2015" role="doc-biblioref">2015</a>)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">summary</span>(dawtry_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -492,8 +498,8 @@ Solution
 </div>
 </div>
 </div>
-</section><section id="activity-3---removing-missing-data" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="activity-3---removing-missing-data">
-<span class="header-section-number">3.2.2</span> Activity 3 - Removing missing data</h3>
+</section><section id="activity-3---removing-missing-data" class="level3" data-number="4.2.2"><h3 data-number="4.2.2" class="anchored" data-anchor-id="activity-3---removing-missing-data">
+<span class="header-section-number">4.2.2</span> Activity 3 - Removing missing data</h3>
 <p>Once we know whether missing data are present, we must consider what to do with them. For this chapter, we are only going to control removing participants, but you could apply a data imputation technique at this point if appropriate.</p>
 <p>For all the modelling techniques we apply in this book, the functions will remove participants who have one or more missing values from any variable involved in the analysis. The functions will give you a warning to highlight when this happens, but it is normally a good idea to remove participants with missing data yourself so you have a note of how many participants you remove.</p>
 <p>For <code>dawtry_clean</code>, the <pkg>tidyverse</pkg> function <code>drop_na()</code> is the easiest way of removing missing data, either participants with any missing data or by specifying individual variables.</p>
@@ -523,8 +529,8 @@ Solution
 </div>
 </div>
 <p>Like most data skills and statistics concepts, the key skill here comes in decision making; documenting and justifying the approach that you take.</p>
-</section></section><section id="outliers" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="outliers">
-<span class="header-section-number">3.3</span> Outliers</h2>
+</section></section><section id="outliers" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="outliers">
+<span class="header-section-number">4.3</span> Outliers</h2>
 <p>The next data screening concept revolves around identifying potential outliers. Like missing data, the difficulty here comes in first deciding what an outlier is and then deciding on what to do with it. <span class="citation" data-cites="leys_how_2019">Leys et al. (<a href="references.html#ref-leys_how_2019" role="doc-biblioref">2019</a>)</span> mention one study found 14 definitions and 39 unique ways of identifying outliers, so this is our second key area of decision making. Leys et al.&nbsp;categorise outliers into three types:</p>
 <ol type="1">
 <li><p><strong><a class="glossary">Error outliers<span class="def">A mistake or impossible value in your data.</span></a></strong>.</p></li>
@@ -533,8 +539,8 @@ Solution
 </ol>
 <p>Even simpler, we can consider values as legitimate or not legitimate. Error outliers would be not legitimate as they represent a mistake or error, so they would potentially provide misleading results. These are values you can justify removing or correcting as they should not be there in the first place.</p>
 <p>Interesting and random outliers would be legitimate as they are not clear mistakes or errors; they are just different to the majority of values in the data. In most cases, it is not a good idea to remove these kind of values as they potentially tell you something interesting, but you might need to approach the data analysis in a different way to ensure the results are robust to extreme values. Alternatively, you might need to assume a different distibution, which we will start exploring in Chapter 5.</p>
-<section id="activity-4--identifying-error-outliers" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="activity-4--identifying-error-outliers">
-<span class="header-section-number">3.3.1</span> Activity 4- Identifying error outliers</h3>
+<section id="activity-4--identifying-error-outliers" class="level3" data-number="4.3.1"><h3 data-number="4.3.1" class="anchored" data-anchor-id="activity-4--identifying-error-outliers">
+<span class="header-section-number">4.3.1</span> Activity 4- Identifying error outliers</h3>
 <p>Unless you can specifically identify values or participants you know contain errors, the main way to check is by ensuring the values are within known limits.</p>
 <p>We can look at <code>dawtry_clean</code> and the key variables we explored in Chapter 1. Fairness and satisfaction was on a 1-9 scale, so we can check the minimum and maximum values and create a plot. For example, we can isolate the variable and apply the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function.</p>
 <div class="cell">
@@ -630,8 +636,8 @@ Solution
 </div>
 </div>
 <p>If you did identify error outliers to remove, then you could use <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> to directly remove values outside your known range, or you could first use <code>case_when()</code> to code observations as outliers or not, before deciding to filter them out.</p>
-</section><section id="activity-5--identifying-interesting-or-random-outliers" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="activity-5--identifying-interesting-or-random-outliers">
-<span class="header-section-number">3.3.2</span> Activity 5- Identifying interesting or random outliers</h3>
+</section><section id="activity-5--identifying-interesting-or-random-outliers" class="level3" data-number="4.3.2"><h3 data-number="4.3.2" class="anchored" data-anchor-id="activity-5--identifying-interesting-or-random-outliers">
+<span class="header-section-number">4.3.2</span> Activity 5- Identifying interesting or random outliers</h3>
 <p>Identifying error outliers relies on manually setting known minimum and maximum values, whereas identifying interesting or random outliers relies on data driven boundaries. For this example, we focus on univariate outliers, where we focus on one variable at a time. When we return to checking assumptions of regression models, you can identify interesting or random outliers through observations with large leverage / Cook’s distance values.</p>
 <p>In general, we recommend not removing outliers providing you are confident they are not errors. It is better to focus on modelling your outcome in a more robust way. However, it is also important you know how to identify errors for strategies you will come across in published research.</p>
 <p>We focus here on setting boundaries using the median absolute deviation as recommended by <span class="citation" data-cites="leys_how_2019">Leys et al. (<a href="references.html#ref-leys_how_2019" role="doc-biblioref">2019</a>)</span>. You will see other approaches in the literature, but this method is useful as it’s influenced less by the very outliers it is trying to identify. We will use <code>lopez_clean</code> from <span class="citation" data-cites="lopez_visual_2023">Lopez et al. (<a href="references.html#ref-lopez_visual_2023" role="doc-biblioref">2023</a>)</span> for this section.</p>
@@ -763,8 +769,8 @@ Solution
 </div>
 </div>
 <p>Remember: identifying outliers is a crucial researcher degree of freedom, so pre-register your choice of outlier detection wherever possible, and document how many outliers you removed. We still recommend favouring a more robust model, but you can make an informed decision now you know how to identify outliers in the data.</p>
-</section></section><section id="checking-assumptions" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="checking-assumptions">
-<span class="header-section-number">3.4</span> Checking assumptions</h2>
+</section></section><section id="checking-assumptions" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="checking-assumptions">
+<span class="header-section-number">4.4</span> Checking assumptions</h2>
 <p>The final section revisits checking assumptions from Chapter 1 to 3. In those chapters, we introduced the concepts and stuck with the output regardless of whether we were happy with the assumptions or not. In this chapter, we will introduce potential solutions.</p>
 <p>As a reminder, the assumptions for simple linear regression are:</p>
 <ol type="1">
@@ -801,8 +807,8 @@ Solution
 <li><p>Treat the data as non-parametric.</p></li>
 <li><p>Use an alternative model.</p></li>
 </ol>
-<section id="activity-6---parametric-tests-are-robust" class="level3" data-number="3.4.1"><h3 data-number="3.4.1" class="anchored" data-anchor-id="activity-6---parametric-tests-are-robust">
-<span class="header-section-number">3.4.1</span> Activity 6 - Parametric tests are robust</h3>
+<section id="activity-6---parametric-tests-are-robust" class="level3" data-number="4.4.1"><h3 data-number="4.4.1" class="anchored" data-anchor-id="activity-6---parametric-tests-are-robust">
+<span class="header-section-number">4.4.1</span> Activity 6 - Parametric tests are robust</h3>
 <p>One get out jail free card is doing nothing as the parametric tests are robust to violations of assumptions. You will often hear this and it is largely true under certain conditions. <span class="citation" data-cites="knief_violating_2021">Knief &amp; Forstmeier (<a href="references.html#ref-knief_violating_2021" role="doc-biblioref">2021</a>)</span> report a simulation study where they explore how violating assumptions like linearity, normality, and outliers affect the results of parametric statistical tests like simple linear regression. They found the tests were robust to violations - particularly normality - apart from when there were extreme outliers which could bias the results.</p>
 <p>In the Lopez et al.&nbsp;example, we identified a few outliers using the 3 times the MAD criterion and the strictest Cook’s distance cut-off in Chapter 2, but normality was the only notable problem in the diagnostic checks. One option would be to feel reassured the results are robust to minor violations and explain that in your report.</p>
 <p>The second option would be checking the results are robust to the presence of outliers. Remember, we advise excluding outliers as a last resort if you consider them legitimate, but it provides a robustness check to see if you get similar conclusions with and without the outliers. For example, we can exclude outliers using the MAD criterion and check the results:</p>
@@ -837,8 +843,8 @@ F-statistic: 37.66 on 1 and 450 DF,  p-value: 1.852e-09</code></pre>
 </div>
 </div>
 <p>The conclusions are very similar. The difference is still statistically significant and instead of a 63 calorie difference for the slope, we get a 67 calorie difference. So, we can stick with the original results and feel reassured that the results are robust to the presence of outliers, given the criterion we used. You would explain to the reader you checked the robustness of the results and what your final conclusion was.</p>
-</section><section id="activity-7---treat-the-data-as-non-parametric" class="level3" data-number="3.4.2"><h3 data-number="3.4.2" class="anchored" data-anchor-id="activity-7---treat-the-data-as-non-parametric">
-<span class="header-section-number">3.4.2</span> Activity 7 - Treat the data as non-parametric</h3>
+</section><section id="activity-7---treat-the-data-as-non-parametric" class="level3" data-number="4.4.2"><h3 data-number="4.4.2" class="anchored" data-anchor-id="activity-7---treat-the-data-as-non-parametric">
+<span class="header-section-number">4.4.2</span> Activity 7 - Treat the data as non-parametric</h3>
 <p>The second option is switching to a non-parametric statistical test which makes fewer assumptions about the data. In Chapter 1, we introduced the Spearman correlation as a non-parametric equivalent. Instead of doubling the number of non-parametric tests you need to learn, we can apply a similar principle to linear regression and recreate non-parametric equivalents.</p>
 <p>In the demonstration by <a href="https://lindeloev.github.io/tests-as-linear/" target="_blank">Lindeløv, 2019</a>, common statistical tests you come across are specific applications of the general linear model. Likewise, you can recreate non-parametric tests by converting continuous variables to ranks and using those in the regression model.</p>
 <p>For example, instead of a Mann-Whitney U test, you can run wrap the number of calories (<code>F_CaloriesConsumed</code>) in the <code><a href="https://rdrr.io/r/base/rank.html">rank()</a></code> function:</p>
@@ -941,11 +947,11 @@ F-statistic: 261.6 on 1 and 303 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
-</section><section id="use-an-alternative-model" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="use-an-alternative-model">
-<span class="header-section-number">3.4.3</span> Use an alternative model</h3>
+</section><section id="use-an-alternative-model" class="level3" data-number="4.4.3"><h3 data-number="4.4.3" class="anchored" data-anchor-id="use-an-alternative-model">
+<span class="header-section-number">4.4.3</span> Use an alternative model</h3>
 <p>The third and final option is considering whether a parametric test is the right choice in the first place. The default assumption in psychology research is assuming everything is linear and normal as it is convenient and applies to many scenarios, but there are some outcomes and models which will always be inappropriate to model as linear and normal. For example, if your outcome is dichotomous (0 or 1; correct or incorrect), then you must assume a <strong><a class="glossary">binomial distribution<span class="def">Instead of the parameters mean and standard deviation in a normal distribution, you have N trials with n number of successes.</span></a></strong> and use something like a <strong><a class="glossary">logistic regression<span class="def">Modelling the log-odds of a dichotomous outcome as a linear combination of one or more predictors.</span></a></strong> model. That is what we will explore in the next chapter.</p>
-</section></section><section id="test-yourself" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="test-yourself">
-<span class="header-section-number">3.5</span> Test yourself</h2>
+</section></section><section id="test-yourself" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="test-yourself">
+<span class="header-section-number">4.5</span> Test yourself</h2>
 <p>To end the chapter, we have some knowledge check questions to test your understanding of the concepts we covered in the chapter.</p>
 <p>For this chapter’s knowledge check section, instead of purely conceptual questions about functions, we have an example model and output and we would like you to consider the presence of missing data, outliers, and modelling assumptions.</p>
 <p>We have a simulated study where our research question is “Are scientists perceived to be more objective than highly-educated lay people”? Participants were randomly allocated to rate the characteristics of scientists or highly-educated lay people. The outcome was a 0-10 scale made up of 10 items of how objective they perceive the target to be, from not very objective to very objective.</p>
@@ -1090,8 +1096,8 @@ Explain this answer
 </div>
 </div>
 </div>
-</section><section id="words-from-this-chapter" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="words-from-this-chapter">
-<span class="header-section-number">3.6</span> Words from this Chapter</h2>
+</section><section id="words-from-this-chapter" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="words-from-this-chapter">
+<span class="header-section-number">4.6</span> Words from this Chapter</h2>
 <p>Below you will find a list of words that were used in this chapter that might be new to you in case it helps to have somewhere to refer back to what they mean. The links in this table take you to the entry for the words in the <a href="https://psyteachr.github.io/glossary/" target="_blank">PsyTeachR Glossary</a>. Note that the Glossary is written by numerous members of the team and as such may use slightly different terminology from that shown in the chapter.</p>
 <table class="table caption-top" data-quarto-postprocess="true">
 <thead><tr class="header">
@@ -1952,8 +1958,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./02-lm-categorical.html" class="pagination-link" aria-label="Regression with one categorical predictor">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regression with one categorical predictor</span></span>
+      <a href="./03-lm-multiple.html" class="pagination-link" aria-label="Multiple Linear Regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
