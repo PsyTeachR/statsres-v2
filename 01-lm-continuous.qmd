@@ -13,6 +13,8 @@ library(effectsize)
 library(correlation)
 library(performance)
 library(tidyverse)
+library(webexercises)
+library(glossary)
 ```
 
 In these first two chapters, we focus on simple linear regression for testing research questions and hypotheses. We are starting slow and demonstrating how common statistical tests such as correlation and t-tests are specific applications of the general linear model ([Lindeløv, 2019](https://lindeloev.github.io/tests-as-linear/){target="_blank"}). With inferential statistics, we want to test our research questions and hypotheses by analysing the data given the research design you are working with. By adopting a modelling approach, you will have far more flexibility to adapt to the design you are working with. 

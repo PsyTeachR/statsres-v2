@@ -11,6 +11,8 @@ knitr::opts_chunk$set(warning = FALSE,
 library(effectsize)
 library(performance)
 library(tidyverse)
+library(webexercises)
+library(glossary)
 ```
 
 In these first two chapters, we focus on simple linear regression for testing research questions and hypotheses. We are starting slow and demonstrating how common statistical tests such as correlation and t-tests are specific applications of the general linear model ([Lindeløv, 2019](https://lindeloev.github.io/tests-as-linear/){target="_blank"}). With inferential statistics, we want to test our research questions and hypotheses by analysing the data given the research design you are working with. By adopting a modelling approach, you will have far more flexibility to adapt to the design you are working with. 
@@ -49,7 +51,7 @@ Before we can get started, you need to organise your files and project for the c
 
 2. Create an R Project for `02_regression_categorical` as an existing directory for your chapter folder. This should now be your working directory.
 
-3. Create a new R Markdown document and give it a sensible title describing the chapter, such as `02 t-tests and Regression`. Save the file in your `02_regression_categorical` folder. 
+3. Create a new Quarto document and give it a sensible title describing the chapter, such as `02 t-tests and Regression`. Save the file in your `02_regression_categorical` folder. 
 
 4. We are working with a new data set, so please save the following data file: [Lopez_2023.csv](data/Lopez_2023.csv). Right click the link and select "save link as", or clicking the link will save the files to your Downloads. Make sure that you save the file as ".csv". Save or copy the file to your `data/` folder within `02_regression_categorical`.
 

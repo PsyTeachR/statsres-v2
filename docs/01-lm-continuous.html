@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="description" content="Book Description">
+<meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
 <title>1&nbsp; Regression with one continuous predictor – Statistics and Research Design</title>
 <style>
 code{white-space: pre-wrap;}
@@ -274,7 +274,6 @@ window.Quarto = {
 </li>
   <li><a href="#reporting-your-results" id="toc-reporting-your-results" class="nav-link" data-scroll-target="#reporting-your-results"><span class="header-section-number">1.5</span> Reporting your results</a></li>
   <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">1.6</span> Test Yourself</a></li>
-  <li><a href="#end-of-chapter" id="toc-end-of-chapter" class="nav-link" data-scroll-target="#end-of-chapter"><span class="header-section-number">1.7</span> End of chapter</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -358,7 +357,7 @@ Try this
 <li><p>Decrease the number of columns in <code>dawtry_clean</code> by selecting <code>PS</code>, all the columns between <code>Household_Income</code> and <code>redistribution</code>, but removing the two reverse coded items <code>redist2_R</code> and <code>redist4_R</code>.</p></li>
 </ol>
 <p>Your data should look like this to be ready to analyse:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 305
 Columns: 11
@@ -390,7 +389,7 @@ Show me the solution
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>You should have the following in a code chunk:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Load the packages below</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(effectsize)</span>
@@ -536,10 +535,10 @@ Try this
 </div>
 <div class="callout-body-container callout-body">
 <p>Using your data visualisation skills from Repro Res, recreate the scatterplot below using the variables <code>fairness_satisfaction</code> and <code>redistribution</code> from <code>dawtry_clean</code>.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -565,7 +564,7 @@ Show me the solution
 <p>The scatterplot shows a negative correlation between the two variables. You need to be careful interpreting fairness and satisfaction as it is coded a little counterintuitive. Higher values mean great <em>dissatisfaction</em>.</p>
 <p>As support for wealth redistribution increases to be more positive, perceived fairness and satisfaction tends to decrease. This makes sense as people who are more dissatisfied with the current system think there should be more wealth redistribution strategies.</p>
 <p>You should have the following in a code chunk:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>dawtry_clean <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> fairness_satisfaction, <span class="at">y =</span> redistribution)) <span class="sc">+</span> </span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
@@ -594,14 +593,14 @@ Show me the solution
 <li><p>The type of correlation you want to run: e.g.&nbsp;<code>pearson</code>, <code>spearman</code>.</p></li>
 </ul>
 <p>For our <code>dawtry_clean</code> data, we would run the following code for a two-tailed Pearson correlation:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">correlation</span>(<span class="at">data =</span> dawtry_clean, </span>
 <span id="cb4-2"><a href="#cb4-2"></a>            <span class="at">select =</span> <span class="st">"fairness_satisfaction"</span>, </span>
 <span id="cb4-3"><a href="#cb4-3"></a>            <span class="at">select2 =</span> <span class="st">"redistribution"</span>,  </span>
 <span id="cb4-4"><a href="#cb4-4"></a>            <span class="at">method =</span> <span class="st">"pearson"</span>, </span>
 <span id="cb4-5"><a href="#cb4-5"></a>            <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -656,14 +655,14 @@ Show me the solution
 </ul>
 <p>To summarise: a Pearson correlation showed there was a strong, negative, statistically significant relationship between attitudes on wealth redistribution and perceived fairness and satisfaction, <em>r</em> (303) = -0.70, <em>p</em> &lt; .001, 95% CI = [-0.75, -0.64].</p>
 <p>If we had reason to use a Spearman correlation instead, all we need to do is change the <code>method</code> argument.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">correlation</span>(<span class="at">data =</span> dawtry_clean, </span>
 <span id="cb5-2"><a href="#cb5-2"></a>            <span class="at">select =</span> <span class="st">"fairness_satisfaction"</span>, </span>
 <span id="cb5-3"><a href="#cb5-3"></a>            <span class="at">select2 =</span> <span class="st">"redistribution"</span>,  </span>
 <span id="cb5-4"><a href="#cb5-4"></a>            <span class="at">method =</span> <span class="st">"spearman"</span>, </span>
 <span id="cb5-5"><a href="#cb5-5"></a>            <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -759,7 +758,7 @@ Show me the solution
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The scatterplot shows very little correlation between the two variables. The regression line is almost flat and there does not appear to be a clear pattern to the data points.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dawtry_clean <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> redistribution)) <span class="sc">+</span> </span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
@@ -767,14 +766,14 @@ Show me the solution
 <span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Attitudes on Wealth Distribution"</span>, </span>
 <span id="cb6-6"><a href="#cb6-6"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>For our inferential statistics, the relationship is not statistically significant and the Pearson correlation coefficient is very weak, <em>r</em> (302) = -0.03, <em>p</em> = .625, 95% CI = [-0.14, 0.08]. Note there is a missing value for age, so we have one few participant / degrees of freedom.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">correlation</span>(<span class="at">data =</span> dawtry_clean, </span>
 <span id="cb7-2"><a href="#cb7-2"></a>            <span class="at">select =</span> <span class="st">"age"</span>, </span>
 <span id="cb7-3"><a href="#cb7-3"></a>            <span class="at">select2 =</span> <span class="st">"redistribution"</span>,  </span>
@@ -835,7 +834,7 @@ Show me the solution
 <section id="activity-5--calculating-descriptive-statistics" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="activity-5--calculating-descriptive-statistics">
 <span class="header-section-number">1.3.1</span> Activity 5- Calculating descriptive statistics</h3>
 <p>For all the information we want to include in a report, calculating descriptive statistics is helpful for the reader to show the context behind the results you present. Here, we can report the mean and standard deviation of our two variables.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dawtry_clean <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="co"># pivot longer to avoid repeating yourself</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> fairness_satisfaction<span class="sc">:</span>redistribution,</span>
@@ -889,7 +888,7 @@ Note
 <p>For our research question of “is there a relationship between support for wealth redistribution and fairness and satisfaction”, we can address it with simple linear regression.</p>
 <p>Instead of a standardised correlation coefficient, we can frame it as whether knowing fairness and satisfaction can predict values of support for wealth redistribution. The design is still correlational, so it does not tell us anything about a causal relationship in isolation. We use the word predict in the statistical sense, where we can ask whether knowing values of one variable help us predict values of another variable with a degree of error.</p>
 <p>The first step is to create an object (<code>lm_redistribution</code>) for the linear model.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>lm_redistribution <span class="ot">&lt;-</span> <span class="fu">lm</span>(redistribution <span class="sc">~</span> fairness_satisfaction,</span>
 <span id="cb9-2"><a href="#cb9-2"></a>                        <span class="at">data =</span> dawtry_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -913,7 +912,7 @@ Note
 </div>
 </div>
 <p>When you create this object, it stores a bunch of information, but does not really tell us all the statistics we expect. If you simply print the object in the console, it will tell you the intercept and coefficient(s), but none of the model fitting nor hypothesis testing values. If you look at the object in the R environment, you will see it is a <a class="glossary">list<span class="def"></span></a> containing several elements. It stores things like the model, the residuals, and other information you can use.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lm_redistribution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -926,7 +925,7 @@ Coefficients:
 </div>
 </div>
 <p>To get that extra information, we need to call the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function around the linear model object to explore it’s properties like estimates and model fit.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">summary</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -981,7 +980,7 @@ What does 2e-16 mean?
 <div class="callout-body-container callout-body">
 <p>For the <em>p</em>-value here, the output looks a little weird. R reports very small or very large numbers using scientific notation to save space. We normally report <em>p</em>-values to three decimals, so we report anything smaller as <em>p</em> &lt; .001 to say it is smaller than this.</p>
 <p>If you want to see the real number, you can use the following function which shows just how small the <em>p</em>-value is:</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">format</span>(<span class="fl">2e-16</span>, <span class="at">scientific =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "0.0000000000000002"</code></pre>
@@ -1011,7 +1010,7 @@ How are correlation and regression the same?
 </section><section id="activity-7---calculating-confidence-intervals" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="activity-7---calculating-confidence-intervals">
 <span class="header-section-number">1.3.3</span> Activity 7 - Calculating confidence intervals</h3>
 <p>In the standard <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> output, we get most of the key values we need for our inferential statistics, but the one thing missing is confidence intervals around our estimates. Fortunately, R has a built-in function called <code><a href="https://rdrr.io/r/stats/confint.html">confint()</a></code> for calculating confidence intervals using your linear model object.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">confint</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           2.5 %     97.5 %
@@ -1071,16 +1070,13 @@ Show me the solution
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The conclusions are the same as when we calculated the correlation where age is not a statistically significant predictor of support for wealth redistribution. As a regression model, we get the same conclusions expressed in a slightly different way. Age is negative, but the size of the slope is very small (-0.003) and non-significant (<em>p</em> = .625). We explain pretty much no variance in support for wealth redistribution (<span class="math inline">\(R^2\)</span> = .0008), so age is not very informative as a predictor.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Create lm object for age as a predictor</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>lm_age <span class="ot">&lt;-</span> <span class="fu">lm</span>(redistribution <span class="sc">~</span> age,</span>
 <span id="cb18-3"><a href="#cb18-3"></a>             <span class="at">data =</span> dawtry_clean)</span>
 <span id="cb18-4"><a href="#cb18-4"></a></span>
 <span id="cb18-5"><a href="#cb18-5"></a><span class="co"># summary of the model object</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a><span class="fu">summary</span>(lm_age)</span>
-<span id="cb18-7"><a href="#cb18-7"></a></span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co"># confidence intervals around estimates</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a><span class="fu">confint</span>(lm_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="fu">summary</span>(lm_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1100,9 +1096,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 1.153 on 302 degrees of freedom
   (1 observation deleted due to missingness)
 Multiple R-squared:  0.0007938, Adjusted R-squared:  -0.002515 
-F-statistic: 0.2399 on 1 and 302 DF,  p-value: 0.6246
-
-                  2.5 %     97.5 %
+F-statistic: 0.2399 on 1 and 302 DF,  p-value: 0.6246</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># confidence intervals around estimates</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">confint</span>(lm_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %     97.5 %
 (Intercept)  3.58679351 4.43706821
 age         -0.01351424 0.00812738</code></pre>
 </div>
@@ -1117,16 +1116,16 @@ age         -0.01351424 0.00812738</code></pre>
 <span class="header-section-number">1.3.4.1</span> Centering predictors</h4>
 <p><a class="glossary">Centering<span class="def">Usually, centering a predictor means subtracting the mean from each value, so the mean is 0. You can then interpret the intercept as the value of your outcome for the mean value of your predictor(s).</span></a> predictors is where you change the values of your predictor, but not their scale. Typically, this means substracting the mean of your predictor from each observation. This changes how you interpret the intercept of your regression model.</p>
 <p>Remember the interpretation of the intercept is the predicted value of your outcome when your predictor is set to 0. If 0 is not present in your data or a value of 0 would be uninformative, the intercept can be difficult to interpret. When you center your predictor, 0 becomes the mean value of your predictor. So, the intercept is now the predicted value of your outcome for the mean value of your predictor, but the slope itself does not change. You can see the impact of this by plotting the data side by side in <a href="#fig-centering-predictors" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>dawtry_clean <span class="ot">&lt;-</span> dawtry_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="co"># subtract fairness values from mean of fairness</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">mutate</span>(<span class="at">fairness_center =</span> fairness_satisfaction <span class="sc">-</span> <span class="fu">mean</span>(fairness_satisfaction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dawtry_clean <span class="ot">&lt;-</span> dawtry_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="co"># subtract fairness values from mean of fairness</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">mutate</span>(<span class="at">fairness_center =</span> fairness_satisfaction <span class="sc">-</span> <span class="fu">mean</span>(fairness_satisfaction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-centering-predictors" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The plot at the top shows the relationship between wealth redistribution and perceived fairness and satisfaction using raw values. The plot at the bottom shows the relationship after centering perceived fairness and satisfaction values, so the values shift to the left.">
+<div id="fig-centering-predictors" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The plot at the top shows the relationship between wealth redistribution and perceived fairness and satisfaction using raw values. The plot at the bottom shows the relationship after centering perceived fairness and satisfaction values, so the values shift to the left.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-centering-predictors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="01-lm-continuous_files/figure-html/fig-centering-predictors-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="The plot at the top shows the relationship between wealth redistribution and perceived fairness and satisfaction using raw values. The plot at the bottom shows the relationship after centering perceived fairness and satisfaction values, so the values shift to the left.">
+<img src="01-lm-continuous_files/figure-html/fig-centering-predictors-1.png" class="img-fluid figure-img" alt="The plot at the top shows the relationship between wealth redistribution and perceived fairness and satisfaction using raw values. The plot at the bottom shows the relationship after centering perceived fairness and satisfaction values, so the values shift to the left." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centering-predictors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.1: Top: The relationship between wealth redistribution and perceived fairness and satisfaction using raw values. Bottom: The relationship after centering perceived fairness and satisfaction values.
@@ -1135,11 +1134,11 @@ Figure&nbsp;1.1: Top: The relationship between wealth redistribution and perceiv
 </div>
 </div>
 <p>The relationship between the two variables is exactly the same, but the values of fairness and satisfaction shifted so the mean is 0. If you create a new linear model object, you can see the difference this makes to the output.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>lm_center <span class="ot">&lt;-</span> <span class="fu">lm</span>(redistribution <span class="sc">~</span> fairness_center, </span>
-<span id="cb21-2"><a href="#cb21-2"></a>                <span class="at">data =</span> dawtry_clean)</span>
-<span id="cb21-3"><a href="#cb21-3"></a></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="fu">summary</span>(lm_center)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>lm_center <span class="ot">&lt;-</span> <span class="fu">lm</span>(redistribution <span class="sc">~</span> fairness_center, </span>
+<span id="cb23-2"><a href="#cb23-2"></a>                <span class="at">data =</span> dawtry_clean)</span>
+<span id="cb23-3"><a href="#cb23-3"></a></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">summary</span>(lm_center)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1166,18 +1165,18 @@ F-statistic: 291.7 on 1 and 303 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span class="header-section-number">1.3.4.2</span> Standardising predictors</h4>
 <p><a class="glossary">Standardising<span class="def">Standardising involves substracting the variable mean from each value and dividing it by the variable standard deviation. It then has the property of a mean of 0 and standard deviation of 1, so you interpret the units as standard deviations.</span></a> predictors is where you first convert your values to z-scores. This means you interpret the values as standard deviations rather than your original units. This is more useful in multiple regression (Chapter 3) to compare the magnitude of predictors, but it is useful to get used to now when you only have one predictor to focus on.</p>
 <p>The first step is to standardise <strong>all</strong> your variables, not just the predictor this time. This involves subtracting the mean of your variable from each value, and dividing by the standard deviation of the variable. They now have a mean of 0 and a standard deviation of 1.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Be careful with the bracket placement to subtract the mean first</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>dawtry_clean <span class="ot">&lt;-</span> dawtry_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">mutate</span>(<span class="at">redistribution_std =</span> (redistribution <span class="sc">-</span> <span class="fu">mean</span>(redistribution)) <span class="sc">/</span> <span class="fu">sd</span>(redistribution),</span>
-<span id="cb23-4"><a href="#cb23-4"></a>         <span class="at">fairness_std =</span> (fairness_satisfaction <span class="sc">-</span> <span class="fu">mean</span>(fairness_satisfaction)) <span class="sc">/</span> <span class="fu">sd</span>(fairness_satisfaction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Be careful with the bracket placement to subtract the mean first</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>dawtry_clean <span class="ot">&lt;-</span> dawtry_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">mutate</span>(<span class="at">redistribution_std =</span> (redistribution <span class="sc">-</span> <span class="fu">mean</span>(redistribution)) <span class="sc">/</span> <span class="fu">sd</span>(redistribution),</span>
+<span id="cb25-4"><a href="#cb25-4"></a>         <span class="at">fairness_std =</span> (fairness_satisfaction <span class="sc">-</span> <span class="fu">mean</span>(fairness_satisfaction)) <span class="sc">/</span> <span class="fu">sd</span>(fairness_satisfaction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once we enter them into the model, we no longer have values in the original units of measurement, we now have them expressed as standard deviations.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>lm_standardised <span class="ot">&lt;-</span> <span class="fu">lm</span>(redistribution_std <span class="sc">~</span> fairness_std, </span>
-<span id="cb24-2"><a href="#cb24-2"></a>                      <span class="at">data =</span> dawtry_clean)</span>
-<span id="cb24-3"><a href="#cb24-3"></a></span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="fu">summary</span>(lm_standardised)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>lm_standardised <span class="ot">&lt;-</span> <span class="fu">lm</span>(redistribution_std <span class="sc">~</span> fairness_std, </span>
+<span id="cb26-2"><a href="#cb26-2"></a>                      <span class="at">data =</span> dawtry_clean)</span>
+<span id="cb26-3"><a href="#cb26-3"></a></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="fu">summary</span>(lm_standardised)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1212,8 +1211,8 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p>It is important to demonstrate the underlying concepts first but if you want a shortcut without needing to standardise all your variables, the <pkg>effectsize</pkg> package has a handy function called <code>standardize_parameters()</code> which you can apply to your initial <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> object.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">standardize_parameters</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">standardize_parameters</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -1263,9 +1262,9 @@ Tip
 </ol>
 <p>Assumptions 1-4 are pretty straight forward as they relate to your understanding of the design or a simple check on the data for non-zero variance (the responses are not all the exact same value).</p>
 <p>Assumptions 5-7 require diagnostic checks on the <a class="glossary">residuals<span class="def">The difference between the observed value in the data and the predicted value from the model given its assumptions.</span></a> from the model. The residuals are the difference between your observed values in the data and the values your model predicts given it’s assumptions. If you remember back, we highlighted the model output mentioned <code>Residuals:</code> and they are saved within the model object.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># head shows the first 6 values </span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">head</span>(lm_redistribution<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># head shows the first 6 values </span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">head</span>(lm_redistribution<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         1          2          3          4          5          6 
  0.5806764 -0.6754769  0.4208311  0.2159084 -0.5279383 -0.5730156 </code></pre>
@@ -1292,15 +1291,15 @@ What does the $ symbol mean?
 </div>
 <p>In your reading, you might see individual statistical tests to check these assumptions, but they have more limitations than benefits. The best way to check the assumptions is through diagnostic plots which express the model residuals in different ways. We want to walk through this longer way of checking assumptions to develop a solid understanding before showing you a shortcut to see them all below.</p>
 <p>In the code below, we use a format you will be less familiar with as all these functions come from base R. If you just run the code for the diagnostic plots <code>plot(lm_redistribution)</code>, each one gets individually printed to your Plots window. Here, we create a 2x2 panel to show them all together.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Change the panel layout to 2 x 2</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb29-3"><a href="#cb29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4"></a><span class="co"># plot the diagnostic plots </span></span>
-<span id="cb29-5"><a href="#cb29-5"></a><span class="fu">plot</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Change the panel layout to 2 x 2</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="co"># plot the diagnostic plots </span></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="fu">plot</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1309,12 +1308,12 @@ What does the $ symbol mean?
 </section><section id="checking-linearity" class="level3" data-number="1.4.2"><h3 data-number="1.4.2" class="anchored" data-anchor-id="checking-linearity">
 <span class="header-section-number">1.4.2</span> Checking linearity</h3>
 <p>To isolate each plot, we can use the <code>which</code> argument. Plot 1 is a residuals vs fitted plot and helps us check linearity by showing the residuals on the y-axis and the fitted (predicted) values on the x-axis.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
-<span id="cb30-2"><a href="#cb30-2"></a>     <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
+<span id="cb32-2"><a href="#cb32-2"></a>     <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1338,12 +1337,12 @@ Error mode
 </section><section id="checking-normality" class="level3" data-number="1.4.3"><h3 data-number="1.4.3" class="anchored" data-anchor-id="checking-normality">
 <span class="header-section-number">1.4.3</span> Checking normality</h3>
 <p>Plot 2 is a qq-plot (quantile-quantile plot) and helps us check the normality of the model residuals by showing the standardised residuals on the y-axis and the theoretical quantiles on the x-axis. A common misconception is your variables should all be normally distributed, but it is actually the model residuals which should be normal.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
-<span id="cb31-2"><a href="#cb31-2"></a>     <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
+<span id="cb33-2"><a href="#cb33-2"></a>     <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1354,12 +1353,12 @@ Error mode
 </section><section id="checking-homoscedasticity" class="level3" data-number="1.4.4"><h3 data-number="1.4.4" class="anchored" data-anchor-id="checking-homoscedasticity">
 <span class="header-section-number">1.4.4</span> Checking homoscedasticity</h3>
 <p>Plot 3 is a scale-location plot and helps us check homoscedasticity by showing the square root of the standardised residuals on the y-axis and the fitted values on the x-axis. Homoscedasticity is where the variance of the residuals is approximately equal across the range of your predictor(s).</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
-<span id="cb32-2"><a href="#cb32-2"></a>     <span class="at">which =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
+<span id="cb34-2"><a href="#cb34-2"></a>     <span class="at">which =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1370,23 +1369,23 @@ Error mode
 <span class="header-section-number">1.4.5</span> Checking influential cases</h3>
 <p>Finally, there are two main plots to help us identify influential cases. You might have heard of the term outlier before and this is one way of classifying data points that are different enough to the rest of the data in a regression model. It is not strictly an assumption of linear regression, but it can affect the other assumptions. Identifying outliers is a complex decision and we will explore your options in the course materials and Chapter 14 on data screening.</p>
 <p>If you only run <code>plot(lm_redistribution)</code> and cycle through the plots, you do not see this version. This plot shows values of Cook’s distance for each observation in your data along the x-axis. Cook’s distance measures the influence of deleting a given observation, where higher values mean deleting that observation results in a larger change to the model estimates. There are different thresholds in the literature, but estimates range from 1, 0.5, to 4/n.&nbsp;We explore the decision making around this and your options in Chapter 4.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
-<span id="cb33-2"><a href="#cb33-2"></a>     <span class="at">which =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
+<span id="cb35-2"><a href="#cb35-2"></a>     <span class="at">which =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Finally, we get a residuals vs leverage plot to show influential cases in a slightly different way. Instead of just the Cook’s distance value of each observation, it plots the standardised residuals against leverage values.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
-<span id="cb34-2"><a href="#cb34-2"></a>     <span class="at">which =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">plot</span>(lm_redistribution, </span>
+<span id="cb36-2"><a href="#cb36-2"></a>     <span class="at">which =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1395,11 +1394,11 @@ Error mode
 </section><section id="checking-all-the-assumptions" class="level3" data-number="1.4.6"><h3 data-number="1.4.6" class="anchored" data-anchor-id="checking-all-the-assumptions">
 <span class="header-section-number">1.4.6</span> Checking all the assumptions</h3>
 <p>Now we have covered the individual diagnostic plots, there is a handy function called <code>check_model()</code> from the <pkg>performance</pkg> package. This function reports all the diagnostic checks from <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, but tidies up the presentation and has some useful reminders of what you are looking for.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">check_model</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">check_model</span>(lm_redistribution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1472,11 +1471,11 @@ Show me the solution
 <li>The relationship between the outcome and predictor is linear.</li>
 </ol>
 <p><strong>Looking at the first plot, the red line is pretty flat and horizontal, so we are happy with this.</strong></p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">plot</span>(lm_age, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">plot</span>(lm_age, <span class="at">which =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1485,11 +1484,11 @@ Show me the solution
 <li>The residuals should be normally distributed.</li>
 </ol>
 <p><strong>The qq-plot is fine for the vast majority of the range. We just have a few deviations in the extreme ends of the x-axis, but this is a byproduct of using a scale score as our outcome as responses cannot go beyond 1-6.</strong></p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">plot</span>(lm_age, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">plot</span>(lm_age, <span class="at">which =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1498,11 +1497,11 @@ Show me the solution
 <li>There should be homoscedasticity.</li>
 </ol>
 <p><strong>The red line is pretty flat and it looks like there is a fairly even range of values across the x-axis range.</strong></p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">plot</span>(lm_age, <span class="at">which =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">plot</span>(lm_age, <span class="at">which =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1523,10 +1522,10 @@ Show me the solution
 </ol>
 <p>For our main example, we could summarise the findings as:</p>
 <p>“Our research question was: is there a relationship between support for wealth redistribution and fairness and satisfaction with the current system? To test this, we applied simple linear regression using fairness and satisfaction as a predictor and support for wealth redistribution as our outcome. Figure 1 shows a scatterplot of the relationship.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1541,16 +1540,16 @@ Show me the solution
 <p><strong>Question 1</strong>. In the scatterplot of the relationship below, this shows a negative relationship between the inequality index and support for redistribution: <select class="webex-select"><option value="blank"></option>
 <option value="">TRUE</option>
 <option value="answer">FALSE</option></select>.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+<div>
+<figure class="figure"><p><img src="01-lm-continuous_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Question 2</strong> For the next few questions, we have the output from a linear regression model and we would like you to interpret it.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1587,10 +1586,6 @@ F-statistic: 6.861 on 1 and 303 DF,  p-value: 0.009251</code></pre>
 <option value="">negative</option></select>, where we expect for every 1-unit increase in the predictor a <input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.02&quot;,&quot;.02&quot;]"> -unit <select class="webex-select"><option value="blank"></option>
 <option value="answer">increase</option>
 <option value="">decrease</option></select> in the outcome.</p>
-</section><section id="end-of-chapter" class="level2" data-number="1.7"><h2 data-number="1.7" class="anchored" data-anchor-id="end-of-chapter">
-<span class="header-section-number">1.7</span> End of chapter</h2>
-<p>Great work, that was your first chapter working on inferential statistics!</p>
-<p>In the next chapter, we reinforce most of the content by applying simple linear regression to a categorical predictor. This is when you want to test for differences between two groups on your outcome instead of testing the relationship between two continuous variables.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">

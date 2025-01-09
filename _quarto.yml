@@ -23,7 +23,7 @@ book:
       given: Lisa
   doi: ''
   license: CC-BY
-  description: Book Description
+  description: Materials for the MSc Statistics and Research Design course at the University of Glasgow.
   cover-image: images/logos/logo.png
   image: images/logos/logo.png
   favicon: images/logos/favicon.ico
