@@ -137,21 +137,65 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h2>
 <section id="introduction-to-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="introduction-to-the-dataset">Introduction to the dataset</h3>
-<p>For the guided examples, we have two datasets, but we will introduce them in turn. To demonstrate logistic regression, we will use data from X.</p>
-<p>Bostyn et al.&nbsp;studied… Their research question was: X The hypothesis was: X.</p>
-<p>There is one independent variable (<code>Condition</code>) to randomly allocate participants into one of two groups:</p>
+<p>For the guided examples, we have two datasets, but we will introduce them in turn. To demonstrate logistic regression, we will use data from <span class="citation" data-cites="bostyn_mice_2018">@bostyn_mice_2018</span>.</p>
+<p>Bostyn et al.&nbsp;studied the classic trolley-dilemma in moral philosophy. In the typical format, a trolley (streetcar/tram) is travelling along tracks and will run over five people. However, you have the choice to pull a lever and divert the trolley to run over just one person. Although this would save lives, you must manually intervene to essentially kill one person. This is typically always a hypothetical scenario as it’s difficult to ask an ethics board for permission to run over people. In this study, Bostyn et al.&nbsp;compared a hypothetical version of the trolley-dilemma with a (seemingly) realistic version. Participants chose between not intervening and allowing five mice in a cage to be shocked with electricity or they could intervene and one mouse would be shocked instead. Do not worry, the mice were never shocked but participants did not know it at the time.</p>
+<p>Their research question was: would there be a difference in moral decision-making when participants completed a hypothetical compared to a real version of the trolley-dilemma task? There was seemingly no hypothesis, so we will just focus on addressing the research question.</p>
+<p>There is one independent variable (<code>STUDY</code>) to randomly allocate participants into one of two groups:</p>
 <ol type="1">
-<li><p>The correction group (group <code>1</code> in the data) had one sentence saying: “The lead author has since specified that the results have been misrepresented and that TV screen time has not yet been found to cause cognitive decline. Only a correlation has been found…”</p></li>
-<li><p>The no correction group (group <code>0</code> in the data) alternatively said: “The lead author of the study could not be reached for comment”</p></li>
+<li><p>The “real” group (group <code>1</code> in the data) attended a lab session where they saw two cages of real mice. They had 20 seconds to decide whether to press a button and divert the electric shock to the cage with one mouse.</p></li>
+<li><p>The hypothetical group (group <code>2</code> in the data) completed a more traditional version of the study where they just responded on a computer for whether they would intervene or not after reading a description of allowing five mice to be shocked or choosing for one mouse to be shocked.</p></li>
 </ol>
-<p>Participants then completed five free-text questions asking them about information in the study. Their responses were manually coded and received a 1 if they made a mistaken causal inference, or a 0 if they did not make one (<code>DV1_1</code> to <code>DV1_5</code> in the data set).</p>
+<p>Participants completed a bunch of additional measures on moral judgement, empathy, psychopathy etc., but our main outcome of interest is whether they chose to intervene (<code>1</code>) or not (<code>0</code>) from the variable <code>DECISION</code>. They label these two decisions as deontological when people intervened and consequentialist when people did not intervene. For plotting, we will use the labels, but for the analyses we will use the 0s and 1s.</p>
 <p>We first need to load some packages and the data for this task. If you do not have any of the packages, make sure you install them first.</p>
+<p>As the first activity, try and test yourself by completing the following task list to practice your data wrangling skills. Create a final object called <code>bostyn_data</code> to be consistent with the tasks below. If you just want to focus on fitting the models, then you can just copy the code in the solution.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To wrangle the data, complete the following tasks:</p>
+<ol type="1">
+<li><p>Load the following packages. If you do not have them already, remember you will need to install them first if you are working on your own computer:</p>
+<ul>
+<li><p><pkg>tidyverse</pkg></p></li>
+<li><p><pkg>emmeans</pkg></p></li>
+<li><p><pkg>ordinal</pkg></p></li>
+</ul></li>
+<li><p>You can complete the following tasks individually or combining things in one pipe, you just need a final object called <code>bostyn_data</code>. Read the data file <code>data/bostyn_2018.csv</code>.</p></li>
+<li><p>There are loads of variables in the data which you can explore in your own time, but for this chapter, just select the first four variables from <code>STUDY</code> to <code>DECISION</code>.</p></li>
+<li><p>There are a few missing values in <code>DECISION</code>, so remove the NAs at this point.</p></li>
+<li><p>To help with plotting and modelling later, create two new variables:</p>
+<ul>
+<li><p>Create a new variable called <code>study</code> where you create a factor to recode the values from <code>STUDY</code>. 1 should be relabelled “Real” and 2 should be relabelled as “Hypothetical”.</p></li>
+<li><p>Create a new variable called <code>label</code> where you create a factor to recode the values from <code>DECISION</code>. 0 should be relabelled “DEO” for deontological and 1 should be relabelled as “CON” for consequentialist.</p></li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Show me the solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You should have the following in a code chunk:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wrangling and visualisation functions </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameter estimates</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordinal regression</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordinal regression for later</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ordinal)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bostyn data for logistic regression</span></span>
@@ -161,9 +205,12 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">study =</span> <span class="fu">factor</span>(STUDY, </span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), </span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Real"</span>, <span class="st">"Hypothetical"</span>)),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">decision =</span> <span class="fu">factor</span>(DECISION, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">label =</span> <span class="fu">factor</span>(DECISION, </span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"DEO"</span>, <span class="st">"UTI"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"DEO"</span>, <span class="st">"CON"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="exploratory-data-analysis" class="level3">
@@ -171,13 +218,13 @@ window.Quarto = {
 <p>When starting any data analysis, it is important to visualise the data for some exploratory data analysis. Using the skills you developed in data skills for reproducible research, you can explore the data to understand its properties and look for potential patterns. In this scenario, a bar plot might be handy as we have a dichotomous outcome, so we can explore the frequency of responses across each group.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bostyn_data <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> decision, <span class="at">fill =</span> study)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> study, <span class="at">fill =</span> label)) <span class="sc">+</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Decision"</span>) <span class="sc">+</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Study"</span>) <span class="sc">+</span> </span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Frequency"</span>, </span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">50</span>), </span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">200</span>)) <span class="sc">+</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">"Study"</span>, <span class="at">option =</span> <span class="st">"E"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">name =</span> <span class="st">"Decision"</span>, <span class="at">option =</span> <span class="st">"E"</span>) <span class="sc">+</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -823,7 +870,7 @@ spacing       1.3626     0.1280  10.647</code></pre>
 </ul>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -832,7 +879,7 @@ Show me the solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To produce a logistic regression model for the third causal question, we will predict <code>DV1_3</code> from <code>Condition</code> as a single predictor.</p>
 </div>
@@ -868,7 +915,7 @@ Try this
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -877,7 +924,7 @@ Show me the solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>First, we need to convert hire rating to a factor for the ordinal model to work.</p>
 <div class="cell">

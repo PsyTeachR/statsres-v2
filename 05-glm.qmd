@@ -37,26 +37,61 @@ You are now ready to start working on the chapter!
 
 ### Introduction to the dataset
 
-For the guided examples, we have two datasets, but we will introduce them in turn. To demonstrate logistic regression, we will use data from X. 
+For the guided examples, we have two datasets, but we will introduce them in turn. To demonstrate logistic regression, we will use data from @bostyn_mice_2018. 
 
-Bostyn et al. studied... Their research question was: X The hypothesis was: X. 
+Bostyn et al. studied the classic trolley-dilemma in moral philosophy. In the typical format, a trolley (streetcar/tram) is travelling along tracks and will run over five people. However, you have the choice to pull a lever and divert the trolley to run over just one person. Although this would save lives, you must manually intervene to essentially kill one person. This is typically always a hypothetical scenario as it's difficult to ask an ethics board for permission to run over people. In this study, Bostyn et al. compared a hypothetical version of the trolley-dilemma with a (seemingly) realistic version. Participants chose between not intervening and allowing five mice in a cage to be shocked with electricity or they could intervene and one mouse would be shocked instead. Do not worry, the mice were never shocked but participants did not know it at the time. 
 
-There is one independent variable (`Condition`) to randomly allocate participants into one of two groups: 
+Their research question was: would there be a difference in moral decision-making when participants completed a hypothetical compared to a real version of the trolley-dilemma task? There was seemingly no hypothesis, so we will just focus on addressing the research question. 
 
-1. The correction group (group `1` in the data) had one sentence saying: “The lead author has since specified that the results have been misrepresented and that TV screen time has not yet been found to cause cognitive decline. Only a correlation has been found…”
+There is one independent variable (`STUDY`) to randomly allocate participants into one of two groups: 
 
-2. The no correction group (group `0` in the data) alternatively said: “The lead author of the study could not be reached for comment”
+1. The "real" group (group `1` in the data) attended a lab session where they saw two cages of real mice. They had 20 seconds to decide whether to press a button and divert the electric shock to the cage with one mouse. 
 
-Participants then completed five free-text questions asking them about information in the study. Their responses were manually coded and received a 1 if they made a mistaken causal inference, or a 0 if they did not make one (`DV1_1` to `DV1_5` in the data set). 
+2. The hypothetical group (group `2` in the data) completed a more traditional version of the study where they just responded on a computer for whether they would intervene or not after reading a description of allowing five mice to be shocked or choosing for one mouse to be shocked. 
+
+Participants completed a bunch of additional measures on moral judgement, empathy, psychopathy etc., but our main outcome of interest is whether they chose to intervene (`1`) or not (`0`) from the variable `DECISION`. They label these two decisions as deontological when people intervened and consequentialist when people did not intervene. For plotting, we will use the labels, but for the analyses we will use the 0s and 1s. 
 
 We first need to load some packages and the data for this task. If you do not have any of the packages, make sure you install them first.
+
+As the first activity, try and test yourself by completing the following task list to practice your data wrangling skills. Create a final object called `bostyn_data` to be consistent with the tasks below. If you just want to focus on fitting the models, then you can just copy the code in the solution. 
+
+::: {.callout-tip}
+#### Try this
+
+To wrangle the data, complete the following tasks: 
+
+1. Load the following packages. If you do not have them already, remember you will need to install them first if you are working on your own computer:
+
+    - <pkg>tidyverse</pkg>
+    
+    - <pkg>emmeans</pkg>
+    
+    - <pkg>ordinal</pkg>
+    
+2. You can complete the following tasks individually or combining things in one pipe, you just need a final object called `bostyn_data`. Read the data file `data/bostyn_2018.csv`.
+
+3. There are loads of variables in the data which you can explore in your own time, but for this chapter, just select the first four variables from `STUDY` to `DECISION`.
+
+4. There are a few missing values in `DECISION`, so remove the NAs at this point. 
+
+5. To help with plotting and modelling later, create two new variables:
+
+    - Create a new variable called `study` where you create a factor to recode the values from `STUDY`. 1 should be relabelled "Real" and 2 should be relabelled as "Hypothetical". 
+    
+    - Create a new variable called `label` where you create a factor to recode the values from `DECISION`. 0 should be relabelled "DEO" for deontological and 1 should be relabelled as "CON" for consequentialist. 
+
+:::
+
+::: {.callout-caution collapse="true"}
+#### Show me the solution
+You should have the following in a code chunk: 
 
 ```{r, warning=FALSE, message=FALSE}
 # wrangling and visualisation functions 
 library(tidyverse)
 # Parameter estimates
 library(emmeans)
-# Ordinal regression
+# Ordinal regression for later
 library(ordinal)
 
 # Bostyn data for logistic regression
@@ -66,10 +101,11 @@ bostyn_data <-read_csv("data/Bostyn_2018.csv") %>%
   mutate(study = factor(STUDY, 
                         levels = c(1, 2), 
                         labels = c("Real", "Hypothetical")),
-         decision = factor(DECISION, 
+         label = factor(DECISION, 
                            levels = c(0, 1), 
-                           labels = c("DEO", "UTI")))
+                           labels = c("DEO", "CON")))
 ```
+:::
 
 ### Exploratory data analysis
 
@@ -77,13 +113,13 @@ When starting any data analysis, it is important to visualise the data for some 
 
 ```{r}
 bostyn_data %>% 
-  ggplot(aes(x = decision, fill = study)) + 
+  ggplot(aes(x = study, fill = label)) + 
   geom_bar(position = "dodge") + 
-  scale_x_discrete(name = "Decision") + 
+  scale_x_discrete(name = "Study") + 
   scale_y_continuous(name = "Frequency", 
                      breaks = seq(0, 200, 50), 
                      limits = c(0,200)) + 
-  scale_fill_viridis_d(name = "Study", option = "E") +
+  scale_fill_viridis_d(name = "Decision", option = "E") +
   theme_minimal()
 ```
 
