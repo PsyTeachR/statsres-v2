@@ -53,6 +53,7 @@ book:
   - 02-lm-categorical.qmd
   - 03-lm-multiple.qmd
   - 04-screening-data.qmd
+  - 05-glm.qmd
   appendices:
   - references.qmd
 bibliography: include/statsresbook_references.bib

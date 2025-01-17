@@ -1,4 +1,4 @@
-# Introduction to Generalised Linear Models
+# Generalised Linear Regression
 
 ```{r echo=FALSE}
 library(webexercises)
@@ -68,6 +68,8 @@ To wrangle the data, complete the following tasks:
     
     - <pkg>ordinal</pkg>
     
+    - <pkg>sjPlot</pkg>
+    
 2. You can complete the following tasks individually or combining things in one pipe, you just need a final object called `bostyn_data`. Read the data file `data/bostyn_2018.csv`.
 
 3. There are loads of variables in the data which you can explore in your own time, but for this chapter, just select the first four variables from `STUDY` to `DECISION`.
@@ -93,6 +95,8 @@ library(tidyverse)
 library(emmeans)
 # Ordinal regression for later
 library(ordinal)
+# plotting model objects
+library(sjPlot)
 
 # Bostyn data for logistic regression
 bostyn_data <-read_csv("data/Bostyn_2018.csv") %>% 
@@ -123,22 +127,22 @@ bostyn_data %>%
   theme_minimal()
 ```
 
-It looks like more participants in the correction group compared to the no correction group did not make a mistaken causal inference (0), whereas more participants in the no correction group compared to the correction group made a mistaken causal inference (1).
+In the real group, there is a bigger difference in the number of people choosing to intervene and make a consequentialist response (1s in the data) compared to the hypothetical group where there is a smaller difference. The number of people choosing not to intervene and make a deontological response (0s in the data) is smaller in both groups, but it's the proportional difference which changes. 
 
-Instead of counts, we can also express binary 0 and 1 data as a proportion or probability of making a mistake. If you take the mean of binary data, it tells you the proportion, so we can calculate the proportion of participant's making a mistake in each group. 
+Instead of counts, we can also express binary 0 and 1 data as a proportion or probability of intervening. If you take the mean of binary data, it tells you the proportion, so we can calculate the proportion of participant's choosing to intervene as a consequentialist decision. 
 
 ```{r}
 bostyn_data %>% 
   group_by(study) %>% 
-  summarise(proportion_deo = mean(DECISION))
+  summarise(proportion_con = mean(DECISION))
 ```
 
-Both the bar plot and summary statistics support our prediction, participants in the no correction condition (47%) were more likely to make a mistaken causal inference than participants in the correction condition (35%). These are just descriptive statistics though, so you need to think about modelling to make inferences from these data. 
+Participants in the real group (86%) were more likely to intervene than participants in the hypothetical group (75%). These are just descriptive statistics though, so you need to think about modelling to make inferences from these data. 
 
 ### Would linear regression work? 
 
 ::: {.callout-warning}
-The most important part of data analysis is your role as the decision maker and thinking about what would be the most appropriate choice of modelling. Sometimes, there are equally valid approaches, while other times there is one better suited approach. If you apply an inappropriate test, R will gladly follow your instructions. Its your job to think critically about your modelling approach and check its an appropriate choice. 
+The most important part of data analysis is your role as the decision maker and thinking about what would be the most appropriate choice of model. Sometimes, there are equally valid approaches, while other times there is one better suited approach. If you apply an inappropriate test, R will gladly follow your instructions. Its your job to think critically about your modelling approach and check its an appropriate choice. 
 :::
 
 When we have a dichotomous outcome coded 0 and 1, it has numerical value, so R will happily apply regular linear regression. 
@@ -149,7 +153,7 @@ bostyn_model1 <- lm(DECISION ~ study, data = bostyn_data)
 summary(bostyn_model1)
 ```
 
-It is somewhat interpretable as when you take the mean of binary data, you get the proportion. So, the intercept represents the proportion of mistaken causal inferences in the no correction group, and the slope coefficient represents the mean difference in proportion, suggesting there are .12/12% fewer mistakes in the correction group, but its not statistically significant. 
+It is somewhat interpretable as when you take the mean of binary data, you get the proportion. So, the intercept represents the proportion of consequentialist responses for those in the real group, and the slope coefficient represents the mean difference in proportion, suggesting there are .12/12% fewer consequentialist responses in the hypothetical group, which is statistically significant at $\alpha$ = .05. 
 
 Although it works and we can make sense of the results, the question is whether it is an informative and appropriate way of modelling a binary outcome. Lets check the assumptions to see if anything looks off. 
 
@@ -161,7 +165,13 @@ par(mfrow=c(2,2))
 plot(bostyn_model1)
 ```
 
-Now we can see the problems. Because we only have two possible outcomes, the assumption checks are all off. The qq plot in panel 2 particularly shows the problem, as there is a giant chunk missing where the values between 0 and 1 should at, at least theoretically if we assume normal residuals. 
+Now we can see the problems. Because we only have two possible outcomes, the assumption checks are all off. The qq plot in panel 2 particularly shows the problem, as there is a giant chunk missing where the values between 0 and 1 should be, at least theoretically if we assume normal residuals. 
+
+```{r}
+# plot the qq plot
+plot(bostyn_model1, 
+     which = 2)
+```
 
 Now we can apply logistic regression to more appropriately model the dichotomous nature of the outcome. 
 
@@ -185,7 +195,7 @@ summary(bostyn_model1_glm)
 
 The link specifies the distribution family and the link function is the transformation for the model units. So, for our normal/Gaussian distribution, we have an identity link which essentially means no transformation, just the values we input. A normal distribution is described by a mean and standard deviation, so we just interpret the raw units in the model. 
 
-The results here are accurate to the third decimal to show its an identical process. The only difference to our regular model output is the model fit statistics. Regular linear regression uses ordinal least squares to fit the model, whereas generalised linear regression fits the models using maximum likelihood. Holding everything else constant, this requires greater computing power, so its redundant to use `glm()` when you just want to assume normal/Gaussian errors, but its important to show the logic behind these procedures. 
+The results here are the same to the third decimal to show its an identical process. The only difference to our regular model output is the model fit statistics. Regular linear regression uses ordinal least squares to fit the model, whereas generalised linear regression fits the models using maximum likelihood. Holding everything else constant, this requires greater computing power, so its overkill to use `glm()` when you just want to assume normal/Gaussian errors, but its important to show the process behind these procedures. 
 
 ::: {.callout-note}
 In this chapter, we are focusing on logistic regression and ordinal regression as variations of generalised linear regression. There are more possibilities though, so type `?family` into the console to see the different families you could enter for the link and link function. 
@@ -209,19 +219,19 @@ confint(bostyn_model2)
 
 The model looks reassuringly similar. We have our coefficients for the intercept and slope, with their standard errors and *p*-values. There are no *p*-values for the model fit though as remember they are based on maximum likelihood, rather than least squares. 
 
-The main difference here is the interpretation of the coefficients. The link function is logit, so we get them in log odds. These are not intuitive to interpret, so we can take the exponential to interpret the slope coefficient as an odds ratio with its 95% CI. 
+The main difference here is the interpretation of the coefficients. The link function is logit, so we get them in log odds, meaning the logarithm of an odds ratio (how likely something is to happen). These are not intuitive to interpret, so we can take the exponential to transform the slope coefficient from log odds to an odds ratio with its 95% CI. 
 
 ```{r}
 # Take the exponential of the second coefficient to avoid typing it manually
-exp(coef(bostyn_model2)[2])
+exp(coef(bostyn_model2)[2]) #subset second component
 
 # Exponential of the confidence interval
 exp(confint(bostyn_model2))
 ```
 
-An odds ratio is a ratio of the odds of an event happening in one group compared to the odds of an event happening in another group. In this context, a ratio of making a mistaken causal inference (1s compared to 0s) in the no correction group, compared to the correction group. 
+An odds ratio is a ratio of the odds of an event happening in one group compared to the odds of an event happening in another group. In this context, a ratio of making a consequentialist decision (1s compared to 0s) in the real group compared to the hypothetical group. 
 
-An odds ratio of 1 means they are equally likely to happen. An odds ratio of less than 1 means something is less likely to happen, whereas more than 1 means something is more likely to happen. The odds ratio is 0.61 here, suggesting the odds of making a mistaken causal inference is lower in the correction group (our target group - `1`) compared to the no correction group (the reference group - `0`). Odds ratios below 1 can be tricky to interpret, so you can flip them around by taking the reciprocal. 
+An odds ratio of 1 means they are equally likely to happen. An odds ratio of less than 1 means something is less likely to happen, whereas more than 1 means something is more likely to happen. The odds ratio is 0.46 here, suggesting the odds of making a consequentialist decision is lower in the hypothetical group (our target group) compared to the real group (the reference group). Odds ratios below 1 can be tricky to interpret, so you can flip them around by taking the reciprocal. 
 
 ```{r}
 # Take the reciprocal of the exponential of the second coefficient 
@@ -231,44 +241,65 @@ An odds ratio of 1 means they are equally likely to happen. An odds ratio of les
 1 / exp(confint(bostyn_model2))
 ```
 
-Expressed this way, there are 1.65 [0.82, 3.38] lower odds (or expressed in probability 65% lower) of making a mistaken causal inference in the correction group compared to the no correction group. In this model, it is not statistically significant and we can see there is a decent amount of uncertainty around the estimate, with an odds ratio spanning above and below 1. 
+Expressed this way, there are 2.16 (95% CI = [1.13, 4.12]) lower odds of making a consequentialist decision in the hypothetical group compared to the real group. In this model, it is statistically significant but we can see there is a decent amount of uncertainty around the estimate, spanning from 1.13 to 4.12. 
 
-::: {.callout-warning}
+::: {.callout-important}
 In this scenario, you would get the same reciprocal odds ratio if you changed the groups around with correction as the reference group. Taking the reciprocal is the same information expressed differently, but its important you are clear about the model estimates to avoid confusing your reader. If you do this yourself, make sure you explain what the model estimates were and how you took the reciprocal. 
 :::
 
 Returning to the idea of model comparison, we could compare the two GLM models using `anova()` and it will tell you the change in deviance (relating the maximum likelihood fitting process), but we can focus on comparing the AIC values for model fit between the two models. Lower values of AIC are better and if we subtract model 1 (the linear model) from model 2 (the logistic model), a negative difference would indicate better model fit from the ordinal model. 
 
 ```{r}
+# AIC of model 1
+AIC(bostyn_model1_glm)
+# AIC of model 2
+AIC(bostyn_model2)
+# difference in AIC values
 AIC(bostyn_model2) - AIC(bostyn_model1_glm)
 ```
 
-Reassuringly, the logistic regression model fits the data better with less prediction error when we use a binomial distribution for the errors, compared to when we force it into a normal residual model.
+Interestingly, the second model actually has worse fit! There is less prediction error when we use the regular linear regression model compared to the logistic regression model. Given the assumptions and what we know of the design though, the logistic regression model would still be the sensible choice here. This reinforces why it is so important to recognise you as the decision maker and considering different sources of information. 
 
 #### Calculating the model probability estimates
 
-Finally, there is a relationship between probability, odds, and log odds. So, we can use the coefficients to produce model estimates for the probability of a mistaken causal inference in each group. The logic is the same as for regular linear regression models, the intercept is the reference group, and the slope coefficient for your predictor is the shift across units of your predictors. We can calculate the probability by taking the exponential of the log odds divided by 1 plus the exponential log odds. 
+Finally, there is a relationship between probability, odds, and log odds. We can use the coefficients to produce model estimates for the probability of a consequentialist decision in each group. @voas_odds_2024 recommend this as the key output of a logistic regression model for helping to communicate your findings. 
+
+::: {.callout-warning}
+Relatedly, the whole purpose of @voas_odds_2024 is to warn against a common misinterpretation of logistic regression. Often, people interpret the odds ratio as an increase in the likelihood of a response. For example, our odds ratio of 2.16 mistakenly interpreted as a consequentialist decision being just over twice as likely in the real group than the hypothetical group. In reality, it is a 2.16 higher *odds* of making a consequentialist decision, and the difference will be clearer once we express it as probabilities. 
+:::
+
+The logic is the same as for regular linear regression models, the intercept is the reference group, and the slope coefficient for your predictor is the shift across units of your outcome. First, we can calculate the model estimated probability for the reference group by taking the exponential of the intercept log odds divided by 1 plus the exponential intercept log odds: 
+
+$$ p = \dfrac{e^{b_0}}{1 + e^{b_0}}$$
+
+Or as code: 
 
 ```{r}
-# Estimated probability of making an error in the 0 condition 
+# Estimated probability in the reference group
 # We use coef() to isolate the model coefficients and subset the 1st item - the intercept
 exp(coef(bostyn_model2)[1]) / (1 + exp(coef(bostyn_model2)[1]))
 ```
 
-This means the estimated probability of a mistaken causal inference in the no correction condition is .47 or 47%. Then for the correction group, we repeat the process, but adding together the intercept and slope coefficient. Given the slope was negative, this is the equivalent of subtracting the slope. 
+This means the estimated probability of a consequentialist decision in the real group is .86 or 86%. 
+
+Then for the hypothetical group, we repeat the process, but adding together the intercept and slope coefficient. Given the slope was negative, this is the equivalent of subtracting the slope. As an equation: 
+
+$$ p = \dfrac{e^{b_0 + b_1}}{1 + e^{b_0 + b_1}}$$
+
+Then as code: 
 
 ```{r}
-# Estimated probability of making an error in the 1 condition
+# Estimated probability in the target group
 # We use coef() to isolate the model coefficients and subset the 1st item - the intercept 
 # We then add the 2nd item in coef() - the slope 
 exp(coef(bostyn_model2)[1] + coef(bostyn_model2)[2]) / (1 + exp(coef(bostyn_model2)[1] + coef(bostyn_model2)[2]))
 ```
 
-This means the estimated probability of a mistaken causal inference in the correction condition is .35 or 35%. These values line up nicely with our original summary statistics, but keep in mind they are model estimates. They are closer here as its a very simple model and we are demonstrating the principles, but they will not line up this close when you have more complex models with partial effects to understand. 
+This means the estimated probability of a consequentialist decision in the hypothetical group is .75 or 75%. These values line up nicely with our original summary statistics, but keep in mind they are model estimates. They are closer here as its a very simple model and we are demonstrating the principles, but they will not line up this close when you have more complex models with marginal effects to understand. 
 
 #### Using `emmeans` to get model estimates
 
-Another way of getting model estimates is using `emmeans()` function from the <pkg>emmeans</pkg> package [@Lenth2022]. This can be particularly useful in more complicated models when you want marginal effects across interactions, but you might prefer to see the estimates in this format instead of reconstructing them from the coefficients. 
+Another way of getting model estimates is using the `emmeans()` function from the <pkg>emmeans</pkg> package [@Lenth2022]. This can be particularly useful in more complicated models when you want marginal effects across interactions, but you might prefer to see the estimates in this format instead of reconstructing them from the coefficients. 
 
 ```{r}
 # logistic regression model as the object
@@ -276,13 +307,35 @@ Another way of getting model estimates is using `emmeans()` function from the <p
 emmeans(bostyn_model2, specs = "study")
 ```
 
-These are still in log odds units, so you can calculate the probability using the same $exp(logit) / 1 + exp(logit)$ method. For example, the estimated probability of a mistaken causal conclusion in the no correction group (`0`) is:
+These are still in log odds units, so you can calculate the probability using the same $ p = \dfrac{e}{1 + e}$ method. For example, the estimated probability of a consequentialist decision in the real group is:
 
 ```{r}
 exp(1.85) / (1 + exp(1.85))
 ```
 
 Which corresponds nicely with what we reconstructed from the model coefficients. 
+
+#### Plotting logistic regression models
+
+Like any model, it will make your life and the lives of your reader much easier to supplement your statistics with a plot informatively showing the model estimates. We can use the <pkg>sjPlot</pkg> function [@luedecke_2024] to take the logistic regression model and plot the predicted probabilites. 
+
+```{r}
+# sjPlot makes it easy to plot estimates from the model
+plot_model(bostyn_model2, # You enter the model object
+           type = "pred", # The type of plot you want to create
+           terms = "study") # The predictor(s)
+```
+Plus some additional arguments and `ggplot()` layers to tidy things up. 
+
+```{r}
+plot_model(bostyn_model2,
+           type = "pred",
+           terms = "study",
+           axis.title = c("Real or Hypothetical Scenario", "Proportion Consequentialist Decision"),
+           axis.lim = c(0.5, 1)) + 
+  theme_classic() + 
+  labs(title = "")
+```
 
 ## Ordinal Regression{#ordinal-regression}
 
@@ -611,9 +664,3 @@ exp(coef(schroeder_model2)[3] - coef(schroeder_model2)[9]) / (1 + exp(coef(schro
 ```
 
 :::
-
-## Further resources
-
-1. <a href="https://openintro-ims.netlify.app/model-logistic" target="_blank">The online textbook Introduction to Modern Statistics</a> by Çetinkaya-Rundel and Hardin (2021) outlines logistic regression in chapter 9, then separatly covers the inferential element in chapter 26. 
-
-2. <a href="https://cran.r-project.org/web/packages/ordinal/vignettes/clm_article.pdf" target="_blank">The ordinal package vignette</a> by Christensen (2023) outlines ordinal regression and the models you can fit using the package in lots of detail. 
