@@ -82,6 +82,7 @@ To wrangle the data, complete the following tasks:
     
     - Create a new variable called `label` where you create a factor to recode the values from `DECISION`. 0 should be relabelled "DEO" for deontological and 1 should be relabelled as "CON" for consequentialist. 
 
+6. To help with modelling later, convert `GENDER` to a factor. 
 :::
 
 ::: {.callout-caution collapse="true"}
@@ -107,7 +108,8 @@ bostyn_data <-read_csv("data/Bostyn_2018.csv") %>%
                         labels = c("Real", "Hypothetical")),
          label = factor(DECISION, 
                            levels = c(0, 1), 
-                           labels = c("DEO", "CON")))
+                           labels = c("DEO", "CON")),
+         GENDER = as.factor(GENDER))
 ```
 :::
 
@@ -307,10 +309,22 @@ Another way of getting model estimates is using the `emmeans()` function from th
 emmeans(bostyn_model2, specs = "study")
 ```
 
-These are still in log odds units, so you can calculate the probability using the same $ p = \dfrac{e}{1 + e}$ method. For example, the estimated probability of a consequentialist decision in the real group is:
+These are still in log odds units, so you can calculate the probability using the same equation as before: 
+
+$$ p = \dfrac{e}{1 + e}$$
+
+To make it less repetitive, you can use the following user-generated function and enter all the relevant values as a vector: 
 
 ```{r}
-exp(1.85) / (1 + exp(1.85))
+probability_from_logit <- function(x){
+  return(
+    exp(x) / (1 + exp(x))
+  )
+}
+
+probability_from_logit(c(1.85, # estimate
+                         1.44, # lower 95% CI
+                         2.27)) # upper 95% CI
 ```
 
 Which corresponds nicely with what we reconstructed from the model coefficients. 
@@ -325,14 +339,15 @@ plot_model(bostyn_model2, # You enter the model object
            type = "pred", # The type of plot you want to create
            terms = "study") # The predictor(s)
 ```
-Plus some additional arguments and `ggplot()` layers to tidy things up. 
+Plus some additional arguments and `ggplot()` layers to tidy things up. Helpfully, it recognises the y-axis is a probability and amends the scale. Unhelpfully, if you want to change the limits etc., you need to tidy the scale up again or it reverts back to proportion. 
 
 ```{r}
 plot_model(bostyn_model2,
            type = "pred",
            terms = "study",
-           axis.title = c("Real or Hypothetical Scenario", "Proportion Consequentialist Decision"),
-           axis.lim = c(0.5, 1)) + 
+           axis.title = c("Real or Hypothetical Scenario", "Probability Consequentialist Decision (%)")) + 
+  scale_y_continuous(labels = scales::percent, # setting to convert y to percent
+                     limits = c(0.5, 1)) + # original units are proportion
   theme_classic() + 
   labs(title = "")
 ```
@@ -555,24 +570,59 @@ Now you have followed along to a guided example, it is important you can transfe
 
 ### Independent logistic regression
 
-For an independent activity, we will use the same data set from @irving_correcting_2022, but this time using a different question as a binary outcome. If you are coming to this fresh, make sure to remind yourself of the data set outlined in the [logistic regression section](#logistic-regression) and load the data. 
+For an independent activity, we will use the same data set from @bostyn_mice_2018, but this time using a couple of extra predictors. If you are coming to this fresh, make sure to remind yourself of the data set outlined in the [logistic regression section](#logistic-regression) and load the data. 
 
-::: {.try data-latex=""}
-From here, apply what you learnt in the guided example for logistic regression to this new independent task and complete the questions below to check your understanding. Remember you are predicting `DV1_3` from `Condition` to see if the probability of a mistaken causal inference is greater in the correction condition compared to the no correction condition. 
+::: {.callout-tip}
+#### Try this
 
-- The correction condition is a `r mcq(opts = c(answer = "significant", x = "non-significant"))` and `r mcq(opts = c(x = "positive", answer = "negative"))` predictor of the third mistaken causal inference question.  
+From here, apply what you learnt in the guided example for logistic regression to this new independent task and complete the questions below to check your understanding.
 
-- Rounding to two decimals, the slope coefficient converted to an odds ratio is `r fitb(answer = 0.09, num = TRUE, tol = .001)`. Taking the reciprocal, the odds ratio is `r fitb(answer = 10.58, num = TRUE, tol = .001)` [lower 95% CI = `r fitb(answer = 2.85, num = TRUE, tol = .001)`, upper 95% CI = `r fitb(answer = 68.80, num = TRUE, tol = .001)`].
+In @bostyn_mice_2018, they actually fit a multiple logistic regression model where they include three predictors. They include `study` as the key predictor of interest, but they also control for `AGE` and `GENDER` as additional predictors. Fit this model to create a new object called `bostyn_model3` and answer the following questions. 
 
-- This suggests there are `r fitb(answer = 10.58, num = TRUE, tol = .001)` lower odds of making a mistaken causal inference in the `r mcq(opts = c(x = "no correction", answer = "correction"))` condition compared to the `r mcq(opts = c(answer = "no correction", x = "correction"))` condition. 
+- In the new model, our key predictor of `study` is statistically `r mcq(opts = sample(c(answer = "significant", "non-significant")))`. The two new predictors of `AGE` and `GENDER` are statistically `r mcq(opts = sample(c("significant", answer =  "non-significant")))`.  
 
-- Rounding to three decimals, the estimated probability of making a mistaken causal inference in the no correction group is `r fitb(answer = .258, num = TRUE, tol = .001)` and the estimated probability of making a mistaken causal inference in the correction group is `r fitb(answer = .032, num = TRUE, tol = .001)`. 
+- The slope for `study` is still in log odds and negative (unless you flipped the groups). If you take the reciprocal of the exponential slope, the odds ratio for the predictor to 2 decimals is `r fitb(answer = 2.23, num = TRUE, tol = .001)` [lower 95% CI = `r fitb(answer = 1.15, num = TRUE, tol = .001)`, upper 95% CI = `r fitb(answer = 4.31, num = TRUE, tol = .001)`].
+
+- This suggests there are `r fitb(answer = 2.23, num = TRUE, tol = .001)` lower odds of making a consequential decision in the `r mcq(opts = sample(c("real", answer = "hypothetical")))` group compared to the `r mcq(opts = sample(c(answer = "real", "hypothetical")))` group. 
+
+- Rounding to 1 decimal, the estimated probability of making a consequential decision in the real group is `r fitb(answer = 87.4, num = TRUE, tol = .001)`% (95% CI = `r fitb(answer = 81.6, num = TRUE, tol = .001)`, `r fitb(answer = 91.6, num = TRUE, tol = .001)`) and the estimated probability in the hypothetical group is `r fitb(answer = 75.8, num = TRUE, tol = .001)`% (95% CI = `r fitb(answer = 64.3, num = TRUE, tol = .001)`, `r fitb(answer = 84.4, num = TRUE, tol = .001)`).
 :::
 
 ::: {.callout-caution collapse="true"}
 #### Show me the solution
 
-To produce a logistic regression model for the third causal question, we will predict `DV1_3` from `Condition` as a single predictor. 
+The first step is fitting the model with three individual predictors. 
+
+```{r}
+bostyn_model3 <- glm(DECISION ~ study + AGE + GENDER,
+                     family = binomial(link = "logit"),
+                     data = bostyn_data)
+
+summary(bostyn_model3)
+```
+
+Given the model, you can take the reciprocal of the exponential for the slope estimate and its 95% confidence interval. You do not need the reciprocal if you flipped the groups and estimate is above 1. 
+
+```{r}
+1 / exp(coef(bostyn_model3)[2])
+
+1 / exp(confint(bostyn_model3))
+```
+
+Finally, you can calculate the estimated probability of making a consequentialist decision in each group by using the `emmeans()` function and our user-generated conversion function. If you calculated it manually with the other methods, that's fine too. 
+
+```{r}
+emmeans(bostyn_model3, specs = "study")
+
+probability_from_logit(c(1.94, # estimate
+                         1.49, # lower 95% CI
+                         2.39)) # upper 95% CI
+
+probability_from_logit(c(1.14, # estimate
+                         0.59, # lower 95% CI
+                         1.69)) # upper 95% CI
+```
+
 :::
 
 ### Independent ordinal regression
