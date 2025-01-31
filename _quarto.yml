@@ -49,11 +49,17 @@ book:
   page-footer: CC-BY (2025) Bartlett, Rousselet, & DeBruine.
   chapters:
   - index.qmd
-  - 01-lm-continuous.qmd
-  - 02-lm-categorical.qmd
-  - 03-lm-multiple.qmd
-  - 04-screening-data.qmd
-  - 05-glm.qmd
+  - part: 01-00-GLM.qmd
+    chapters:
+      - 01-01-lm-continuous.qmd
+      - 01-02-lm-categorical.qmd
+      - 01-03-lm-multiple.qmd
+      - 01-04-screening-data.qmd
+      - 01-05-glm.qmd
+  - part: 02-00-graph_robust.qmd
+    chapters:
+      - 02-07-gar-ci.qmd
+      - 02-08-gar-gpcomp.qmd
   appendices:
   - references.qmd
 bibliography: include/statsresbook_references.bib
