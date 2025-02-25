@@ -1,0 +1,15 @@
+{
+  "hash": "3448156d0a838748d1d391bf218685b7",
+  "result": {
+    "engine": "knitr",
+    "markdown": "# Installing the `brms` package\n\nIn the Bayesian statistics component of the course, you will use the <pkg>brms</pkg> to fit Bayesian regression models. Behind the scenes, this package uses a programming language called <a href=\"https://mc-stan.org/\" target=\"_blank\">Stan</a> which requires a C++ compiler. Unlike other packages, you cannot just use the `install.packages()` function to install everything, there are a few steps to follow.\n\nThe best place to start is referring to the FAQs on the <a href=\"https://github.com/paul-buerkner/brms#how-do-i-install-brms\" target=\"_blank\">package Github page</a>. \n\nFirst, if you have a Windows computer, you should install Rtools. If you have a Mac, then you should install Xcode. \n\nOnce you have the program relevant to your computer, then you can install <pkg>brms</pkg> as usual: \n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ninstall.packages(\"brms\")\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

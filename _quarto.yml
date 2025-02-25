@@ -60,8 +60,9 @@ book:
     chapters:
       - 02-07-gar-ci.qmd
       - 02-08-gar-gpcomp.qmd
-  appendices:
   - references.qmd
+  appendices:
+  - appendix-a-installing-brms.qmd
 bibliography: include/statsresbook_references.bib
 csl: include/apa.csl
 format:

@@ -100,7 +100,6 @@
     "section": "",
     "text": "Bem, D. J. (2011). Feeling the future: Experimental\nevidence for anomalous retroactive influences on cognition and affect.\nJournal of Personality and Social Psychology, 100(3),\n407–425. https://doi.org/10.1037/a0021524\n\n\nBostyn, D. H., Sevenhant, S., & Roets, A. (2018). Of\nMice, Men, and Trolleys:\nHypothetical Judgment Versus\nReal-Life Behavior in\nTrolley-Style Moral\nDilemmas: Psychological Science, 29(7),\n1084–1093. https://doi.org/10.1177/0956797617752640\n\n\nBrandt, M. J., IJzerman, H., & Blanken, I. (2014). Does\nRecalling Moral Behavior\nChange the Perception of\nBrightness? Social Psychology, 45(3),\n246–252. https://doi.org/10.1027/1864-9335/a000191\n\n\nChristensen, R. H. B. (2023). Ordinal—regression models for ordinal\ndata. https://CRAN.R-project.org/package=ordinal\n\n\nDawtry, R. J., Sutton, R. M., & Sibley, C. G. (2015). Why\nWealthier People Think\nPeople Are Wealthier, and\nWhy It Matters: From\nSocial Sampling to Attitudes to\nRedistribution. Psychological Science,\n26(9), 1389–1400. https://doi.org/10.1177/0956797615586560\n\n\nEvans, T. R. (2024). Unethical Behaviour in the\nWorkplace: A Direct and\nConceptual Replication of Jones\n& Kavanagh (1996). https://doi.org/10.31234/osf.io/a2rj9\n\n\nJakobsen, J. C., Gluud, C., Wetterslev, J., & Winkel, P. (2017).\nWhen and how should multiple imputation be used for handling missing\ndata in randomised clinical trials – a practical guide with flowcharts.\nBMC Medical Research Methodology, 17(1), 162. https://doi.org/10.1186/s12874-017-0442-1\n\n\nJames, E. L., Bonsall, M. B., Hoppitt, L., Tunbridge, E. M., Geddes, J.\nR., Milton, A. L., & Holmes, E. A. (2015). Computer\nGame Play Reduces\nIntrusive Memories of\nExperimental Trauma via\nReconsolidation-Update\nMechanisms: Psychological Science, 26(8),\n1201–1215. https://doi.org/10.1177/0956797615583071\n\n\nJones, G. E., & Kavanagh, M. J. (1996). An experimental examination\nof the effects of individual and situational factors on unethical\nbehavioral intentions in the workplace. Journal of Business\nEthics, 15, 511–523.\n\n\nKnief, U., & Forstmeier, W. (2021). Violating the normality\nassumption may be the lesser of two evils. Behavior Research\nMethods, 53(6), 2576–2590. https://doi.org/10.3758/s13428-021-01587-5\n\n\nLenth, R. V. (2024). Emmeans: Estimated marginal means, aka\nleast-squares means. https://CRAN.R-project.org/package=emmeans\n\n\nLeys, C., Delacre, M., Mora, Y. L., Lakens, D., & Ley, C. (2019).\nHow to Classify, Detect, and\nManage Univariate and\nMultivariate Outliers, With\nEmphasis on Pre-Registration.\nInternational Review of Social Psychology, 32(1), 5.\nhttps://doi.org/10.5334/irsp.289\n\n\nLopez, A., Choi, A. K., Dellawar, N. C., Cullen, B. C., Avila Contreras,\nS., Rosenfeld, D. L., & Tomiyama, A. J. (2023). Visual cues and food\nintake: A preregistered replication of Wansink\net al (2005). Journal of Experimental Psychology: General. https://doi.org/10.1037/xge0001503.supp\n\n\nLüdecke, D. (2024). sjPlot: Data visualization for statistics in\nsocial science. https://CRAN.R-project.org/package=sjPlot\n\n\nSchroeder, J., & Epley, N. (2015). The Sound of\nIntellect: Speech Reveals a\nThoughtful Mind, Increasing a\nJob Candidate’s Appeal.\nPsychological Science, 26(6), 877–891. https://doi.org/10.1177/0956797615572906\n\n\nTroy, A. S., Ford, B. Q., McRae, K., Zarolia, P., & Mauss, I.\n(2017). Change the things you can: Emotion regulation is\nmore beneficial for people from lower than from higher socioeconomic\nstatus. Emotion, 17(1), 141–154. https://doi.org/10.1037/emo0000210\n\n\nVoas, D., & Watt, L. (2024). The odds are it’s wrong:\nCorrecting a common mistake in statistics. Teaching\nStatistics. https://doi.org/10.1111/test.12391",
     "crumbs": [
-      "Appendices",
       "References"
     ]
   },
@@ -1305,6 +1304,17 @@
     "crumbs": [
       "Graphical representations and robust statistics",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Perspectives on group comparisons</span>"
+    ]
+  },
+  {
+    "objectID": "appendix-a-installing-brms.html",
+    "href": "appendix-a-installing-brms.html",
+    "title": "Appendix A — Installing the brms package",
+    "section": "",
+    "text": "In the Bayesian statistics component of the course, you will use the brms to fit Bayesian regression models. Behind the scenes, this package uses a programming language called Stan which requires a C++ compiler. Unlike other packages, you cannot just use the install.packages() function to install everything, there are a few steps to follow.\nThe best place to start is referring to the FAQs on the package Github page.\nFirst, if you have a Windows computer, you should install Rtools. If you have a Mac, then you should install Xcode.\nOnce you have the program relevant to your computer, then you can install brms as usual:\n\ninstall.packages(\"brms\")",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Installing the `brms` package</span>"
     ]
   }
 ]

@@ -1,0 +1,14 @@
+# Installing the `brms` package
+
+In the Bayesian statistics component of the course, you will use the <pkg>brms</pkg> to fit Bayesian regression models. Behind the scenes, this package uses a programming language called <a href="https://mc-stan.org/" target="_blank">Stan</a> which requires a C++ compiler. Unlike other packages, you cannot just use the `install.packages()` function to install everything, there are a few steps to follow.
+
+The best place to start is referring to the FAQs on the <a href="https://github.com/paul-buerkner/brms#how-do-i-install-brms" target="_blank">package Github page</a>. 
+
+First, if you have a Windows computer, you should install Rtools. If you have a Mac, then you should install Xcode. 
+
+Once you have the program relevant to your computer, then you can install <pkg>brms</pkg> as usual: 
+
+```{r eval = FALSE}
+install.packages("brms")
+```
+
