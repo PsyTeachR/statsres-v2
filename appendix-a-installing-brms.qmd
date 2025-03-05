@@ -1,4 +1,4 @@
-# Installing the `brms` package
+# Installing the `brms` package {#install-brms}
 
 In the Bayesian statistics component of the course, you will use the <pkg>brms</pkg> to fit Bayesian regression models. Behind the scenes, this package uses a programming language called <a href="https://mc-stan.org/" target="_blank">Stan</a> which requires a C++ compiler. Unlike other packages, you cannot just use the `install.packages()` function to install everything, there are a few steps to follow.
 
