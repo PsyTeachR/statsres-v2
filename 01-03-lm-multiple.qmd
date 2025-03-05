@@ -1,4 +1,4 @@
-# Multiple Linear Regression
+# Multiple linear regression
 
 ```{r echo=FALSE}
 library(webexercises)

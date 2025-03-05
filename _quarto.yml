@@ -63,6 +63,7 @@ book:
   - part: 03-00-bayes.qmd
     chapters:
       - 03-01-hypothesis.qmd
+      - 03-02-estimation.qmd
   - references.qmd
   appendices:
   - appendix-a-installing-brms.qmd

@@ -1,4 +1,4 @@
-# Introduction to Linear Mixed Effects Models
+# Introduction to linear mixed effects models
 
 In this chapter, we will explore linear mixed effects models by simulating data. Experimental designs that sample both subjects and stimuli from a larger population need to account for random effects of both subjects and stimuli using mixed-effects models. However, much of this research is analyzed using analysis of variance on aggregated responses because researchers are not confident specifying and interpreting mixed-effects models. This chapter will explain how to simulate data with random-effects structure (using the faux R package) and analyze the data using linear mixed-effects regression (with the lme4 R package), with a focus on interpreting the output in light of the simulated parameters. You will also learn to calculate power using simulation.
 

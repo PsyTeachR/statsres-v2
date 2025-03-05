@@ -1,4 +1,4 @@
-# Generalised Linear Regression
+# Generalised linear regression
 
 ```{r echo=FALSE}
 library(webexercises)
