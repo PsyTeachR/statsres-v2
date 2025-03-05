@@ -60,6 +60,9 @@ book:
     chapters:
       - 02-07-gar-ci.qmd
       - 02-08-gar-gpcomp.qmd
+  - part: 03-00-bayes.qmd
+    chapters:
+      - 03-01-hypothesis.qmd
   - references.qmd
   appendices:
   - appendix-a-installing-brms.qmd

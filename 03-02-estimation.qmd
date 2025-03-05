@@ -1,4 +1,4 @@
-# Introduction to Bayesian Estimation
+# Bayesian Modelling
 
 In this chapter, you will learn about the Bayesian approach to estimation by fitting regression models using the `r pkg("brms")` package [@burkner_brms_2017]. This is the most flexible approach to modelling as you can select your relevant outcome and predictors rather than relying on out-of-the-box statistical tests. We will be focusing on estimation and exploring the posterior of your model to make inferences. You will build on the skills you learnt in chapter 9, but extending it to more flexible priors and statistical models. We are mainly going to focus on simple and multiple linear regression in this chapter, but the final section outlines further resources to learn about more advanced distribution families and models.
 

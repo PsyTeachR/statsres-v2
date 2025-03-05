@@ -13,7 +13,7 @@ This book will use the following conventions:
 * Glossary items: `r glossary("ordinal")`
 * Citations: @R-tidyverse
 * Internal links: Chapter\ \@ref(intro)
-* External links: [R for Data Science](https://r4ds.had.co.nz/){target="_blank"}
+* External links: [R for Data Science](https://r4ds.had.co.nz/){target="_blank"} [](){target="_blank"}
 * Menu/interface options: **`New File...`**
 * Quiz question: I am going to learn a lot: `r torf(TRUE)`
 

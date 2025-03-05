@@ -1,0 +1,2944 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
+<title>Statistics and Research Design - 8&nbsp; Bayesian hypothesis testing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./03-00-bayes.html" rel="prev">
+<link href="./images/logos/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+<link rel="stylesheet" href="include/booktem.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/glossary.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-01-hypothesis.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics and Research Design</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General linear model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-01-lm-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Regression with one continuous predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-02-lm-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regression with one categorical predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-03-lm-multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-04-screening-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-05-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised Linear Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graphical representations and robust statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian modelling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-a-installing-brms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installing the <code>brms</code> package</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">8.1</span> Learning objectives</a></li>
+  <li>
+<a href="#bayes-logic" id="toc-bayes-logic" class="nav-link" data-scroll-target="#bayes-logic"><span class="header-section-number">8.2</span> The Logic Behind Bayesian Inference</a>
+  <ul class="collapse">
+<li><a href="#step-1---pick-your-prior" id="toc-step-1---pick-your-prior" class="nav-link" data-scroll-target="#step-1---pick-your-prior"><span class="header-section-number">8.2.1</span> Step 1 - Pick your prior</a></li>
+  <li><a href="#step-2---update-to-a-posterior" id="toc-step-2---update-to-a-posterior" class="nav-link" data-scroll-target="#step-2---update-to-a-posterior"><span class="header-section-number">8.2.2</span> Step 2 - Update-to-a-posterior</a></li>
+  </ul>
+</li>
+  <li><a href="#Bayes-factors" id="toc-Bayes-factors" class="nav-link" data-scroll-target="#Bayes-factors"><span class="header-section-number">8.3</span> The Logic Behind Bayes Factors</a></li>
+  <li>
+<a href="#Bayes-independent-samples" id="toc-Bayes-independent-samples" class="nav-link" data-scroll-target="#Bayes-independent-samples"><span class="header-section-number">8.4</span> Bayes factors for two independent samples</a>
+  <ul class="collapse">
+<li><a href="#guided-example-bastian-et-al.-2014" id="toc-guided-example-bastian-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-bastian-et-al.-2014"><span class="header-section-number">8.4.1</span> Guided example (Bastian et al., 2014)</a></li>
+  <li><a href="#Schroeder-activity" id="toc-Schroeder-activity" class="nav-link" data-scroll-target="#Schroeder-activity"><span class="header-section-number">8.4.2</span> Independent activity (Schroeder &amp; Epley, 2015)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#Bayes-dependent-samples" id="toc-Bayes-dependent-samples" class="nav-link" data-scroll-target="#Bayes-dependent-samples"><span class="header-section-number">8.5</span> Bayes factors for two dependent samples</a>
+  <ul class="collapse">
+<li><a href="#guided-example-mehr-et-al.-2016" id="toc-guided-example-mehr-et-al.-2016" class="nav-link" data-scroll-target="#guided-example-mehr-et-al.-2016"><span class="header-section-number">8.5.1</span> Guided example (Mehr et al., 2016)</a></li>
+  <li><a href="#Zwaan-activity" id="toc-Zwaan-activity" class="nav-link" data-scroll-target="#Zwaan-activity"><span class="header-section-number">8.5.2</span> Independent activity (Zwaan et al., 2020)</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#ROPE" id="toc-ROPE" class="nav-link" data-scroll-target="#ROPE"><span class="header-section-number">8.6</span> Region of Practical Equivalence (ROPE)</a>
+  <ul class="collapse">
+<li><a href="#guided-example-for-two-independent-samples-bastian-et-al.-2014" id="toc-guided-example-for-two-independent-samples-bastian-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-for-two-independent-samples-bastian-et-al.-2014"><span class="header-section-number">8.6.1</span> Guided example for two independent samples (Bastian et al., 2014)</a></li>
+  <li><a href="#independent-activity-for-two-independent-samples-schroeder-epley-2014" id="toc-independent-activity-for-two-independent-samples-schroeder-epley-2014" class="nav-link" data-scroll-target="#independent-activity-for-two-independent-samples-schroeder-epley-2014"><span class="header-section-number">8.6.2</span> Independent activity for two independent samples (Schroeder &amp; Epley, 2014)</a></li>
+  <li><a href="#guided-example-for-two-dependent-samples-mehr-et-al.-2014" id="toc-guided-example-for-two-dependent-samples-mehr-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-for-two-dependent-samples-mehr-et-al.-2014"><span class="header-section-number">8.6.3</span> Guided example for two dependent samples (Mehr et al., 2014)</a></li>
+  <li><a href="#independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" id="toc-independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" class="nav-link" data-scroll-target="#independent-activity-for-two-dependent-samples-zwaan-et-al.-2018"><span class="header-section-number">8.6.4</span> Independent activity for two dependent samples (Zwaan et al., 2018)</a></li>
+  </ul>
+</li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.7</span> Summary</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-01-hypothesis.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>In this chapter, we will be exploring how you can perform hypothesis testing under a Bayesian framework. After working through some interactive apps to understand the logic behind Bayesian statistics and Bayes factors, we will calculate Bayes factors for two independent samples and two dependent samples using real data. The application of Bayes factors still mostly relies on testing against a point null hypothesis, so we will end on an alternative known as a Region of Practical Equivalence (ROPE). Here, we try to reject parameter values inside boundaries for your smallest effect size of interest.</p>
+<section id="learning-objectives" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="learning-objectives">
+<span class="header-section-number">8.1</span> Learning objectives</h2>
+<p>By the end of this chapter, you should be able to:</p>
+<ol type="1">
+<li><p>Understand the logic behind <a href="#bayes-logic">Bayesian inference</a> using the sweet example and Shiny app.</p></li>
+<li><p>Use the online visualisation to explore what impacts <a href="#Bayes-factors">Bayes factors</a>.</p></li>
+<li><p>Calculate Bayes factors for <a href="#Bayes-independent-samples">two independent samples</a>.</p></li>
+<li><p>Calculate Bayes factors for <a href="#Bayes-dependent-samples">two dependent samples</a>.</p></li>
+<li><p>Define a <a href="#ROPE">Region of Practical Equivalence (ROPE)</a> as an alternative to null hypothesis testing.</p></li>
+</ol>
+<p>To follow along to this chapter and try the code yourself, please download the data files we will be using in <a href="data/Bayes_hypothesis_data.zip">this zip file</a>.</p>
+<p>Credit for sourcing three of the data sets goes to the <a href="https://sites.google.com/view/openstatslab/home" target="_blank">Open Stats Lab</a> and its creator Dr.&nbsp;Kevin McIntyre. The project provides a great resource for teaching exercises using open data.</p>
+</section><section id="bayes-logic" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="bayes-logic">
+<span class="header-section-number">8.2</span> The Logic Behind Bayesian Inference</h2>
+<p>To demonstrate the logic behind Bayesian inference, we will play around with <a href="https://shiny.psy.lmu.de/felix/BayesLessons/BayesianLesson1.Rmd" target="_blank">this shiny app by Wagenmakers (2015)</a>. The text walks you through the app and provides exercises to explore on your own, but we will use it to explore defining a prior distribution and seeing how the posterior updates with data.</p>
+<p>The example is based on estimating the the proportion of yellow candies in a bag with different coloured candies. If you see a yellow candy, it is logged as a 1. If you see a non-yellow candy, it is logged as a 0. We want to know what proportion of the candies are yellow by modelling it as a beta distribution.</p>
+<p>This is a handy demonstration for the logic behind Bayesian inference as it is the simplest application. Behind the scenes, we could calculate these values directly as the distributions are simple and there is only one parameter. In later examples, we will focus on more complicated models which require sampling from the posterior.</p>
+<section id="step-1---pick-your-prior" class="level3" data-number="8.2.1"><h3 data-number="8.2.1" class="anchored" data-anchor-id="step-1---pick-your-prior">
+<span class="header-section-number">8.2.1</span> Step 1 - Pick your prior</h3>
+<p>First, we define what our prior expectations are for the proportion of yellow candies. For a dichotomous outcome like this (yellow or not yellow), we can model the prior as a beta distribution. There are only two parameters to set: <em>a</em> and <em>b</em>.</p>
+<p>Explore changing the parameters and their impact on the distribution, but here are a few observations to orient yourself:</p>
+<ol type="1">
+<li><p>Setting both to 1 create a flat prior: any proportion is possible.</p></li>
+<li><p>Using the same number for both centers the distribution on 0.5, with increasing numbers showing greater certainty (higher peak).</p></li>
+<li><p>If parameter a &lt; b, proportions less than 0.5 are more likely.</p></li>
+<li><p>If parameter b &gt; a, proportions higher than 0.5 are more likely.</p></li>
+</ol></section><section id="step-2---update-to-a-posterior" class="level3" data-number="8.2.2"><h3 data-number="8.2.2" class="anchored" data-anchor-id="step-2---update-to-a-posterior">
+<span class="header-section-number">8.2.2</span> Step 2 - Update-to-a-posterior</h3>
+<p>Now we have a prior, its time to collect some data and update to the posterior. In the lecture, we will play around with a practical demonstration of testing simulated rigged coins, so set your prior by entering a value for <em>a</em> and <em>b</em>, and we will see what the data tell us. There are two boxes for entering data: the number of yellows you observe (heads in our example), and the number of non-yellows (tails in our example) you observe.</p>
+<p>If you are trying this on your own, explore changing the prior and data to see how it affects the posterior distribution. For some inspiration and key observations:</p>
+<ol type="1">
+<li><p>Setting an uninformative (1,1) or weak prior (2, 2) over 0.5, the posterior is dominated by the data. For example, imagine we observed 5 yellows and 10 non-yellows. The posterior peaks around 0.30 but plausibly ranges between 0.2 and 0.6. Changing the data completely changes the posterior to show the prior has very little influence. As you change the number of yellows and non-yellows, the posterior updates more dramatically.</p></li>
+<li><p>Now set a strong prior (20, 20) over 0.5 with 5 yellows and 10 non-yellows. Despite the observed data showing a proportion of 0.33, the peak of the posterior distribution is slightly higher than 0.4. The posterior is a compromise between the prior and the likelihood, so a stronger prior means you need more data to change your beliefs. For example, imagine we had 10 times more data with 50 yellows and 100 non-yellows. Now, there is greater density between 0.3 and 0.4, to show the posterior is now more convinced of the proportion of yellows.</p></li>
+</ol>
+<p>In this demonstration, note we only have two curves for the prior and posterior, without the likelihood. When the prior and posterior come from the same distribution family, it is known as a <a href="https://en.wikipedia.org/wiki/Conjugate_prior" target="_blank">conjugate prior</a>, and the beta distribution is one of the simplest. We are simply modelling the proportion of successes and failures (here yellows vs non-yellows).</p>
+<p>In section 4 of the app, you can also explore Bayes factors applied to this scenario, working out how much you should shift your belief in favour of the alternative hypothesis compared to the null (here, that the proportion is exactly 0.5).</p>
+</section></section><section id="Bayes-factors" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="Bayes-factors">
+<span class="header-section-number">8.3</span> The Logic Behind Bayes Factors</h2>
+<p>To demonstrate the logic behind Bayes factors, we will play around with <a href="https://rpsychologist.com/d3/bayes/" target="_blank">this interactive app by Magnusson</a>. Building on <a href="#bayes-logic">section 1</a>, the visualisation shows a Bayesian two-sample t-test, demonstrating a more complicated application compared to the beta distribution and proportions. The visualisation shows both Bayesian estimation through the posterior distribution and 95% Highest Density Interval (HDI), and Bayes factors against a null hypothesis centered on 0. We will use this visualisation to reinforce what we learnt earlier and extend it to understanding the logic behind Bayes factors.</p>
+<p>There are three settings on the visualisation, :</p>
+<ol type="1">
+<li><p>Observed effect - Expressed as Cohen’s d, this represents the standardised mean difference between two groups. You can set larger effects (positive or negative) or assume the null hypothesis is true (d = 0).</p></li>
+<li><p>Sample size - You can increase the sample size from 1 to 1000, with more steps between 1 and 100.</p></li>
+<li><p>SD of prior - The prior is always set to 0 as we are testing against the null hypothesis, but you can specify how strong this prior is. Decreasing the SD means you are more confident in an effect of 0. Increasing the SD means you are less certain about the prior.</p></li>
+</ol>
+<p>This visualisation is set up to test against the null hypothesis of no difference between two groups, but remember Bayes factors allow you to test any two hypotheses. The Bayes factor is represented by the difference between the two dots, where the curves represent a likelihood of 0 in the prior and posterior distributions. The Bayes factor is a ratio between these two values for the posterior odds of how much your belief should shift in favour of the experimental hypothesis compared to the null hypothesis.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep an eye on the <em>p</em>-value and 95% Confidence Interval (CI) to see where the inferences are similar or different for each statistical philosophy.</p>
+</div>
+</div>
+<p>To reinforce the lessons from <a href="#bayes-logic">section 1</a> and the emphasis now on Bayes factors, there are some key observations:</p>
+<ol type="1">
+<li><p>With a less informative prior (higher SD), the posterior is dominated by the likelihood to show the posterior is overwhelmed by data. For example, if you set the SD to 2, the prior peaks at 0 but the distribution is so flat it accepts any reasonable effect. If you move the observed effect anywhere along the scale, the likelihood and posterior almost completely overlap until you reach d = ±2.</p></li>
+<li><p>With a stronger prior (lower SD), the posterior represents more of a compromise between the prior and likelihood. If you change the SD to 0.5 and the observed effect to 1, the posterior is closer to being an intermediary. You may have the observed data, but your prior belief in a null effect is strong enough that it requires more data to be convinced otherwise.</p></li>
+<li><p>With more participants / data, there is less uncertainty in the likelihood. Keeping the same inputs as point 2, with 10 participants, the likelihood peaks at d = 1, but easily spans between 0 and 2. As you increase the sample size towards 1000, the uncertainty around the likelihood is lower. More data also overwhelms the prior, so although we had a relatively strong prior that we would have a null effect, with 50 participants, the likelihood and posterior mostly overlap.</p></li>
+<li><p>Focusing on the Bayes factor supporting the experimental hypothesis, if there is an effect, evidence in favour of the experimental hypothesis increases as the observed effect increases or the sample size increases. This is not too dissimilar to frequentist statistical power, but with Bayesian statistics, optional stopping can be less of a problem (<span class="citation" data-cites="rouder_optional_2014">Rouder (<a href="references.html#ref-rouder_optional_2014" role="doc-biblioref">2014</a>)</span> but see <span class="citation" data-cites="schonbrodt_sequential_2017">Schönbrodt et al. (<a href="references.html#ref-schonbrodt_sequential_2017" role="doc-biblioref">2017</a>)</span> for considerations you must make). So, if we do not have enough data to shift our beliefs towards either hypothesis, we can collect more data and update our beliefs.</p></li>
+<li><p>If we set the observed effect to 0, the <em>p</em>-value is 1 to suggest we cannot reject the null, but remember we cannot support the null. With Bayes factors, we can support the null and see with observed effect = 0, sample size = 50, and SD of prior = 0.5, the data are 2.60 times more likely under the null than the experimental hypothesis. So, we should shift our belief in favour of the null, but it is not very convincing. We can obtain a higher Bayes factor in support of the null by increasing the sample size or increasing the SD of the prior. This last part might sound a little odd at first, but if your prior was very strong in favour of the null (small SD), your beliefs do not need to shift in light of the data.</p></li>
+<li><p>Finally, if you set a weak prior (SD = 2), you will see the frequentist 95% CI and the Bayesian 95% HDI are almost identical. With a weak or uninformative prior, the values from the two intervals are usually similar, but you must interpret them differently. Increasing the sample size makes both intervals smaller and changing the observed effect shifts them around. If you make a stronger prior (SD = 0.5), now the 95% HDI will change as you move the observed effect size around. The frequentist 95% CI will always follow the likelihood as it is only based on the observed data. The Bayesian 95% HDI represents the area of the posterior, so it will be a compromise between the prior and likelihood, or it can be smaller if you have a stronger prior in favour of the null and an observed effect of 0.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Based on the observations above, try and apply your understanding to the questions below using Magnusson’s interactive app.</p>
+<ol type="1">
+<li><p>Assuming a moderate effect size of d = 0.4 and a weak prior SD = 0.5, how many participants per group would you need for the Bayes factor to be 3 or more in favour of the alternative hypothesis? <input class="webex-solveme nospaces" data-tol="0.001" size="2" data-answer="[&quot;57&quot;]"></p></li>
+<li><p>Assuming a moderate effect size of d = 0.4 and 50 participants per group, when you use a weaker prior of SD = 2, evidence in favour of the alternative hypothesis is <select class="webex-select"><option value="blank"></option>
+<option value="x">stronger</option>
+<option value="answer">weaker</option>
+<option value="x">the same</option></select> than when you use a stronger prior of SD = 1.</p></li>
+<li><p>The old rule of thumb in psychology was 20 participants per group would provide sufficient statistical power. Assuming a moderate effect size of d = 0.5 and a prior SD = 1, the difference would be statistically significant (<em>p</em> = .049). However, looking at the guidelines provided in the lecture from <span class="citation" data-cites="wagenmakers_why_2011">Wagenmakers et al. (<a href="references.html#ref-wagenmakers_why_2011" role="doc-biblioref">2011</a>)</span>, how could you describe the evidence in favour of the alternative hypothesis? <select class="webex-select"><option value="blank"></option>
+<option value="x">No evidence</option>
+<option value="answer">Anecdotal</option>
+<option value="x">Substantial</option>
+<option value="x">Strong</option></select></p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Explain the answer to question 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is the opposite of point 5 in the explanation above. Remember Bayes factors represent a shift in belief in one hypothesis compared to another. If you are more confident in the null (smaller SD), then it would take more evidence to shift your belief in favour of the alternative hypothesis that there is a difference.</p>
+</div>
+</div>
+</div>
+</section><section id="Bayes-independent-samples" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="Bayes-independent-samples">
+<span class="header-section-number">8.4</span> Bayes factors for two independent samples</h2>
+<section id="guided-example-bastian-et-al.-2014" class="level3" data-number="8.4.1"><h3 data-number="8.4.1" class="anchored" data-anchor-id="guided-example-bastian-et-al.-2014">
+<span class="header-section-number">8.4.1</span> Guided example (Bastian et al., 2014)</h3>
+<p>This is the first time we have used R in this chapter, so we need to load some packages and the data for this task. If you do not have any of the packages, make sure you install them first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(BayesFactor)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(bayestestR)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For this guided example, we will reanalyse data from <span class="citation" data-cites="bastian_pain_2014">Bastian et al. (<a href="references.html#ref-bastian_pain_2014" role="doc-biblioref">2014</a>)</span>. This study wanted to investigate whether experiencing pain together can increase levels of bonding between participants. The study was trying to explain how people often say friendships are strengthened by adversity.</p>
+<p>Participants were randomly allocated into two conditions: pain or control. Participants in the pain group experienced mild pain through a cold pressor task (leaving your hand in ice cold water) and a wall squat (sitting against a wall). The control group completed a different task that did not involve pain. The participants then completed a scale to measure how bonded they felt to other participants in the group. Higher values on this scale mean greater bonding.</p>
+<p>The independent variable is called <code>"CONDITION"</code>. The control group has the value 0 and the pain group has the value 1. They wanted to find out whether participants in the pain group would have higher levels of bonding with their fellow participants than participants in the control group. After a little processing, the dependent variable is called <code>"mean_bonding"</code> for the mean of 7 items related to bonding.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>Bastian_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Bastian.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># We also need to get our DV from the mean of 7 items</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>mean_bonding <span class="ot">&lt;-</span> Bastian_data <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"item"</span>, <span class="co"># var for item names</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>               <span class="at">values_to =</span> <span class="st">"score"</span>, <span class="co"># var for item scores</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>               <span class="at">cols =</span> group101<span class="sc">:</span>group107) <span class="sc">%&gt;%</span> <span class="co"># Range of columns for group bonding items</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">group_by</span>(subid) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="fu">summarise</span>(<span class="at">mean_bonding =</span> <span class="fu">mean</span>(score)) <span class="sc">%&gt;%</span> <span class="co"># Summarise by creating a subscale name and specify sum or mean</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="fu">ungroup</span>() <span class="co"># Always ungroup</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a>Bastian_data <span class="ot">&lt;-</span> Bastian_data <span class="sc">%&gt;%</span> </span>
+<span id="cb2-13"><a href="#cb2-13"></a>  <span class="fu">inner_join</span>(mean_bonding, <span class="at">by =</span> <span class="st">"subid"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-14"><a href="#cb2-14"></a>  <span class="fu">select</span>(subid, CONDITION, mean_bonding) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-15"><a href="#cb2-15"></a>  <span class="fu">mutate</span>(<span class="at">CONDITION =</span> <span class="fu">factor</span>(CONDITION, <span class="co"># Relabel condition to be more intuitive which group is which </span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>                                   <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb2-17"><a href="#cb2-17"></a>                                   <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Pain"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This chapter will predominantly use the <pkg>BayesFactor</pkg> package <span class="citation" data-cites="MoreyRouder2022">(<a href="references.html#ref-MoreyRouder2022" role="doc-biblioref">Morey &amp; Rouder, 2024</a>)</span> and its functions applied to t-tests. To use the Bayesian version of the t-test, we use similar arguments to the base frequentist version by stating our design with a formula and which data frame you are referring to. For this study, we want to predict the bonding rating by the group they were allocated into: <code>mean_bonding ~ CONDITION</code>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As we are using t-tests, keep in mind we are still applying a linear model to the data despite using Bayesian rather than frequentist statistics to model uncertainty. We are not going to cover it in this chapter, but you would still check your data for parametric assumptions like normal residuals and influential cases / outliers.</p>
+</div>
+</div>
+<p>In the Bayesian t-test, we are comparing the null hypothesis of 0 against an alternative hypothesis. For our data in an independent samples t-test, we have the difference between our two groups. The prior for the null is a point-null hypothesis assuming the difference is 0, while the prior for the alternative is modelled as a Cauchy distribution. The Bayes factor tells you how much you should shift your belief towards one hypothesis compared to another, either in favour of the alternative or null hypothesis.</p>
+<p>In the Bayesian t-test function, the main new argument is <code>rscale</code> which sets the width of the prior distribution around the alternative hypothesis. T-tests use a <a href="https://en.wikipedia.org/wiki/Cauchy_distribution" target="_blank">Cauchy prior</a> which is similar to a normal distribution but with fatter tails and you only have to define one parameter: the r scale. The figure below visualises the difference between a Cauchy and normal distribution for the same range of r scale and SD values.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/cauchy vs normal plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The default prior is set to <code>"medium"</code>, but you could change this depending on your understanding of the area of research. See the function help page for different options here, but medium is equivalent to a value of 0.707 for scaling the Cauchy prior which is the default setting for most statistics software. You can interpret the r scale as 50% of the distribution covers values ± your chosen value. An effect of zero is the most likely, but the larger the r scale value, the more plausible you consider large effects. If you use a value of 0.707 (<code>"medium"</code>) on a two-tailed test, this means 50% of the prior distribution covers values between ± 0.707. You can enter a numeric value for the precise scaling or there are a few word presets like <code>"medium"</code>, <code>"wide"</code>, and <code>"ultrawide"</code> depending on how strong or weak you want the prior to be.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># brackets to print and save</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>(Bastian_ttest <span class="ot">&lt;-</span> <span class="fu">ttestBF</span>(<span class="at">formula =</span> mean_bonding <span class="sc">~</span> CONDITION,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>                        <span class="at">data =</span> Bastian_data,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>                        <span class="at">rscale =</span> <span class="st">"medium"</span>, </span>
+<span id="cb3-5"><a href="#cb3-5"></a>                        <span class="at">paired =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: data coerced from tibble to data frame</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Alt., r=0.707 : 1.445956 ±0.01%
+
+Against denominator:
+  Null, mu1-mu2 = 0 
+---
+Bayes factor type: BFindepSample, JZS</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t worry about the warning, there were just previous issues with using tibbles in the <pkg>BayesFactor</pkg> package. Now the package converts tibbles to normal R data frames before doing its thing.</p>
+</div>
+</div>
+<p>With the medium prior, we have a Bayes factor of 1.45 (<span class="math inline">\(BF\)</span><span class="math inline">\(_1\)</span><span class="math inline">\(_0\)</span> = 1.45), suggesting the experimental hypothesis is 1.45 times more likely than the point null hypothesis. By the guidelines from Wagenmakers et al.&nbsp;(2011), this is quite weak anecdotal evidence.</p>
+<p>There is also a percentage next to the Bayes factor. This is the proportional error estimate and tells you the error in estimating the Bayes factor value. Less error is better and a rough rule of thumb is less than 20% is acceptable <span class="citation" data-cites="van_doorn_jasp_2021">(<a href="references.html#ref-van_doorn_jasp_2021" role="doc-biblioref">Doorn et al., 2021</a>)</span>. In this example, the error estimate is 0.01%, so very small. This means we could expect the Bayes factor to range between 1.44 and 1.45 which makes little impact on the conclusion.</p>
+<section id="robustness-check" class="level4" data-number="8.4.1.1"><h4 data-number="8.4.1.1" class="anchored" data-anchor-id="robustness-check">
+<span class="header-section-number">8.4.1.1</span> Robustness check</h4>
+<p>This will be more important for modelling in the next chapter, but it is good practice to check the sensitivity of your results to your choice of prior. You would exercise caution if your choice of prior affects the conclusions you are making, such as weak evidence turning into strong evidence. If the qualitative conclusions do not change across plausible priors, then your findings are robust. For example, the Bayes factor for the Bastian et al.&nbsp;example decreases as the prior r scale increases.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Prior</th>
+<th style="text-align: right;">BayesFactor</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Medium</td>
+<td style="text-align: right;">1.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wide</td>
+<td style="text-align: right;">1.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ultrawide</td>
+<td style="text-align: right;">0.97</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>A wider prior expresses less certainty about the size of the effect; larger effects become more plausible. Remember Bayes factors quantify the degree of belief in one hypothesis compared to another. As the evidence is quite weak, the Bayes factor decreases in favour of the null under weaker priors as you are expressing less certainty about the size of the effect.</p>
+</section><section id="one--vs-two-tailed-tests" class="level4" data-number="8.4.1.2"><h4 data-number="8.4.1.2" class="anchored" data-anchor-id="one--vs-two-tailed-tests">
+<span class="header-section-number">8.4.1.2</span> One- vs two-tailed tests</h4>
+<p>The authors were pretty convinced that the pain group would score higher on the bonding rating than the control group, so lets see what happens with a one-tailed test to see how its done. We need to define the <code>nullInterval</code> argument to state we only consider negative effects.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure you check the order of your groups to check which direction you expect the results to go in. If you expect group A to be smaller than group B, you would code for negative effects. If you expect group A to be bigger than group B, you would code for positive effects. A common mistake is defining the wrong direction if you do not know which order the groups are coded.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>(Bastian_onetail <span class="ot">&lt;-</span> <span class="fu">ttestBF</span>(<span class="at">formula =</span> mean_bonding <span class="sc">~</span> CONDITION,</span>
+<span id="cb6-2"><a href="#cb6-2"></a>                        <span class="at">data =</span> Bastian_data,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>                        <span class="at">rscale =</span> <span class="st">"medium"</span>, </span>
+<span id="cb6-4"><a href="#cb6-4"></a>                        <span class="at">paired =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>                        <span class="at">nullInterval =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>)) <span class="co"># negative only as we expect control &lt; pain</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: data coerced from tibble to data frame</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Alt., r=0.707 -Inf&lt;d&lt;0    : 2.790031  ±0%
+[2] Alt., r=0.707 !(-Inf&lt;d&lt;0) : 0.1018811 ±0.02%
+
+Against denominator:
+  Null, mu1-mu2 = 0 
+---
+Bayes factor type: BFindepSample, JZS</code></pre>
+</div>
+</div>
+<p>In a one-tailed test, we now have two tests. In row one, we have the test we want where we compare our experimental hypothesis (negative effects) against the point null. In row two, we have the opposite which is the complement of our experimental hypothesis, which would be that the effect is <em>not</em> negative. Even with a one-tailed test, the evidence in favour of our experimental hypothesis compared to the null is anecdotal at best (<span class="math inline">\(BF\)</span><span class="math inline">\(_1\)</span><span class="math inline">\(_0\)</span> = 2.79).</p>
+<p>If we wanted to test the null compared to the experimental hypothesis, we can simply take the reciprocal of the object, here demonstrated on the original two-tailed object.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="dv">1</span> <span class="sc">/</span> Bastian_ttest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Null, mu1-mu2=0 : 0.6915839 ±0.01%
+
+Against denominator:
+  Alternative, r = 0.707106781186548, mu =/= 0 
+---
+Bayes factor type: BFindepSample, JZS</code></pre>
+</div>
+</div>
+<p>For this object, we already know there is anecdotal evidence in favour of the experimental hypothesis, so this is just telling us the null is less likely than the experimental hypothesis (<span class="math inline">\(BF\)</span><span class="math inline">\(_0\)</span><span class="math inline">\(_1\)</span> = 0.69). This will come in handy when you specifically want to test the null though.</p>
+<p>For the purposes of the rest of the demonstration, we will stick with our original object with a two-tailed test to see how we can interpret inconclusive results. In the original study, the pain group scored significantly higher than the control group, but the p-value was .048, so hardly convincing evidence. With Bayes factors, at least we can see we ideally need more data to make a decision.</p>
+</section><section id="parameter-estimation" class="level4" data-number="8.4.1.3"><h4 data-number="8.4.1.3" class="anchored" data-anchor-id="parameter-estimation">
+<span class="header-section-number">8.4.1.3</span> Parameter estimation</h4>
+<p>We will spend more time on this process in the next chapter, but a Bayes factor on its own is normally not enough. It’s equivalent to null hypothesis significance testing in telling us whether we have evidence for an effect or not. We also want an estimate of the effect size and the precision around it. Within the <pkg>BayesFactor</pkg> package, there is a function to sample from the posterior distribution using MCMC sampling. We need to pass the t-test object into the <code>posterior()</code> function, and include the number of iterations we want. We will use 10,000 here. Depending on your computer, this may take a few seconds.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you use a one-tailed test, you must index the first object (e.g., <code>Bastian_ttest[1]</code>) as a one-tailed test includes two lines: 1) the directional alternative we state against the null and 2) the complement of the alternative against the null.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>Bastian_samples <span class="ot">&lt;-</span> <span class="fu">posterior</span>(Bastian_ttest,</span>
+<span id="cb11-2"><a href="#cb11-2"></a>                            <span class="at">iterations =</span> <span class="fl">1e5</span>) <span class="co"># 10,000 in math notation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once we have the samples, we can use the base <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function to see trace plots (more on those in the next chapter) and a density plot of the posterior distributions for several parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">plot</span>(Bastian_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Bastian plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Bastian plot-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The second and fourth plots are what we are mainly interested in for a t-test. Once we know what kind of evidence we have for different hypotheses, typically we want to know what the effect size is. In the <pkg>BayesFactor</pkg> package, we get the mean difference between groups (unhelpfully named beta) and the effect size Delta, which is kind of like Cohen’s d.&nbsp;It is calculated by dividing the t statistic by the square root of the sample size, so a type of standardised mean difference. One of my main complaints with the <pkg>BayesFactor</pkg> package is not explaining what the outputs mean as the only explanation I could find is an <a href="http://bayesfactor.blogspot.com/2014/02/bayes-factor-t-tests-part-1.html" target="_blank">old blog post</a> with no clear overview in the documentation.</p>
+<p>The plot provides the posterior distribution of different statistics based on sampling 10,000 times. For beta, we can see the peak of the distribution is around -0.5, spanning from above 0 to -1. For delta, we can see the peak of the distribution is around -0.5, and spans from above 0 to -1 again.</p>
+<p>For a more fine-tuned description of the posterior distribution, we can use handy functions from the <pkg>bayestestR</pkg> package <span class="citation" data-cites="Makowski2019">(<a href="references.html#ref-Makowski2019" role="doc-biblioref">Makowski et al., 2019</a>)</span>. We will use this much more in the next chapter as there are some great plotting functions, but these functions work for <pkg>BayesFactor</pkg> objects. To get the point estimates of each parameter, we can use the <code>point_estimate()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">point_estimate</span>(Bastian_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">MAP</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">3.4261304</td>
+<td style="text-align: right;">3.4262019</td>
+<td style="text-align: right;">3.4131426</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">beta (Control - Pain)</td>
+<td style="text-align: right;">-0.4848002</td>
+<td style="text-align: right;">-0.4892667</td>
+<td style="text-align: right;">-0.4665795</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">1.1061817</td>
+<td style="text-align: right;">1.1348647</td>
+<td style="text-align: right;">1.0803148</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.4619808</td>
+<td style="text-align: right;">-0.4664735</td>
+<td style="text-align: right;">-0.4443186</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.5448393</td>
+<td style="text-align: right;">7.6797358</td>
+<td style="text-align: right;">0.0236393</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Our best guess (median of the posterior) for the mean difference between groups is -0.49 and a delta of -0.47 in favour of the pain group.</p>
+<p>We do not just want a point estimate though, we also want the credible interval around it. For this, we have the <code>hdi()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">hdi</span>(Bastian_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1355925</td>
+<td style="text-align: right;">3.7088678</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">beta (Control - Pain)</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1.0362104</td>
+<td style="text-align: right;">0.0505082</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.7316134</td>
+<td style="text-align: right;">1.5957396</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.9816252</td>
+<td style="text-align: right;">0.0549678</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0321040</td>
+<td style="text-align: right;">7.7710573</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>So, 95% of the posterior distribution for the mean difference is between -1.04 and 0.04, and that delta is between -0.99 and 0.04. As both values cross 0, we would not be confident in these findings and ideally we would need to collect more data, which is consistent with the Bayes Factor results.</p>
+<p>Finally, instead of separate functions, there is a handy wrapper for the median, 95% credible interval, and ROPE (more on that later).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">describe_posterior</span>(Bastian_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">3.4261304</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1373459</td>
+<td style="text-align: right;">3.7109673</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">beta (Control - Pain)</td>
+<td style="text-align: right;">-0.4848002</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1.0426880</td>
+<td style="text-align: right;">0.0452834</td>
+<td style="text-align: right;">0.96438</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0540526</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">1.1061817</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.7707757</td>
+<td style="text-align: right;">1.6676312</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.4619808</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.9985058</td>
+<td style="text-align: right;">0.0413485</td>
+<td style="text-align: right;">0.96438</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0585263</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.5448393</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0928315</td>
+<td style="text-align: right;">15.8435212</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0076000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>There are a bunch of tests and tricks we have not covered here, so check out the <a href="https://richarddmorey.github.io/BayesFactor/" target="_blank">Bayesfactor package page online</a> for a series of vignettes.</p>
+</section><section id="reporting-your-findings" class="level4" data-number="8.4.1.4"><h4 data-number="8.4.1.4" class="anchored" data-anchor-id="reporting-your-findings">
+<span class="header-section-number">8.4.1.4</span> Reporting your findings</h4>
+<p>When reporting your findings, <span class="citation" data-cites="van_doorn_jasp_2021">Doorn et al. (<a href="references.html#ref-van_doorn_jasp_2021" role="doc-biblioref">2021</a>)</span> suggest several key pieces of information to provide your reader:</p>
+<ol type="1">
+<li><p>A complete description and justification of your prior;</p></li>
+<li><p>Clearly state each hypothesis you are comparing and specify using the Bayes factor notation (<span class="math inline">\(BF\)</span><span class="math inline">\(_0\)</span><span class="math inline">\(_1\)</span> or <span class="math inline">\(BF\)</span><span class="math inline">\(_1\)</span><span class="math inline">\(_0\)</span>);</p></li>
+<li><p>The Bayes factor value and error percentage;</p></li>
+<li><p>A robustness check of your findings under different plausible priors;</p></li>
+<li><p>Your parameter estimate (effect size) including the posterior mean or median and its 95% credible / highest density interval (HDI).</p></li>
+</ol>
+<p>Where possible, try and provide the reader with the results in graphical and numerical form, such as including a plot of the posterior distribution. This will be easier in the next chapter as some of the plotting helper functions do not work nicely with the <pkg>BayesFactor</pkg> package.</p>
+</section></section><section id="Schroeder-activity" class="level3" data-number="8.4.2"><h3 data-number="8.4.2" class="anchored" data-anchor-id="Schroeder-activity">
+<span class="header-section-number">8.4.2</span> Independent activity (Schroeder &amp; Epley, 2015)</h3>
+<p>For an independent activity, we will use data from <span class="citation" data-cites="schroeder_sound_2015">Schroeder &amp; Epley (<a href="references.html#ref-schroeder_sound_2015" role="doc-biblioref">2015</a>)</span>. The aim of the study was to investigate whether delivering a short speech to a potential employer would be more effective at landing you a job than writing the speech down and the employer reading it themselves. Thirty-nine professional recruiters were randomly assigned to receive a job application speech as either a transcript for them to read, or an audio recording of the applicant reading the speech.</p>
+<p>The recruiters then rated the applicants on perceived intellect, their impression of the applicant, and whether they would recommend hiring the candidate. All ratings were originally on a Likert scale ranging from 0 (low intellect, impression etc.) to 10 (high impression, recommendation etc.), with the final value representing the mean across several items.</p>
+<p>For this example, we will focus on the hire rating (variable <code>"Hire_Rating"</code> to see whether the audio condition would lead to higher ratings than the transcript condition (variable <code>"CONDITION"</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>Schroeder_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Schroeder_hiring.csv"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co"># Relabel condition to be more intuitive which group is which </span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>Schroeder_data <span class="ot">&lt;-</span> Schroeder_data <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">mutate</span>(<span class="at">CONDITION =</span> <span class="fu">factor</span>(CONDITION, </span>
+<span id="cb16-6"><a href="#cb16-6"></a>                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb16-7"><a href="#cb16-7"></a>                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Transcript"</span>, <span class="st">"Audio"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From here, apply what you learnt in the first guided example to this new independent task and complete the questions below to check your understanding. Since we expect higher ratings for audio than transcript, use a one-tailed test. Remember to sample from the posterior, so we can also get estimates of the effect sizes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>Schroeder_ttest <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Rounding to two decimals, what is the Bayes Factor in favour of the alternative hypothesis? <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;8.21&quot;]"></p></li>
+<li><p>Looking at the guidelines from Wagenmakers et al.&nbsp;(2015), how could you describe the evidence in favour of the alternative hypothesis? <select class="webex-select"><option value="blank"></option>
+<option value="x">No</option>
+<option value="x">Anecdotal</option>
+<option value="answer">Substantial</option>
+<option value="x">Strong</option></select></p></li>
+<li><p>Rounding to two decimals, what is the absolute (ignoring the sign) mean difference (beta) in favour of the audio condition? <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;1.54&quot;]"></p></li>
+<li><p>Looking at the 95% credible interval, can we rule out an effect of 0 given these data and model? <select class="webex-select"><option value="blank"></option>
+<option value="answer">Yes</option>
+<option value="x">No</option></select></p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>(Schroeder_ttest <span class="ot">&lt;-</span> <span class="fu">ttestBF</span>(<span class="at">formula =</span> Hire_Rating <span class="sc">~</span> CONDITION,</span>
+<span id="cb18-2"><a href="#cb18-2"></a>        <span class="at">data =</span> Schroeder_data, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>        <span class="at">rscale =</span> <span class="st">"medium"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>        <span class="at">nullInterval =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>)) <span class="co"># Expect negative effects since Transcript &lt; Audio</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: data coerced from tibble to data frame</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Alt., r=0.707 -Inf&lt;d&lt;0    : 8.205739  ±0%
+[2] Alt., r=0.707 !(-Inf&lt;d&lt;0) : 0.1020371 ±0%
+
+Against denominator:
+  Null, mu1-mu2 = 0 
+---
+Bayes factor type: BFindepSample, JZS</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># We need to index the first object as a one-tailed test includes two lines: </span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co"># 1. Directional alternative we state against the null</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co"># 2. Complement of the alternative against the null</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a>Schroeder_samples <span class="ot">&lt;-</span> <span class="fu">posterior</span>(Schroeder_ttest[<span class="dv">1</span>], </span>
+<span id="cb21-6"><a href="#cb21-6"></a>                               <span class="at">iterations =</span> <span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">plot</span>(Schroeder_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Schroeder solution plots-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Schroeder solution plots-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">describe_posterior</span>(Schroeder_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 23%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">3.8132709</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1110014</td>
+<td style="text-align: right;">4.5167223</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">beta (Transcript - Audio)</td>
+<td style="text-align: right;">-1.5447908</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2.9314661</td>
+<td style="text-align: right;">-0.3157279</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">4.7839866</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1363201</td>
+<td style="text-align: right;">7.7806034</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.7061183</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1.3635093</td>
+<td style="text-align: right;">-0.1363184</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.7472401</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.1140215</td>
+<td style="text-align: right;">21.1801826</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section><section id="Bayes-dependent-samples" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="Bayes-dependent-samples">
+<span class="header-section-number">8.5</span> Bayes factors for two dependent samples</h2>
+<section id="guided-example-mehr-et-al.-2016" class="level3" data-number="8.5.1"><h3 data-number="8.5.1" class="anchored" data-anchor-id="guided-example-mehr-et-al.-2016">
+<span class="header-section-number">8.5.1</span> Guided example (Mehr et al., 2016)</h3>
+<p>For a paired samples t-test, the process is identical to the independent samples t-test apart from defining the variables. So, we will demonstrate a full example like before with less commentary, then you have an independent data set to test your understanding.</p>
+<p>The next study we are going to look at is by <span class="citation" data-cites="mehr_for_2016">Mehr et al. (<a href="references.html#ref-mehr_for_2016" role="doc-biblioref">2016</a>)</span>. They were interested in whether singing to infants conveyed important information about social affiliation. Infants become familiar with melodies that are repeated in their specific culture. The authors were interested in whether a novel person (someone they had never seen before) could signal to the child that they are a member of the same social group and attract their attention by singing a familiar song to them.</p>
+<p>Mehr et al.&nbsp;(2016) invited 32 infants and their parents to participate in a repeated measures experiment. First, the parents were asked to repeatedly sing a previously unfamiliar song to the infants for two weeks. When they returned to the lab, they measured the baseline gaze (where they were looking) of the infants towards two unfamiliar people on a screen who were just silently smiling at them. This was measured as the proportion of time looking at the individual who would later sing the familiar song (0.5 would indicate half the time was spent looking at the familiar singer. Values closer to one indicate looking at them for longer). The two silent people on the screen then took it in turns to sing a lullaby. One of the people sung the song that the infant’s parents had been told to sing for the previous two weeks, and the other one sang a song with the same lyrics and rhythm, but with a different melody. Mehr et al.&nbsp;(2016) then repeated the gaze procedure to the two people at the start of the experiment to provide a second measure of gaze as a proportion of looking at the familiar singer.</p>
+<p>We are interested in whether the infants increased the proportion of time spent looking at the singer who sang the familiar song after they sang, in comparison to before they sang to the infants. We have one dependent variable (gaze proportion) and one within-subjects independent variable (baseline vs test). We want to know whether gaze proportion was higher at test (<code>Test_Proportion_Gaze_to_Singer</code>) than it was at baseline (<code>Baseline_Proportion_Gaze_to_Singer</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>Mehr_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Mehr_voice.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">select</span>(<span class="at">Baseline =</span> Baseline_Proportion_Gaze_to_Singer, <span class="co"># Shorten super long names</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>         <span class="at">Test =</span> Test_Proportion_Gaze_to_Singer)</span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a>Mehr_ttest <span class="ot">&lt;-</span> <span class="fu">ttestBF</span>(<span class="at">x =</span> Mehr_data<span class="sc">$</span>Baseline,</span>
+<span id="cb24-6"><a href="#cb24-6"></a>                      <span class="at">y =</span> Mehr_data<span class="sc">$</span>Test,</span>
+<span id="cb24-7"><a href="#cb24-7"></a>                      <span class="at">paired =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb24-8"><a href="#cb24-8"></a>                      <span class="at">rscale =</span> <span class="st">"medium"</span>)</span>
+<span id="cb24-9"><a href="#cb24-9"></a></span>
+<span id="cb24-10"><a href="#cb24-10"></a>Mehr_ttest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Alt., r=0.707 : 2.296479 ±0%
+
+Against denominator:
+  Null, mu = 0 
+---
+Bayes factor type: BFoneSample, JZS</code></pre>
+</div>
+</div>
+<p>Like Bastian et al.&nbsp;(2014), we have just anecdotal evidence in favour of the experimental hypothesis over the null (<span class="math inline">\(BF\)</span><span class="math inline">\(_1\)</span><span class="math inline">\(0\)</span> = 2.30).</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mehr et al.&nbsp;(2016) expected gaze proportion to be higher at test, so try defining a one-tailed test and see what kind of evidence we have in favour of the alternative hypothesis.</p>
+</div>
+</div>
+<p>As before, we know there is only anecdotal evidence in favour of the experimental hypothesis, but we also want the effect size and its 95% credible interval. So, we can sample from the posterior, plot it, and get some estimates.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>Mehr_samples <span class="ot">&lt;-</span> <span class="fu">posterior</span>(Mehr_ttest,</span>
+<span id="cb26-2"><a href="#cb26-2"></a>                          <span class="at">iterations =</span> <span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Just note in the plot we have fewer panels as the paired samples approach simplifies things. Mu is our mean difference in the first panel and delta is our standardised effect in the third panel. For a dependent variable like gaze proportion, an unstandardised effect size is informative and comparable across studies, but its also useful to report standardised effect sizes for future power analyses etc.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Subset first plot for mean to display correctly</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">plot</span>(Mehr_samples[, <span class="dv">1</span>],</span>
+<span id="cb27-3"><a href="#cb27-3"></a>     <span class="at">main =</span> <span class="st">"Posterior for mu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Mehr plots-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># Subset third plot for delta to display correctly</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">plot</span>(Mehr_samples[, <span class="dv">3</span>],</span>
+<span id="cb28-3"><a href="#cb28-3"></a>     <span class="at">main =</span> <span class="st">"Posterior for delta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Mehr plots-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We finally have our wrapper function for the median posterior distribution and its 95% credible interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">describe_posterior</span>(Mehr_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 15%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">-0.0664572</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1257782</td>
+<td style="text-align: right;">-0.0080014</td>
+<td style="text-align: right;">0.98638</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.8915789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">0.0288816</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0182954</td>
+<td style="text-align: right;">0.0494104</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">1.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.3926306</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.7466274</td>
+<td style="text-align: right;">-0.0440859</td>
+<td style="text-align: right;">0.98638</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0259789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.4864845</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0862197</td>
+<td style="text-align: right;">13.6498562</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0154526</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>We can see here the median posterior estimate of the mean difference is -.07 with a 95% credible interval ranging from -.13 to -.01. As the dependent variable is measured as a proportion of gaze time, infants looked at the familiar singer for 7% (1-13% for the 95% credible interval) longer at test than at baseline. This means we can exclude 0 from the likely effects, but we still only have anecdotal evidence in favour of the experimental hypothesis compared to the null.</p>
+</section><section id="Zwaan-activity" class="level3" data-number="8.5.2"><h3 data-number="8.5.2" class="anchored" data-anchor-id="Zwaan-activity">
+<span class="header-section-number">8.5.2</span> Independent activity (Zwaan et al., 2020)</h3>
+<p>For this independent activity, we have data from <span class="citation" data-cites="zwaan_participant_2018">Zwaan et al. (<a href="references.html#ref-zwaan_participant_2018" role="doc-biblioref">2018</a>)</span> who wanted to see how replicable experiments from cognitive psychology are. For this exercise, we will explore the <a href="https://en.wikipedia.org/wiki/Eriksen_flanker_task" target="_blank">flanker task</a>.</p>
+<p>In short, we have two conditions: congruent and incongruent. In congruent trials, five symbols like arrows are the same and participants must identify the central symbol with a keyboard response. In incongruent trials, the four outer symbols are different to the central symbol. Typically, we find participants respond faster to congruent trials than incongruent trials. The dependent variable here is the mean response time in milliseconds (ms).</p>
+<p>We want to know whether response times are faster to congruent trials (<code>session1_responsecongruent</code>) than incongruent trials (<code>session1_incongruent</code>). Zwaan et al.&nbsp;measured a few things like changing the stimuli and repeating the task in two sessions, so we will just focus on the first session for this example.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Perform a paired samples t-test comparing the response times to congruent and incongruent trials. The questions below relate to a one-tailed test since there is a strong prediction to expect faster responses in the congruent condition compared to the incongruent condition. Think carefully about whether you expect positive or negative effects depending on the order you enter the variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>Zwaan_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Zwaan_flanker.csv"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a>Zwaan_ttest <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Looking at the guidelines from Wagenmakers et al.&nbsp;(2011), how could you describe the evidence in favour of the alternative hypothesis? <select class="webex-select"><option value="blank"></option>
+<option value="x">Substantial</option>
+<option value="x">Strong</option>
+<option value="x">Very strong</option>
+<option value="answer">Extreme</option></select></p></li>
+<li><p>Rounding to two decimals, what is the absolute (ignoring the sign) mean difference (beta) in response time between congruent and incongruent trials? <input class="webex-solveme nospaces" data-tol="0.001" size="5" data-answer="[&quot;38.78&quot;]"></p></li>
+<li><p>Looking at the 95% credible interval for mu, we would expect the absolute mean difference to range between <select class="webex-select"><option value="blank"></option>
+<option value="answer">30.06</option>
+<option value="x">38.78</option>
+<option value="x">47.54</option></select>ms and <select class="webex-select"><option value="blank"></option>
+<option value="x">30.06</option>
+<option value="x">38.78</option>
+<option value="answer">47.54</option></select>ms.</p></li>
+<li><p>Rounding to two decimals, what is the absolute standardised mean difference (delta) in response time between congruent and incongruent trials? <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;0.69&quot;,&quot;.69&quot;]"></p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>Zwaan_ttest <span class="ot">&lt;-</span> <span class="fu">ttestBF</span>(<span class="at">x =</span> Zwaan_data<span class="sc">$</span>session1_responsecongruent,</span>
+<span id="cb31-2"><a href="#cb31-2"></a>                      <span class="at">y =</span> Zwaan_data<span class="sc">$</span>session1_incongruent,</span>
+<span id="cb31-3"><a href="#cb31-3"></a>                      <span class="at">paired =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb31-4"><a href="#cb31-4"></a>                      <span class="at">rscale =</span> <span class="st">"medium"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5"></a>                      <span class="at">nullInterval =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>)) <span class="co"># negative as we expect incongruent to be larger than congruent</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a>Zwaan_ttest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Alt., r=0.707 -Inf&lt;d&lt;0    : 8.786135e+12 ±0%
+[2] Alt., r=0.707 !(-Inf&lt;d&lt;0) : 60.58291     ±0%
+
+Against denominator:
+  Null, mu = 0 
+---
+Bayes factor type: BFoneSample, JZS</code></pre>
+</div>
+</div>
+<p>The Bayes Factor for this analysis is huge. Unless you edit the settings, R reports large numbers in scientific notation. The Bayes Factor in favour of the alternative hypothesis here is 8.7861e+12 or as a real number 8786100000000. For a finding as established as the flanker task, testing against a point null is not too informative, but this shows what extreme evidence looks like. We will come back to this in the ROPE demonstration later.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>Zwaan_samples <span class="ot">&lt;-</span> <span class="fu">posterior</span>(Zwaan_ttest[<span class="dv">1</span>], <span class="co"># index first item for a one-tailed test</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>                          <span class="at">iterations =</span> <span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">plot</span>(Zwaan_samples[, <span class="dv">1</span>],</span>
+<span id="cb34-2"><a href="#cb34-2"></a>     <span class="at">main =</span> <span class="st">"Posterior for mu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Zwaan solution plots-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">plot</span>(Zwaan_samples[, <span class="dv">3</span>], </span>
+<span id="cb35-2"><a href="#cb35-2"></a>     <span class="at">main =</span> <span class="st">"Posterior for delta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-01-hypothesis_files/figure-html/Zwaan solution plots-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">describe_posterior</span>(Zwaan_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 4%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 15%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">-38.7921701</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-47.6008243</td>
+<td style="text-align: right;">-30.0210031</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">3146.0852518</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">2548.7948971</td>
+<td style="text-align: right;">3953.2658000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.6923437</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.8652868</td>
+<td style="text-align: right;">-0.5196406</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.7060218</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.1297111</td>
+<td style="text-align: right;">19.6119034</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section><section id="ROPE" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="ROPE">
+<span class="header-section-number">8.6</span> Region of Practical Equivalence (ROPE)</h2>
+<section id="guided-example-for-two-independent-samples-bastian-et-al.-2014" class="level3" data-number="8.6.1"><h3 data-number="8.6.1" class="anchored" data-anchor-id="guided-example-for-two-independent-samples-bastian-et-al.-2014">
+<span class="header-section-number">8.6.1</span> Guided example for two independent samples (Bastian et al., 2014)</h3>
+<p>In previous sections, we focused on the Bayesian approach to null hypothesis testing. We compared the alternative hypothesis to the null hypothesis and wanted to know how much we should shift our beliefs. However, there are times when comparing against a point null is uninformative. The same advice applies to frequentist statistics where you can use equivalence testing <span class="citation" data-cites="harms_making_2018 lakens_improving_2020 lakens_equivalence_2018">(<a href="references.html#ref-harms_making_2018" role="doc-biblioref">Harms &amp; Lakens, 2018</a>; <a href="references.html#ref-lakens_equivalence_2018" role="doc-biblioref">Daniel Lakens et al., 2018</a>; <a href="references.html#ref-lakens_improving_2020" role="doc-biblioref">Daniël Lakens et al., 2020</a>)</span>. In this setup, you set two boundaries representing your smallest effect size of interest (SESOI) and conduct two one-sided tests: one comparing your sample mean (difference) to the upper bound and one comparing your sample mean (difference) to the lower bound. If both tests are significant, you can conclude the mean was within your bounds and it is practically equivalent to zero.</p>
+<p>In a Bayesian framework, we follow a similar approach by setting an upper and lower bound for the interval we consider practically or theoretically meaningful. This is known as the Region of Practical Equivalence (ROPE). However, we do not perform a two one-sided test, we directly compare the posterior distribution to the ROPE and interpret how much of the ROPE captures our 95% credible interval. This creates three decisions <span class="citation" data-cites="kruschke_bayesian_2018-1">(<a href="references.html#ref-kruschke_bayesian_2018-1" role="doc-biblioref">Kruschke &amp; Liddell, 2018a</a>)</span> instead of comparing the experimental hypothesis to the point null:</p>
+<ol type="1">
+<li><p>HDI completely outside the ROPE: We reject the ROPE as the parameter is larger than the effects we consider too small to be practically/theoretically meaningful.</p></li>
+<li><p>HDI completely within the ROPE: We accept the ROPE as the parameter is smaller than the effects we consider practically/theoretically meaningful.</p></li>
+<li><p>HDI and the ROPE partially overlap: We are undecided as we need more data and greater precision in the posterior to make a decision about whether we can reject the ROPE.</p></li>
+</ol>
+<p>This will be more meaningful in the next chapter when we turn to Bayesian modelling as the <pkg>bayestestR</pkg> package has great functions for visualising the ROPE, but they unfortunately do not work with <pkg>BayesFactor</pkg> objects. We will return to the Bastian et al.&nbsp;(2014) data and the <code>describe_posterior()</code> function. If you explored the complete output earlier, you might have noticed the values relating to ROPE, but we ignored it at the time. As a reminder, lets see the output:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># rerun the code from the past section if you do not have this object saved</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">describe_posterior</span>(Bastian_samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">3.4261304</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1373459</td>
+<td style="text-align: right;">3.7109673</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">beta (Control - Pain)</td>
+<td style="text-align: right;">-0.4848002</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1.0426880</td>
+<td style="text-align: right;">0.0452834</td>
+<td style="text-align: right;">0.96438</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0540526</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">1.1061817</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.7707757</td>
+<td style="text-align: right;">1.6676312</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.4619808</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.9985058</td>
+<td style="text-align: right;">0.0413485</td>
+<td style="text-align: right;">0.96438</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0585263</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.5448393</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0928315</td>
+<td style="text-align: right;">15.8435212</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0076000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>For more information on ROPE within the <pkg>bayestestR</pkg> package, see <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html" target="_blank">the online vignettes</a>. In the output, we have:</p>
+<ul>
+<li><p>The 95% credible interval - we will need this to compare to the ROPE.</p></li>
+<li><p>The probability of direction (pd) - how much of the posterior distribution is in a positive or negative direction?</p></li>
+<li><p>Region of practical equivalence (ROPE) - the interval we would consider for our SESOI.</p></li>
+<li><p>% in ROPE - how much of the posterior is within the ROPE?</p></li>
+</ul>
+<p>By default, the <code>describe_posterior()</code> function sets the ROPE region to the mean plus or minus 0.1 * SD of your response. This is almost always a terrible idea and you should either ignore it in the output or provide your own values. We can set our own ROPE using the <code>rope_range</code> argument. Justifying your ROPE is probably the most difficult decision you will make as it requires subject knowledge for what you would consider the smallest effect size of interest. From the lecture, there are different strategies:</p>
+<ol type="1">
+<li><p>Your understanding of the applications / mechanisms (e.g., a clinically meaningful decrease in pain).</p></li>
+<li><p>Smallest effects from previous research (e.g., lower bound of individual study effect sizes or lower bound of a meta-analysis).</p></li>
+<li><p>Small telescopes (the effect size the original study had 33% power to detect).</p></li>
+</ol>
+<p>For Bastian et al.&nbsp;(2014), they measured bonding on a 5-point Likert scale, so we might consider anything less than a one-point difference as too small to be practically meaningful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">describe_posterior</span>(Bastian_samples,</span>
+<span id="cb38-2"><a href="#cb38-2"></a>                   <span class="at">rope_range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># plus or minus one point difference</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">3.4261304</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1373459</td>
+<td style="text-align: right;">3.7109673</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">beta (Control - Pain)</td>
+<td style="text-align: right;">-0.4848002</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1.0426880</td>
+<td style="text-align: right;">0.0452834</td>
+<td style="text-align: right;">0.96438</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.9898737</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">1.1061817</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.7707757</td>
+<td style="text-align: right;">1.6676312</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.2915789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.4619808</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.9985058</td>
+<td style="text-align: right;">0.0413485</td>
+<td style="text-align: right;">0.96438</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.5448393</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0928315</td>
+<td style="text-align: right;">15.8435212</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.6907789</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Note how changing the ROPE range changes the values for every parameter, so you will need to think which parameter you are interested in and what would be a justifiable ROPE for it. For this example, we will focus on the mean difference between groups (beta). Using a ROPE of plus or minus 1, 99.26% of the 95% HDI is within the ROPE. Its so close, but it falls in the third decision from above where we need more data to make a decision. The lower bound of the HDI is -1.03, so it extends just outside our ROPE region.</p>
+<p>Compared to the standard Bayes factor where we had weak evidence in favour of the alternative hypothesis compared to the point null, using the ROPE approach means we also have an inconclusive decision, but our effect size is almost too small to be practically meaningful.</p>
+</section><section id="independent-activity-for-two-independent-samples-schroeder-epley-2014" class="level3" data-number="8.6.2"><h3 data-number="8.6.2" class="anchored" data-anchor-id="independent-activity-for-two-independent-samples-schroeder-epley-2014">
+<span class="header-section-number">8.6.2</span> Independent activity for two independent samples (Schroeder &amp; Epley, 2014)</h3>
+<p>For this activity, you will need the objects you created in the <a href="#Schroeder-activity">Schroeder and Epley task</a> for the independent activity. Remember it is based on a one-tailed t-test as we expected higher ratings for the audio group compared to the transcript group. You will need the samples from the posterior as the only thing you will need to change is the arguments you use in the <code>describe_posterior()</code> function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>describe_posterior()</code> from <a href="#Schroeder-activity">Schroeder and Epley task</a>, but this time enter values for the ROPE arguments. The original study was on a 10-point scale. Your choice of ROPE will depend on your understanding of the subject area, but they measured their outcomes on a 0-10 scale. We might have a higher bar for concluding a meaningful effect of medium on people’s hire ratings, so use a ROPE region of 2 points. Since we used a one-tailed test focusing on negative effects (transcript &lt; audio), we can just focus on the region between -2 and 0.</p>
+<ul>
+<li><p>Looking at the 95% credible interval for beta, we would expect the absolute mean difference to range between <select class="webex-select"><option value="blank"></option>
+<option value="answer">0.32</option>
+<option value="x">2.94</option>
+<option value="x">3.11</option>
+<option value="x">4.52</option></select> and <select class="webex-select"><option value="blank"></option>
+<option value="x">0.32</option>
+<option value="answer">2.94</option>
+<option value="x">3.11</option>
+<option value="x">4.52</option></select>.</p></li>
+<li><p>Rounding to two decimals, what percentage of the 95% credible interval is within the ROPE? <input class="webex-solveme nospaces" data-tol="0.001" size="5" data-answer="[&quot;75.88&quot;]"></p></li>
+<li>
+<p>What is the most appropriate conclusion based on this ROPE?:</p>
+<div id="radio_HHDIHDMVGY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HHDIHDMVGY" value="x"><span>HDI completely outside the ROPE: We reject the ROPE.</span></label><label><input type="radio" autocomplete="off" name="radio_HHDIHDMVGY" value="x"><span>HDI completely within the ROPE: We accept the ROPE.</span></label><label><input type="radio" autocomplete="off" name="radio_HHDIHDMVGY" value="answer"><span>HDI and the ROPE partially overlap: We are undecided and we need more data.</span></label>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">describe_posterior</span>(Schroeder_samples,</span>
+<span id="cb39-2"><a href="#cb39-2"></a>                   <span class="at">rope_range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 23%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">3.8132709</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1110014</td>
+<td style="text-align: right;">4.5167223</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">beta (Transcript - Audio)</td>
+<td style="text-align: right;">-1.5447908</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2.9314661</td>
+<td style="text-align: right;">-0.3157279</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.7584</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">4.7839866</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">3.1363201</td>
+<td style="text-align: right;">7.7806034</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.7061183</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-1.3635093</td>
+<td style="text-align: right;">-0.1363184</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.7472401</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.1140215</td>
+<td style="text-align: right;">21.1801826</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="guided-example-for-two-dependent-samples-mehr-et-al.-2014" class="level3" data-number="8.6.3"><h3 data-number="8.6.3" class="anchored" data-anchor-id="guided-example-for-two-dependent-samples-mehr-et-al.-2014">
+<span class="header-section-number">8.6.3</span> Guided example for two dependent samples (Mehr et al., 2014)</h3>
+<p>For the Mehr et al.&nbsp;(2014) data, the outcome is a little easier to interpret for an unstandardised effect than the two between-subjects examples. They compared infants’ proportion of gaze duration spent on the model that sang the familiar song and wanted to know whether this would increase at test compared to baseline. As the proportion of gaze is bound between 0 (none of the time) to 1 (all of the time), we might consider a 5% (0.05) increase or decrease as theoretically meaningful if we are not very certain the test will be higher than baseline.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">describe_posterior</span>(Mehr_samples,</span>
+<span id="cb40-2"><a href="#cb40-2"></a>                   <span class="at">rope_range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 15%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">-0.0664572</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.1257782</td>
+<td style="text-align: right;">-0.0080014</td>
+<td style="text-align: right;">0.98638</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.2738947</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">0.0288816</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0182954</td>
+<td style="text-align: right;">0.0494104</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">1.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.3926306</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.7466274</td>
+<td style="text-align: right;">-0.0440859</td>
+<td style="text-align: right;">0.98638</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.0021789</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.4864845</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.0862197</td>
+<td style="text-align: right;">13.6498562</td>
+<td style="text-align: right;">1.00000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Our observed mean difference was a posterior median of -0.07, 95% CI = [-.13, -0.01], which is 27.50% within the ROPE region of plus or minus 0.05 points. We are not far off ruling out our ROPE, but we still need more data to make a decision. Hopefully, you can see by this point, many of these studies have more inconclusive conclusions when analysed through a Bayesian framework than the original frequentist statistics.</p>
+</section><section id="independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" class="level3" data-number="8.6.4"><h3 data-number="8.6.4" class="anchored" data-anchor-id="independent-activity-for-two-dependent-samples-zwaan-et-al.-2018">
+<span class="header-section-number">8.6.4</span> Independent activity for two dependent samples (Zwaan et al., 2018)</h3>
+<p>For this activity, you will need the objects you created for the <a href="#Zwaan-activity">Zwaan et al.</a> independent activity. Remember it is based on a one-tailed t-test as we expected faster response times to congruent trials than incongruent trials. You will need the samples from the posterior as the only thing you will need to change is the arguments you use in the <code>describe_posterior()</code> function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>describe_posterior()</code> function from the <a href="#Zwaan-activity">Zwaan et al.</a> independent activity, but this time enter values for the ROPE arguments. Set your ROPE to -10 to 0ms (or 0-10 depending on the order you entered the variables) as these are smaller effects closer to the sampling error we can expect with response time experiments held online <span class="citation" data-cites="reimers_presentation_2015">(<a href="references.html#ref-reimers_presentation_2015" role="doc-biblioref">Reimers &amp; Stewart, 2015</a>)</span>.</p>
+<ul>
+<li><p>Looking at the 95% credible interval for mu, we would expect the absolute mean difference to range between <select class="webex-select"><option value="blank"></option>
+<option value="answer">30.06</option>
+<option value="x">31.48</option>
+<option value="x">38.78</option>
+<option value="x">47.54</option></select> and <select class="webex-select"><option value="blank"></option>
+<option value="x">30.06</option>
+<option value="x">31.48</option>
+<option value="x">38.78</option>
+<option value="answer">47.54</option></select>.</p></li>
+<li><p>What percentage of the 95% credible interval is within the ROPE? <input class="webex-solveme nospaces" data-tol="0.001" size="1" data-answer="[&quot;0&quot;]"></p></li>
+<li>
+<p>What is the most appropriate conclusion based on this ROPE?:</p>
+<div id="radio_FLTBETDJPE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FLTBETDJPE" value="answer"><span>HDI completely outside the ROPE: We reject the ROPE.</span></label><label><input type="radio" autocomplete="off" name="radio_FLTBETDJPE" value="x"><span>HDI completely within the ROPE: We accept the ROPE.</span></label><label><input type="radio" autocomplete="off" name="radio_FLTBETDJPE" value="x"><span>HDI and the ROPE partially overlap: We are undecided and we need more data.</span></label>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">describe_posterior</span>(Zwaan_samples,</span>
+<span id="cb41-2"><a href="#cb41-2"></a>                   <span class="at">rope_range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 4%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 15%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">CI</th>
+<th style="text-align: right;">CI_low</th>
+<th style="text-align: right;">CI_high</th>
+<th style="text-align: right;">pd</th>
+<th style="text-align: right;">ROPE_CI</th>
+<th style="text-align: right;">ROPE_low</th>
+<th style="text-align: right;">ROPE_high</th>
+<th style="text-align: right;">ROPE_Percentage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">mu</td>
+<td style="text-align: right;">-38.7921701</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-47.6008243</td>
+<td style="text-align: right;">-30.0210031</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">sig2</td>
+<td style="text-align: right;">3146.0852518</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">2548.7948971</td>
+<td style="text-align: right;">3953.2658000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">delta</td>
+<td style="text-align: right;">-0.6923437</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-0.8652868</td>
+<td style="text-align: right;">-0.5196406</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">g</td>
+<td style="text-align: right;">0.7060218</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.1297111</td>
+<td style="text-align: right;">19.6119034</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">-10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section><section id="summary" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="summary">
+<span class="header-section-number">8.7</span> Summary</h2>
+<p>In this chapter, you learnt about hypothesis testing using a Bayesian framework. The first two activities explored the logic of Bayesian statistics to make inferences and how it can be used to test hypotheses when expressed as the Bayes factor. You then learnt how to perform Bayes factors applied to the simplest cases of two independent samples and two dependent samples. Bayes factors are a useful way of quantifying the evidence in favour of a hypotheses compared to a competing hypothesis. Bayesian statistics can still be used mindlessly, but hopefully you can see they provide the opportunity to move away from purely dichotomous thinking. Evidence that would be statistically significant (<em>p</em> &lt; .05) but close to alpha only represents anecdotal evidence.</p>
+<p>As with any new skill, practice is the best approach to becoming comfortable in applying your knowledge to novel scenario. Hopefully, you worked through the guided examples and tested your understanding on the independent activities.</p>
+<p>For further learning, we recommend the following resources relevant to this chapter:</p>
+<ol type="1">
+<li><p><span class="citation" data-cites="van_doorn_jasp_2021">Doorn et al. (<a href="references.html#ref-van_doorn_jasp_2021" role="doc-biblioref">2021</a>)</span> - Although it focuses on the JASP software, this article provides an accessible introduction to Bayes factors and how you can report your findings.</p></li>
+<li><p><span class="citation" data-cites="kruschke_bayesian_2018">Kruschke &amp; Liddell (<a href="references.html#ref-kruschke_bayesian_2018" role="doc-biblioref">2018b</a>)</span> - This article discusses the proposed shift away from dichotomous hypothesis testing towards estimation and how it relates to Bayesian statistics through summarising the posterior and the ROPE procedure.</p></li>
+<li><p><span class="citation" data-cites="wong_potential_2022">Wong et al. (<a href="references.html#ref-wong_potential_2022" role="doc-biblioref">2022</a>)</span> - Although Bayes factors have the potential to help you make more nuanced inferences, they are still prone to misinterpretations. This article outlines common errors and misconceptions when researcher report Bayes factors.</p></li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-bastian_pain_2014" class="csl-entry" role="listitem">
+Bastian, B., Jetten, J., &amp; Ferris, L. J. (2014). Pain as <span>Social</span> <span>Glue</span>: <span>Shared</span> <span>Pain</span> <span>Increases</span> <span>Cooperation</span>. <em>Psychological Science</em>, <em>25</em>(11), 2079–2085. <a href="https://doi.org/10.1177/0956797614545886">https://doi.org/10.1177/0956797614545886</a>
+</div>
+<div id="ref-van_doorn_jasp_2021" class="csl-entry" role="listitem">
+Doorn, J. van, Bergh, D. van den, Böhm, U., Dablander, F., Derks, K., Draws, T., Etz, A., Evans, N. J., Gronau, Q. F., Haaf, J. M., Hinne, M., Kucharský, Š., Ly, A., Marsman, M., Matzke, D., Gupta, A. R. K. N., Sarafoglou, A., Stefan, A., Voelkel, J. G., &amp; Wagenmakers, E.-J. (2021). The <span>JASP</span> guidelines for conducting and reporting a <span>Bayesian</span> analysis. <em>Psychonomic Bulletin &amp; Review</em>, <em>28</em>(3), 813–826. <a href="https://doi.org/10.3758/s13423-020-01798-5">https://doi.org/10.3758/s13423-020-01798-5</a>
+</div>
+<div id="ref-harms_making_2018" class="csl-entry" role="listitem">
+Harms, C., &amp; Lakens, D. (2018). Making ’null effects’ informative: Statistical techniques and inferential frameworks. <em>Journal of Clinical and Translational Research</em>, <em>3</em>(Suppl 2), 382–393. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6412612/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6412612/</a>
+</div>
+<div id="ref-kruschke_bayesian_2018-1" class="csl-entry" role="listitem">
+Kruschke, J. K., &amp; Liddell, T. M. (2018a). Bayesian data analysis for newcomers. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 155–177. <a href="https://doi.org/10.3758/s13423-017-1272-1">https://doi.org/10.3758/s13423-017-1272-1</a>
+</div>
+<div id="ref-kruschke_bayesian_2018" class="csl-entry" role="listitem">
+Kruschke, J. K., &amp; Liddell, T. M. (2018b). The <span>Bayesian</span> <span>New</span> <span>Statistics</span>: <span>Hypothesis</span> testing, estimation, meta-analysis, and power analysis from a <span>Bayesian</span> perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206. <a href="https://doi.org/10.3758/s13423-016-1221-4">https://doi.org/10.3758/s13423-016-1221-4</a>
+</div>
+<div id="ref-lakens_improving_2020" class="csl-entry" role="listitem">
+Lakens, Daniël, McLatchie, N., Isager, P. M., Scheel, A. M., &amp; Dienes, Z. (2020). Improving <span>Inferences</span> <span>About</span> <span>Null</span> <span>Effects</span> <span>With</span> <span>Bayes</span> <span>Factors</span> and <span>Equivalence</span> <span>Tests</span>. <em>The Journals of Gerontology: Series B</em>, <em>75</em>(1), 45–57. <a href="https://doi.org/10.1093/geronb/gby065">https://doi.org/10.1093/geronb/gby065</a>
+</div>
+<div id="ref-lakens_equivalence_2018" class="csl-entry" role="listitem">
+Lakens, Daniel, Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence <span>Testing</span> for <span>Psychological</span> <span>Research</span>: <span>A</span> <span>Tutorial</span>. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 259–269. <a href="https://doi.org/10.1177/2515245918770963">https://doi.org/10.1177/2515245918770963</a>
+</div>
+<div id="ref-Makowski2019" class="csl-entry" role="listitem">
+Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). bayestestR: Describing effects and their uncertainty, existence and significance within the bayesian framework. <em>Journal of Open Source Software</em>, <em>4</em>(40), 1541. <a href="https://doi.org/10.21105/joss.01541">https://doi.org/10.21105/joss.01541</a>
+</div>
+<div id="ref-mehr_for_2016" class="csl-entry" role="listitem">
+Mehr, S. A., Song, L. A., &amp; Spelke, E. S. (2016). For 5-<span>Month</span>-<span>Old</span> <span>Infants</span>, <span>Melodies</span> <span>Are</span> <span>Social</span>. <em>Psychological Science</em>, <em>27</em>(4), 486–501. <a href="https://doi.org/10.1177/0956797615626691">https://doi.org/10.1177/0956797615626691</a>
+</div>
+<div id="ref-MoreyRouder2022" class="csl-entry" role="listitem">
+Morey, R. D., &amp; Rouder, J. N. (2024). <em>BayesFactor: Computation of bayes factors for common designs</em>. <a href="https://CRAN.R-project.org/package=BayesFactor">https://CRAN.R-project.org/package=BayesFactor</a>
+</div>
+<div id="ref-reimers_presentation_2015" class="csl-entry" role="listitem">
+Reimers, S., &amp; Stewart, N. (2015). Presentation and response timing accuracy in <span>Adobe</span> <span>Flash</span> and <span>HTML5</span>/<span>JavaScript</span> <span>Web</span> experiments. <em>Behavior Research Methods</em>, <em>47</em>(2), 309–327. <a href="https://doi.org/10.3758/s13428-014-0471-1">https://doi.org/10.3758/s13428-014-0471-1</a>
+</div>
+<div id="ref-rouder_optional_2014" class="csl-entry" role="listitem">
+Rouder, J. N. (2014). Optional stopping: <span>No</span> problem for <span>Bayesians</span>. <em>Psychonomic Bulletin &amp; Review</em>, <em>21</em>(2), 301–308. <a href="https://doi.org/10.3758/s13423-014-0595-4">https://doi.org/10.3758/s13423-014-0595-4</a>
+</div>
+<div id="ref-schonbrodt_sequential_2017" class="csl-entry" role="listitem">
+Schönbrodt, F. D., Wagenmakers, E.-J., Zehetleitner, M., &amp; Perugini, M. (2017). Sequential hypothesis testing with <span>Bayes</span> factors: <span>Efficiently</span> testing mean differences. <em>Psychological Methods</em>, <em>22</em>(2), 322–339. <a href="https://doi.org/10.1037/met0000061">https://doi.org/10.1037/met0000061</a>
+</div>
+<div id="ref-schroeder_sound_2015" class="csl-entry" role="listitem">
+Schroeder, J., &amp; Epley, N. (2015). The <span>Sound</span> of <span>Intellect</span>: <span>Speech</span> <span>Reveals</span> a <span>Thoughtful</span> <span>Mind</span>, <span>Increasing</span> a <span>Job</span> <span>Candidate</span>’s <span>Appeal</span>. <em>Psychological Science</em>, <em>26</em>(6), 877–891. <a href="https://doi.org/10.1177/0956797615572906">https://doi.org/10.1177/0956797615572906</a>
+</div>
+<div id="ref-wagenmakers_why_2011" class="csl-entry" role="listitem">
+Wagenmakers, E.-J., Wetzels, R., Borsboom, D., &amp; Maas, H. L. J. van der. (2011). Why psychologists must change the way they analyze their data: <span>The</span> case of psi: <span>Comment</span> on <span>Bem</span> (2011). <em>Journal of Personality and Social Psychology</em>, <em>100</em>(3), 426–432. <a href="https://doi.org/10.1037/a0022790">https://doi.org/10.1037/a0022790</a>
+</div>
+<div id="ref-wong_potential_2022" class="csl-entry" role="listitem">
+Wong, T. K., Kiers, H., &amp; Tendeiro, J. (2022). On the <span>Potential</span> <span>Mismatch</span> <span>Between</span> the <span>Function</span> of the <span>Bayes</span> <span>Factor</span> and <span>Researchers</span>’ <span>Expectations</span>. <em>Collabra: Psychology</em>, <em>8</em>(1), 36357. <a href="https://doi.org/10.1525/collabra.36357">https://doi.org/10.1525/collabra.36357</a>
+</div>
+<div id="ref-zwaan_participant_2018" class="csl-entry" role="listitem">
+Zwaan, R. A., Pecher, D., Paolacci, G., Bouwmeester, S., Verkoeijen, P., Dijkstra, K., &amp; Zeelenberg, R. (2018). Participant <span>Nonnaiveté</span> and the reproducibility of cognitive psychology. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(5), 1968–1972. <a href="https://doi.org/10.3758/s13423-017-1348-y">https://doi.org/10.3758/s13423-017-1348-y</a>
+</div>
+</div>
+</section></main><!-- /main --><script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+// open rdrr links externally ----
+
+var exlinks = document.querySelectorAll("a[href^='https://rdrr.io']");
+var exlink_func = function(){
+  window.open(this.href);
+  return false;
+};
+for (var i = 0; i < exlinks.length; i++) {
+    exlinks[i].addEventListener('click', exlink_func, false);
+}
+
+// visible second sidebar in mobile ----
+
+function move_sidebar() {
+  var toc = document.getElementById("TOC");
+  var small_sidebar = document.querySelector("#quarto-sidebar .sidebar-menu-container");
+  var right_sidebar = document.getElementById("quarto-margin-sidebar");
+
+  if (window.innerWidth < 768) {
+    small_sidebar.append(toc);
+  } else {
+    right_sidebar.append(toc);
+  }
+}
+move_sidebar();
+window.onresize = move_sidebar;
+</script><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./03-00-bayes.html" class="pagination-link" aria-label="Bayesian modelling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Bayesian modelling</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>CC-BY (2025) Bartlett, Rousselet, &amp; DeBruine.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>
