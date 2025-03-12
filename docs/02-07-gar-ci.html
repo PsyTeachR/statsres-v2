@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
-<title>6&nbsp; Confidence intervals – Statistics and Research Design</title>
+<title>Statistics and Research Design - 7&nbsp; Confidence intervals</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -115,13 +115,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-07-gar-ci.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-07-gar-ci.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -152,7 +152,7 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General linear model</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -187,13 +187,19 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Graphical representations and robust statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -201,13 +207,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,7 +222,7 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayesian modelling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -224,13 +230,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -243,9 +249,9 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -267,48 +273,48 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#chapter-preparation" id="toc-chapter-preparation" class="nav-link active" data-scroll-target="#chapter-preparation"><span class="header-section-number">6.1</span> Chapter preparation</a>
+<a href="#chapter-preparation" id="toc-chapter-preparation" class="nav-link active" data-scroll-target="#chapter-preparation"><span class="header-section-number">7.1</span> Chapter preparation</a>
   <ul class="collapse">
-<li><a href="#organising-your-files-and-project-for-the-chapter" id="toc-organising-your-files-and-project-for-the-chapter" class="nav-link" data-scroll-target="#organising-your-files-and-project-for-the-chapter"><span class="header-section-number">6.1.1</span> Organising your files and project for the chapter</a></li>
+<li><a href="#organising-your-files-and-project-for-the-chapter" id="toc-organising-your-files-and-project-for-the-chapter" class="nav-link" data-scroll-target="#organising-your-files-and-project-for-the-chapter"><span class="header-section-number">7.1.1</span> Organising your files and project for the chapter</a></li>
   </ul>
 </li>
-  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies"><span class="header-section-number">6.2</span> Dependencies</a></li>
-  <li><a href="#rand-wilcoxs-code" id="toc-rand-wilcoxs-code" class="nav-link" data-scroll-target="#rand-wilcoxs-code"><span class="header-section-number">6.3</span> Rand Wilcox’s code</a></li>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies"><span class="header-section-number">7.2</span> Dependencies</a></li>
+  <li><a href="#rand-wilcoxs-code" id="toc-rand-wilcoxs-code" class="nav-link" data-scroll-target="#rand-wilcoxs-code"><span class="header-section-number">7.3</span> Rand Wilcox’s code</a></li>
   <li>
-<a href="#p-value-sampling-distribution" id="toc-p-value-sampling-distribution" class="nav-link" data-scroll-target="#p-value-sampling-distribution"><span class="header-section-number">6.4</span> P value sampling distribution</a>
+<a href="#p-value-sampling-distribution" id="toc-p-value-sampling-distribution" class="nav-link" data-scroll-target="#p-value-sampling-distribution"><span class="header-section-number">7.4</span> P value sampling distribution</a>
   <ul class="collapse">
-<li><a href="#no-effect" id="toc-no-effect" class="nav-link" data-scroll-target="#no-effect"><span class="header-section-number">6.4.1</span> No effect</a></li>
-  <li><a href="#effect" id="toc-effect" class="nav-link" data-scroll-target="#effect"><span class="header-section-number">6.4.2</span> Effect</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#confidence-intervals-sampling-from-normal-distribution" id="toc-confidence-intervals-sampling-from-normal-distribution" class="nav-link" data-scroll-target="#confidence-intervals-sampling-from-normal-distribution"><span class="header-section-number">6.5</span> Confidence intervals: sampling from normal distribution</a>
-  <ul class="collapse">
-<li><a href="#experiments---20-confidence-intervals" id="toc-experiments---20-confidence-intervals" class="nav-link" data-scroll-target="#experiments---20-confidence-intervals"><span class="header-section-number">6.5.1</span> 20 experiments - 20 confidence intervals</a></li>
-  <li><a href="#experiments---20000-confidence-intervals" id="toc-experiments---20000-confidence-intervals" class="nav-link" data-scroll-target="#experiments---20000-confidence-intervals"><span class="header-section-number">6.5.2</span> 20,000 experiments - 20,000 confidence intervals</a></li>
+<li><a href="#no-effect" id="toc-no-effect" class="nav-link" data-scroll-target="#no-effect"><span class="header-section-number">7.4.1</span> No effect</a></li>
+  <li><a href="#effect" id="toc-effect" class="nav-link" data-scroll-target="#effect"><span class="header-section-number">7.4.2</span> Effect</a></li>
   </ul>
 </li>
   <li>
-<a href="#confidence-intervals-sampling-from-lognormal-distribution" id="toc-confidence-intervals-sampling-from-lognormal-distribution" class="nav-link" data-scroll-target="#confidence-intervals-sampling-from-lognormal-distribution"><span class="header-section-number">6.6</span> Confidence intervals: sampling from lognormal distribution</a>
+<a href="#confidence-intervals-sampling-from-normal-distribution" id="toc-confidence-intervals-sampling-from-normal-distribution" class="nav-link" data-scroll-target="#confidence-intervals-sampling-from-normal-distribution"><span class="header-section-number">7.5</span> Confidence intervals: sampling from normal distribution</a>
   <ul class="collapse">
-<li><a href="#experiments---20-confidence-intervals-1" id="toc-experiments---20-confidence-intervals-1" class="nav-link" data-scroll-target="#experiments---20-confidence-intervals-1"><span class="header-section-number">6.6.1</span> 20 experiments - 20 confidence intervals</a></li>
-  <li><a href="#experiments---20000-confidence-intervals-1" id="toc-experiments---20000-confidence-intervals-1" class="nav-link" data-scroll-target="#experiments---20000-confidence-intervals-1"><span class="header-section-number">6.6.2</span> 20,000 experiments - 20,000 confidence intervals</a></li>
+<li><a href="#experiments---20-confidence-intervals" id="toc-experiments---20-confidence-intervals" class="nav-link" data-scroll-target="#experiments---20-confidence-intervals"><span class="header-section-number">7.5.1</span> 20 experiments - 20 confidence intervals</a></li>
+  <li><a href="#experiments---20000-confidence-intervals" id="toc-experiments---20000-confidence-intervals" class="nav-link" data-scroll-target="#experiments---20000-confidence-intervals"><span class="header-section-number">7.5.2</span> 20,000 experiments - 20,000 confidence intervals</a></li>
   </ul>
 </li>
   <li>
-<a href="#confidence-interval-coverage-simulation-mean-and-20-trimmed-mean" id="toc-confidence-interval-coverage-simulation-mean-and-20-trimmed-mean" class="nav-link" data-scroll-target="#confidence-interval-coverage-simulation-mean-and-20-trimmed-mean"><span class="header-section-number">6.7</span> Confidence interval coverage simulation: mean and 20% trimmed mean</a>
+<a href="#confidence-intervals-sampling-from-lognormal-distribution" id="toc-confidence-intervals-sampling-from-lognormal-distribution" class="nav-link" data-scroll-target="#confidence-intervals-sampling-from-lognormal-distribution"><span class="header-section-number">7.6</span> Confidence intervals: sampling from lognormal distribution</a>
   <ul class="collapse">
-<li><a href="#illustrate-populations" id="toc-illustrate-populations" class="nav-link" data-scroll-target="#illustrate-populations"><span class="header-section-number">6.7.1</span> Illustrate populations</a></li>
-  <li><a href="#trimmed-means" id="toc-trimmed-means" class="nav-link" data-scroll-target="#trimmed-means"><span class="header-section-number">6.7.2</span> Trimmed means</a></li>
+<li><a href="#experiments---20-confidence-intervals-1" id="toc-experiments---20-confidence-intervals-1" class="nav-link" data-scroll-target="#experiments---20-confidence-intervals-1"><span class="header-section-number">7.6.1</span> 20 experiments - 20 confidence intervals</a></li>
+  <li><a href="#experiments---20000-confidence-intervals-1" id="toc-experiments---20000-confidence-intervals-1" class="nav-link" data-scroll-target="#experiments---20000-confidence-intervals-1"><span class="header-section-number">7.6.2</span> 20,000 experiments - 20,000 confidence intervals</a></li>
   </ul>
 </li>
-  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation"><span class="header-section-number">6.8</span> Simulation</a></li>
+  <li>
+<a href="#confidence-interval-coverage-simulation-mean-and-20-trimmed-mean" id="toc-confidence-interval-coverage-simulation-mean-and-20-trimmed-mean" class="nav-link" data-scroll-target="#confidence-interval-coverage-simulation-mean-and-20-trimmed-mean"><span class="header-section-number">7.7</span> Confidence interval coverage simulation: mean and 20% trimmed mean</a>
+  <ul class="collapse">
+<li><a href="#illustrate-populations" id="toc-illustrate-populations" class="nav-link" data-scroll-target="#illustrate-populations"><span class="header-section-number">7.7.1</span> Illustrate populations</a></li>
+  <li><a href="#trimmed-means" id="toc-trimmed-means" class="nav-link" data-scroll-target="#trimmed-means"><span class="header-section-number">7.7.2</span> Trimmed means</a></li>
+  </ul>
+</li>
+  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation"><span class="header-section-number">7.8</span> Simulation</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-07-gar-ci.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-07-gar-ci.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span>
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span>
 </h1>
 </div>
 
@@ -323,11 +329,11 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
   
 
 
-</header><section id="chapter-preparation" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="chapter-preparation">
-<span class="header-section-number">6.1</span> Chapter preparation</h2>
+</header><section id="chapter-preparation" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="chapter-preparation">
+<span class="header-section-number">7.1</span> Chapter preparation</h2>
 <p>In this chapter, we need a few different datasets and source files, so we will introduce them as we need them.</p>
-<section id="organising-your-files-and-project-for-the-chapter" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="organising-your-files-and-project-for-the-chapter">
-<span class="header-section-number">6.1.1</span> Organising your files and project for the chapter</h3>
+<section id="organising-your-files-and-project-for-the-chapter" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="organising-your-files-and-project-for-the-chapter">
+<span class="header-section-number">7.1.1</span> Organising your files and project for the chapter</h3>
 <p>Before we can get started, you need to organise your files and project for the chapter, so your working directory is in order.</p>
 <ol type="1">
 <li><p>In your folder for statistics and research design <code>Stats_Research_Design</code>, create a new folder called <code>07_confidence_intervals</code>.</p></li>
@@ -336,8 +342,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <li><p>Create a new Quarto document and give it a sensible title describing the chapter, such as <code>07 Confidence Intervals</code>. Save the file in your <code>07_confidence_intervals</code> folder.</p></li>
 </ol>
 <p>You are now ready to start working on the chapter!</p>
-</section></section><section id="dependencies" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="dependencies">
-<span class="header-section-number">6.2</span> Dependencies</h2>
+</section></section><section id="dependencies" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="dependencies">
+<span class="header-section-number">7.2</span> Dependencies</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tibble)</span>
@@ -345,8 +351,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <span id="cb1-4"><a href="#cb1-4"></a><span class="fu">source</span>(<span class="st">"code/Rallfun-v35-light.txt"</span>)</span>
 <span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(beepr) <span class="co"># for little auditory rewards :)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="rand-wilcoxs-code" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="rand-wilcoxs-code">
-<span class="header-section-number">6.3</span> Rand Wilcox’s code</h2>
+</section><section id="rand-wilcoxs-code" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="rand-wilcoxs-code">
+<span class="header-section-number">7.3</span> Rand Wilcox’s code</h2>
 <p>When I mention code from Rand Wilcox, it is available in a giant text file (see Wilcox’s <a href="https://dornsife.usc.edu/labs/rwilcox/software/">website</a> for the most recent version of the code). You access the functions by using the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">source</span>(<span class="st">"code/Rallfun-v35.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -357,11 +363,11 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <p>In some of the notebooks, I’ve extracted one or a few functions so you can source a smaller file. This prevents your environment from being cluttered with functions you don’t need. Creating a well documented R package is a lot of work, so some statisticians don’t spend the time required. But that means their code is less accessible.</p>
 <p>Some of the functions are also available in the <code>WRS2</code> package available on <a href="https://cran.r-project.org/web/packages/WRS2/index.html">CRAN</a>. For correlation analyses, I have created an R package called <a href="https://github.com/GRousselet/bootcorci"><code>bootcorci</code></a>. To quantify how distributions differ using quantile estimation, I have created the <a href="https://github.com/GRousselet/rogme"><code>rogme</code></a> R package.</p>
-</section><section id="p-value-sampling-distribution" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="p-value-sampling-distribution">
-<span class="header-section-number">6.4</span> P value sampling distribution</h2>
+</section><section id="p-value-sampling-distribution" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="p-value-sampling-distribution">
+<span class="header-section-number">7.4</span> P value sampling distribution</h2>
 <p>Consider normality only.</p>
-<section id="no-effect" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="no-effect">
-<span class="header-section-number">6.4.1</span> No effect</h3>
+<section id="no-effect" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="no-effect">
+<span class="header-section-number">7.4.1</span> No effect</h3>
 <p>How are p values distributed under the null?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>)</span>
@@ -399,8 +405,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-</section><section id="effect" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="effect">
-<span class="header-section-number">6.4.2</span> Effect</h3>
+</section><section id="effect" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="effect">
+<span class="header-section-number">7.4.2</span> Effect</h3>
 <p>Now we look at the distribution of p values when there is a 0.5 effect.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> p.sampdist.h1)</span>
@@ -419,8 +425,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-</section></section><section id="confidence-intervals-sampling-from-normal-distribution" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="confidence-intervals-sampling-from-normal-distribution">
-<span class="header-section-number">6.5</span> Confidence intervals: sampling from normal distribution</h2>
+</section></section><section id="confidence-intervals-sampling-from-normal-distribution" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="confidence-intervals-sampling-from-normal-distribution">
+<span class="header-section-number">7.5</span> Confidence intervals: sampling from normal distribution</h2>
 <p>We sample from a standard normal population (mean 0 and standard deviation 1).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>pop.m <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># population mean</span></span>
@@ -450,8 +456,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># ggsave(filename = './figures/nb2_norm_pop.pdf', width = 7, height = 5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="experiments---20-confidence-intervals" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="experiments---20-confidence-intervals">
-<span class="header-section-number">6.5.1</span> 20 experiments - 20 confidence intervals</h3>
+<section id="experiments---20-confidence-intervals" class="level3" data-number="7.5.1"><h3 data-number="7.5.1" class="anchored" data-anchor-id="experiments---20-confidence-intervals">
+<span class="header-section-number">7.5.1</span> 20 experiments - 20 confidence intervals</h3>
 <p>We perform many experiments, and for each experiment we compute a parametric one-sample confidence interval, which we plot as horizontal lines.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">set.seed</span>(<span class="dv">666</span>) <span class="co"># set seed of random number generator</span></span>
@@ -481,8 +487,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <span id="cb8-25"><a href="#cb8-25"></a>  </span>
 <span id="cb8-26"><a href="#cb8-26"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="illustrate-results" class="level4" data-number="6.5.1.1"><h4 data-number="6.5.1.1" class="anchored" data-anchor-id="illustrate-results">
-<span class="header-section-number">6.5.1.1</span> Illustrate results</h4>
+<section id="illustrate-results" class="level4" data-number="7.5.1.1"><h4 data-number="7.5.1.1" class="anchored" data-anchor-id="illustrate-results">
+<span class="header-section-number">7.5.1.1</span> Illustrate results</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># confidence intervals</span></span>
 <span id="cb9-2"><a href="#cb9-2"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">as.vector</span>(ci.ttest),</span>
@@ -519,8 +525,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># ggsave(filename = './figures/nb2_20expt_ttci_norm.pdf', width = 5, height = 7)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section></section><section id="experiments---20000-confidence-intervals" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="experiments---20000-confidence-intervals">
-<span class="header-section-number">6.5.2</span> 20,000 experiments - 20,000 confidence intervals</h3>
+</section></section><section id="experiments---20000-confidence-intervals" class="level3" data-number="7.5.2"><h3 data-number="7.5.2" class="anchored" data-anchor-id="experiments---20000-confidence-intervals">
+<span class="header-section-number">7.5.2</span> 20,000 experiments - 20,000 confidence intervals</h3>
 <p>Now we do 20,000 experiments, and check the long term coverage of the confidence intervals.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>) <span class="co"># set seed of random number generator</span></span>
@@ -549,8 +555,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <span id="cb11-24"><a href="#cb11-24"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Confidence interval coverage = 90.4%.</p>
-<section id="illustrate-cis-excluding-population" class="level4" data-number="6.5.2.1"><h4 data-number="6.5.2.1" class="anchored" data-anchor-id="illustrate-cis-excluding-population">
-<span class="header-section-number">6.5.2.1</span> Illustrate CIs excluding population</h4>
+<section id="illustrate-cis-excluding-population" class="level4" data-number="7.5.2.1"><h4 data-number="7.5.2.1" class="anchored" data-anchor-id="illustrate-cis-excluding-population">
+<span class="header-section-number">7.5.2.1</span> Illustrate CIs excluding population</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>ci <span class="ot">&lt;-</span> ci.ttest[ci.ttest.in<span class="sc">==</span><span class="dv">0</span>, ]</span>
 <span id="cb12-2"><a href="#cb12-2"></a>todo <span class="ot">&lt;-</span> <span class="fu">sum</span>(ci.ttest.in<span class="sc">==</span><span class="dv">0</span>)</span>
@@ -575,8 +581,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <p>Proportion of confidence intervals shifted to the <strong>left</strong> of the population value = 4.9%.</p>
 <p>Proportion of confidence intervals shifted to the <strong>right</strong> of the population value = 4.7%.</p>
-</section></section></section><section id="confidence-intervals-sampling-from-lognormal-distribution" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="confidence-intervals-sampling-from-lognormal-distribution">
-<span class="header-section-number">6.6</span> Confidence intervals: sampling from lognormal distribution</h2>
+</section></section></section><section id="confidence-intervals-sampling-from-lognormal-distribution" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="confidence-intervals-sampling-from-lognormal-distribution">
+<span class="header-section-number">7.6</span> Confidence intervals: sampling from lognormal distribution</h2>
 <p>Now we sample from a lognormal population, which is an example of a skewed distribution.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>logpop.m <span class="ot">&lt;-</span> <span class="fu">exp</span>(pop.m <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>pop.sd<span class="sc">^</span><span class="dv">2</span>) <span class="co"># population mean</span></span>
@@ -606,8 +612,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># ggsave(filename = './figures/nb2_lnorm_pop.pdf', width = 7, height = 5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="experiments---20-confidence-intervals-1" class="level3" data-number="6.6.1"><h3 data-number="6.6.1" class="anchored" data-anchor-id="experiments---20-confidence-intervals-1">
-<span class="header-section-number">6.6.1</span> 20 experiments - 20 confidence intervals</h3>
+<section id="experiments---20-confidence-intervals-1" class="level3" data-number="7.6.1"><h3 data-number="7.6.1" class="anchored" data-anchor-id="experiments---20-confidence-intervals-1">
+<span class="header-section-number">7.6.1</span> 20 experiments - 20 confidence intervals</h3>
 <p>We perform many experiments, and for each experiment we compute a confidence interval, which we plot as horizontal lines.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>) <span class="co"># set seed of random number generator</span></span>
@@ -637,8 +643,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <span id="cb16-25"><a href="#cb16-25"></a>  </span>
 <span id="cb16-26"><a href="#cb16-26"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="illustrate-results-1" class="level4" data-number="6.6.1.1"><h4 data-number="6.6.1.1" class="anchored" data-anchor-id="illustrate-results-1">
-<span class="header-section-number">6.6.1.1</span> Illustrate results</h4>
+<section id="illustrate-results-1" class="level4" data-number="7.6.1.1"><h4 data-number="7.6.1.1" class="anchored" data-anchor-id="illustrate-results-1">
+<span class="header-section-number">7.6.1.1</span> Illustrate results</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># confidence intervals</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">as.vector</span>(ci.ttest),</span>
@@ -675,13 +681,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># ggsave(filename = './figures/nb2_20expt_ttci_lnorm.pdf', width = 5, height = 7)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="illustrate-results-bootstrap" class="level4" data-number="6.6.1.2"><h4 data-number="6.6.1.2" class="anchored" data-anchor-id="illustrate-results-bootstrap">
-<span class="header-section-number">6.6.1.2</span> Illustrate results: bootstrap</h4>
+</section><section id="illustrate-results-bootstrap" class="level4" data-number="7.6.1.2"><h4 data-number="7.6.1.2" class="anchored" data-anchor-id="illustrate-results-bootstrap">
+<span class="header-section-number">7.6.1.2</span> Illustrate results: bootstrap</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># re-use the previous chunk if you want to see how the results look like for the percentile bootstrap confidence intervals.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section></section><section id="experiments---20000-confidence-intervals-1" class="level3" data-number="6.6.2"><h3 data-number="6.6.2" class="anchored" data-anchor-id="experiments---20000-confidence-intervals-1">
-<span class="header-section-number">6.6.2</span> 20,000 experiments - 20,000 confidence intervals</h3>
+</section></section><section id="experiments---20000-confidence-intervals-1" class="level3" data-number="7.6.2"><h3 data-number="7.6.2" class="anchored" data-anchor-id="experiments---20000-confidence-intervals-1">
+<span class="header-section-number">7.6.2</span> 20,000 experiments - 20,000 confidence intervals</h3>
 <p>Now we do 20,000 experiments, and check the long term coverage of the confidence intervals.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>) <span class="co"># set seed of random number generator</span></span>
@@ -710,8 +716,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <span id="cb20-24"><a href="#cb20-24"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Confidence interval coverage = 81.9%.</p>
-<section id="illustrate-cis-excluding-population-1" class="level4" data-number="6.6.2.1"><h4 data-number="6.6.2.1" class="anchored" data-anchor-id="illustrate-cis-excluding-population-1">
-<span class="header-section-number">6.6.2.1</span> Illustrate CIs excluding population</h4>
+<section id="illustrate-cis-excluding-population-1" class="level4" data-number="7.6.2.1"><h4 data-number="7.6.2.1" class="anchored" data-anchor-id="illustrate-cis-excluding-population-1">
+<span class="header-section-number">7.6.2.1</span> Illustrate CIs excluding population</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>ci <span class="ot">&lt;-</span> ci.ttest[ci.ttest.in<span class="sc">==</span><span class="dv">0</span>, ]</span>
 <span id="cb21-2"><a href="#cb21-2"></a>todo <span class="ot">&lt;-</span> <span class="fu">sum</span>(ci.ttest.in<span class="sc">==</span><span class="dv">0</span>)</span>
@@ -736,13 +742,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 <p>Proportion of confidence intervals shifted to the <strong>left</strong> of the population value = 17.4%.</p>
 <p>Proportion of confidence intervals shifted to the <strong>right</strong> of the population value = 0.7%.</p>
-</section></section></section><section id="confidence-interval-coverage-simulation-mean-and-20-trimmed-mean" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="confidence-interval-coverage-simulation-mean-and-20-trimmed-mean">
-<span class="header-section-number">6.7</span> Confidence interval coverage simulation: mean and 20% trimmed mean</h2>
+</section></section></section><section id="confidence-interval-coverage-simulation-mean-and-20-trimmed-mean" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="confidence-interval-coverage-simulation-mean-and-20-trimmed-mean">
+<span class="header-section-number">7.7</span> Confidence interval coverage simulation: mean and 20% trimmed mean</h2>
 <p>Here is another example of a simple simulation to check the probability coverage of a confidence interval method. The simulation has 10,000 iterations, which is often recommended or expected in the literature. For more complex applications, time might be a constraint.</p>
 <p>The sample size is 30, which seems reasonably high for a psychology experiment. A more systematic simulation should include sample size as a parameter.</p>
 <p>The populations are normal and lognormal and are generated outside the simulation loop. An alternative is to generate the random numbers directly inside the loop by using <code>samp &lt;- rlnorm(nsamp)</code> and <code>samp &lt;- rnorm(nsamp)</code>. The lognormal distribution is one of many skewed mathematical distributions. It serves to illustrate what can happen when sampling from skewed distributions in general. Other shapes could be used to, if some domain specific information is available. For instance, ex-Gaussian and shifted log-normal distributions do a good job at capturing the shape of reaction time distributions.</p>
-<section id="illustrate-populations" class="level3" data-number="6.7.1"><h3 data-number="6.7.1" class="anchored" data-anchor-id="illustrate-populations">
-<span class="header-section-number">6.7.1</span> Illustrate populations</h3>
+<section id="illustrate-populations" class="level3" data-number="7.7.1"><h3 data-number="7.7.1" class="anchored" data-anchor-id="illustrate-populations">
+<span class="header-section-number">7.7.1</span> Illustrate populations</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">15</span>, <span class="fl">0.01</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a>nx <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
@@ -770,10 +776,10 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 <span id="cb24-2"><a href="#cb24-2"></a><span class="co"># ggsave(filename = "norm_lnorm_pop.pdf", width = 15, height = 10, units = "cm")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The population means and trimmed means differ and are estimated independently in the simulation: the sample mean is used to make inferences about the population mean, whereas the sample trimmed mean is used to make inferences about the population trimmed mean.</p>
-</section><section id="trimmed-means" class="level3" data-number="6.7.2"><h3 data-number="6.7.2" class="anchored" data-anchor-id="trimmed-means">
-<span class="header-section-number">6.7.2</span> Trimmed means</h3>
-<section id="illustrate-20-trimming---normal-distribution" class="level4" data-number="6.7.2.1"><h4 data-number="6.7.2.1" class="anchored" data-anchor-id="illustrate-20-trimming---normal-distribution">
-<span class="header-section-number">6.7.2.1</span> Illustrate 20% trimming - Normal distribution</h4>
+</section><section id="trimmed-means" class="level3" data-number="7.7.2"><h3 data-number="7.7.2" class="anchored" data-anchor-id="trimmed-means">
+<span class="header-section-number">7.7.2</span> Trimmed means</h3>
+<section id="illustrate-20-trimming---normal-distribution" class="level4" data-number="7.7.2.1"><h4 data-number="7.7.2.1" class="anchored" data-anchor-id="illustrate-20-trimming---normal-distribution">
+<span class="header-section-number">7.7.2.1</span> Illustrate 20% trimming - Normal distribution</h4>
 <p>For variety, the example below uses base R graphics to display a normal distribution with each blue area marking 20% of the distribution density (area under the curve). If your head hurts trying to understand the calls to the <code>polygon</code> function, don’t worry, it took me many trials and errors until I could produce this figure.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>tr <span class="ot">&lt;-</span> .<span class="dv">25</span></span>
@@ -790,8 +796,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-</section><section id="illustrate-20-trimming---f-distribution" class="level4" data-number="6.7.2.2"><h4 data-number="6.7.2.2" class="anchored" data-anchor-id="illustrate-20-trimming---f-distribution">
-<span class="header-section-number">6.7.2.2</span> Illustrate 20% trimming - F distribution</h4>
+</section><section id="illustrate-20-trimming---f-distribution" class="level4" data-number="7.7.2.2"><h4 data-number="7.7.2.2" class="anchored" data-anchor-id="illustrate-20-trimming---f-distribution">
+<span class="header-section-number">7.7.2.2</span> Illustrate 20% trimming - F distribution</h4>
 <p>Why an F distribution? No particular reason, it is one of many skewed distributions we could choose from.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>tr <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
@@ -809,8 +815,8 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-</section></section></section><section id="simulation" class="level2" data-number="6.8"><h2 data-number="6.8" class="anchored" data-anchor-id="simulation">
-<span class="header-section-number">6.8</span> Simulation</h2>
+</section></section></section><section id="simulation" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="simulation">
+<span class="header-section-number">7.8</span> Simulation</h2>
 <p><strong>DO NOT RUN THE NEXT CHUNK UNLESS YOU’RE PLANNING A BREAK!</strong></p>
 <p>If you want to try the code, and potentially look at other quantities and methods, you can speed things up by reducing <code>nsim</code> and <code>nboot</code>.</p>
 <p>To make inferences about 20% trimmed means, we use a t-test in which the standard error was adjusted to take into account the trimming, as implemented in the <code>trimci</code> function. We also use the more straightforward percentile bootstrap, which doesn’t make parametric assumption and doesn’t involve standard error estimation.</p>
@@ -1317,7 +1323,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1349,29 +1366,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1379,7 +1374,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1708,7 +1703,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./02-08-gar-gpcomp.html" class="pagination-link" aria-label="Perspectives on group comparisons">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

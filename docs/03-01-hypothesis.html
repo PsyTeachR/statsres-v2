@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
-<title>8&nbsp; Bayesian hypothesis testing – Statistics and Research Design</title>
+<title>Statistics and Research Design - 9&nbsp; Bayesian hypothesis testing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -125,7 +125,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
-</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -160,13 +160,13 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-01-hypothesis.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-01-hypothesis.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -197,7 +197,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General linear model</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -232,13 +232,19 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Graphical representations and robust statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -246,13 +252,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
   </div>
 </li>
       </ul>
@@ -261,7 +267,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayesian modelling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -269,13 +275,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -288,9 +294,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -311,45 +317,45 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">8.1</span> Learning objectives</a></li>
+<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">9.1</span> Learning objectives</a></li>
   <li>
-<a href="#bayes-logic" id="toc-bayes-logic" class="nav-link" data-scroll-target="#bayes-logic"><span class="header-section-number">8.2</span> The Logic Behind Bayesian Inference</a>
+<a href="#bayes-logic" id="toc-bayes-logic" class="nav-link" data-scroll-target="#bayes-logic"><span class="header-section-number">9.2</span> The Logic Behind Bayesian Inference</a>
   <ul class="collapse">
-<li><a href="#step-1---pick-your-prior" id="toc-step-1---pick-your-prior" class="nav-link" data-scroll-target="#step-1---pick-your-prior"><span class="header-section-number">8.2.1</span> Step 1 - Pick your prior</a></li>
-  <li><a href="#step-2---update-to-a-posterior" id="toc-step-2---update-to-a-posterior" class="nav-link" data-scroll-target="#step-2---update-to-a-posterior"><span class="header-section-number">8.2.2</span> Step 2 - Update-to-a-posterior</a></li>
+<li><a href="#step-1---pick-your-prior" id="toc-step-1---pick-your-prior" class="nav-link" data-scroll-target="#step-1---pick-your-prior"><span class="header-section-number">9.2.1</span> Step 1 - Pick your prior</a></li>
+  <li><a href="#step-2---update-to-a-posterior" id="toc-step-2---update-to-a-posterior" class="nav-link" data-scroll-target="#step-2---update-to-a-posterior"><span class="header-section-number">9.2.2</span> Step 2 - Update-to-a-posterior</a></li>
   </ul>
 </li>
-  <li><a href="#Bayes-factors" id="toc-Bayes-factors" class="nav-link" data-scroll-target="#Bayes-factors"><span class="header-section-number">8.3</span> The Logic Behind Bayes Factors</a></li>
+  <li><a href="#Bayes-factors" id="toc-Bayes-factors" class="nav-link" data-scroll-target="#Bayes-factors"><span class="header-section-number">9.3</span> The Logic Behind Bayes Factors</a></li>
   <li>
-<a href="#Bayes-independent-samples" id="toc-Bayes-independent-samples" class="nav-link" data-scroll-target="#Bayes-independent-samples"><span class="header-section-number">8.4</span> Bayes factors for two independent samples</a>
+<a href="#Bayes-independent-samples" id="toc-Bayes-independent-samples" class="nav-link" data-scroll-target="#Bayes-independent-samples"><span class="header-section-number">9.4</span> Bayes factors for two independent samples</a>
   <ul class="collapse">
-<li><a href="#guided-example-bastian-et-al.-2014" id="toc-guided-example-bastian-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-bastian-et-al.-2014"><span class="header-section-number">8.4.1</span> Guided example (Bastian et al., 2014)</a></li>
-  <li><a href="#Schroeder-activity" id="toc-Schroeder-activity" class="nav-link" data-scroll-target="#Schroeder-activity"><span class="header-section-number">8.4.2</span> Independent activity (Schroeder &amp; Epley, 2015)</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#Bayes-dependent-samples" id="toc-Bayes-dependent-samples" class="nav-link" data-scroll-target="#Bayes-dependent-samples"><span class="header-section-number">8.5</span> Bayes factors for two dependent samples</a>
-  <ul class="collapse">
-<li><a href="#guided-example-mehr-et-al.-2016" id="toc-guided-example-mehr-et-al.-2016" class="nav-link" data-scroll-target="#guided-example-mehr-et-al.-2016"><span class="header-section-number">8.5.1</span> Guided example (Mehr et al., 2016)</a></li>
-  <li><a href="#Zwaan-activity" id="toc-Zwaan-activity" class="nav-link" data-scroll-target="#Zwaan-activity"><span class="header-section-number">8.5.2</span> Independent activity (Zwaan et al., 2020)</a></li>
+<li><a href="#guided-example-bastian-et-al.-2014" id="toc-guided-example-bastian-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-bastian-et-al.-2014"><span class="header-section-number">9.4.1</span> Guided example (Bastian et al., 2014)</a></li>
+  <li><a href="#Schroeder-activity" id="toc-Schroeder-activity" class="nav-link" data-scroll-target="#Schroeder-activity"><span class="header-section-number">9.4.2</span> Independent activity (Schroeder &amp; Epley, 2015)</a></li>
   </ul>
 </li>
   <li>
-<a href="#ROPE" id="toc-ROPE" class="nav-link" data-scroll-target="#ROPE"><span class="header-section-number">8.6</span> Region of Practical Equivalence (ROPE)</a>
+<a href="#Bayes-dependent-samples" id="toc-Bayes-dependent-samples" class="nav-link" data-scroll-target="#Bayes-dependent-samples"><span class="header-section-number">9.5</span> Bayes factors for two dependent samples</a>
   <ul class="collapse">
-<li><a href="#guided-example-for-two-independent-samples-bastian-et-al.-2014" id="toc-guided-example-for-two-independent-samples-bastian-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-for-two-independent-samples-bastian-et-al.-2014"><span class="header-section-number">8.6.1</span> Guided example for two independent samples (Bastian et al., 2014)</a></li>
-  <li><a href="#independent-activity-for-two-independent-samples-schroeder-epley-2014" id="toc-independent-activity-for-two-independent-samples-schroeder-epley-2014" class="nav-link" data-scroll-target="#independent-activity-for-two-independent-samples-schroeder-epley-2014"><span class="header-section-number">8.6.2</span> Independent activity for two independent samples (Schroeder &amp; Epley, 2014)</a></li>
-  <li><a href="#guided-example-for-two-dependent-samples-mehr-et-al.-2014" id="toc-guided-example-for-two-dependent-samples-mehr-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-for-two-dependent-samples-mehr-et-al.-2014"><span class="header-section-number">8.6.3</span> Guided example for two dependent samples (Mehr et al., 2014)</a></li>
-  <li><a href="#independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" id="toc-independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" class="nav-link" data-scroll-target="#independent-activity-for-two-dependent-samples-zwaan-et-al.-2018"><span class="header-section-number">8.6.4</span> Independent activity for two dependent samples (Zwaan et al., 2018)</a></li>
+<li><a href="#guided-example-mehr-et-al.-2016" id="toc-guided-example-mehr-et-al.-2016" class="nav-link" data-scroll-target="#guided-example-mehr-et-al.-2016"><span class="header-section-number">9.5.1</span> Guided example (Mehr et al., 2016)</a></li>
+  <li><a href="#Zwaan-activity" id="toc-Zwaan-activity" class="nav-link" data-scroll-target="#Zwaan-activity"><span class="header-section-number">9.5.2</span> Independent activity (Zwaan et al., 2020)</a></li>
   </ul>
 </li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.7</span> Summary</a></li>
+  <li>
+<a href="#ROPE" id="toc-ROPE" class="nav-link" data-scroll-target="#ROPE"><span class="header-section-number">9.6</span> Region of Practical Equivalence (ROPE)</a>
+  <ul class="collapse">
+<li><a href="#guided-example-for-two-independent-samples-bastian-et-al.-2014" id="toc-guided-example-for-two-independent-samples-bastian-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-for-two-independent-samples-bastian-et-al.-2014"><span class="header-section-number">9.6.1</span> Guided example for two independent samples (Bastian et al., 2014)</a></li>
+  <li><a href="#independent-activity-for-two-independent-samples-schroeder-epley-2014" id="toc-independent-activity-for-two-independent-samples-schroeder-epley-2014" class="nav-link" data-scroll-target="#independent-activity-for-two-independent-samples-schroeder-epley-2014"><span class="header-section-number">9.6.2</span> Independent activity for two independent samples (Schroeder &amp; Epley, 2014)</a></li>
+  <li><a href="#guided-example-for-two-dependent-samples-mehr-et-al.-2014" id="toc-guided-example-for-two-dependent-samples-mehr-et-al.-2014" class="nav-link" data-scroll-target="#guided-example-for-two-dependent-samples-mehr-et-al.-2014"><span class="header-section-number">9.6.3</span> Guided example for two dependent samples (Mehr et al., 2014)</a></li>
+  <li><a href="#independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" id="toc-independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" class="nav-link" data-scroll-target="#independent-activity-for-two-dependent-samples-zwaan-et-al.-2018"><span class="header-section-number">9.6.4</span> Independent activity for two dependent samples (Zwaan et al., 2018)</a></li>
+  </ul>
+</li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.7</span> Summary</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-01-hypothesis.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-01-hypothesis.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span>
+<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span>
 </h1>
 </div>
 
@@ -365,8 +371,8 @@ window.Quarto = {
 
 
 </header><p>In this chapter, we will be exploring how you can perform hypothesis testing under a Bayesian framework. After working through some interactive apps to understand the logic behind Bayesian statistics and Bayes factors, we will calculate Bayes factors for two independent samples and two dependent samples using real data. The application of Bayes factors still mostly relies on testing against a point null hypothesis, so we will end on an alternative known as a Region of Practical Equivalence (ROPE). Here, we try to reject parameter values inside boundaries for your smallest effect size of interest.</p>
-<section id="learning-objectives" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="learning-objectives">
-<span class="header-section-number">8.1</span> Learning objectives</h2>
+<section id="learning-objectives" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="learning-objectives">
+<span class="header-section-number">9.1</span> Learning objectives</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ol type="1">
 <li><p>Understand the logic behind <a href="#bayes-logic">Bayesian inference</a> using the sweet example and Shiny app.</p></li>
@@ -377,13 +383,13 @@ window.Quarto = {
 </ol>
 <p>To follow along to this chapter and try the code yourself, please download the data files we will be using in <a href="data/Bayes_hypothesis_data.zip">this zip file</a>.</p>
 <p>Credit for sourcing three of the data sets goes to the <a href="https://sites.google.com/view/openstatslab/home" target="_blank">Open Stats Lab</a> and its creator Dr.&nbsp;Kevin McIntyre. The project provides a great resource for teaching exercises using open data.</p>
-</section><section id="bayes-logic" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="bayes-logic">
-<span class="header-section-number">8.2</span> The Logic Behind Bayesian Inference</h2>
+</section><section id="bayes-logic" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="bayes-logic">
+<span class="header-section-number">9.2</span> The Logic Behind Bayesian Inference</h2>
 <p>To demonstrate the logic behind Bayesian inference, we will play around with <a href="https://shiny.psy.lmu.de/felix/BayesLessons/BayesianLesson1.Rmd" target="_blank">this shiny app by Wagenmakers (2015)</a>. The text walks you through the app and provides exercises to explore on your own, but we will use it to explore defining a prior distribution and seeing how the posterior updates with data.</p>
 <p>The example is based on estimating the the proportion of yellow candies in a bag with different coloured candies. If you see a yellow candy, it is logged as a 1. If you see a non-yellow candy, it is logged as a 0. We want to know what proportion of the candies are yellow by modelling it as a beta distribution.</p>
 <p>This is a handy demonstration for the logic behind Bayesian inference as it is the simplest application. Behind the scenes, we could calculate these values directly as the distributions are simple and there is only one parameter. In later examples, we will focus on more complicated models which require sampling from the posterior.</p>
-<section id="step-1---pick-your-prior" class="level3" data-number="8.2.1"><h3 data-number="8.2.1" class="anchored" data-anchor-id="step-1---pick-your-prior">
-<span class="header-section-number">8.2.1</span> Step 1 - Pick your prior</h3>
+<section id="step-1---pick-your-prior" class="level3" data-number="9.2.1"><h3 data-number="9.2.1" class="anchored" data-anchor-id="step-1---pick-your-prior">
+<span class="header-section-number">9.2.1</span> Step 1 - Pick your prior</h3>
 <p>First, we define what our prior expectations are for the proportion of yellow candies. For a dichotomous outcome like this (yellow or not yellow), we can model the prior as a beta distribution. There are only two parameters to set: <em>a</em> and <em>b</em>.</p>
 <p>Explore changing the parameters and their impact on the distribution, but here are a few observations to orient yourself:</p>
 <ol type="1">
@@ -391,8 +397,8 @@ window.Quarto = {
 <li><p>Using the same number for both centers the distribution on 0.5, with increasing numbers showing greater certainty (higher peak).</p></li>
 <li><p>If parameter a &lt; b, proportions less than 0.5 are more likely.</p></li>
 <li><p>If parameter b &gt; a, proportions higher than 0.5 are more likely.</p></li>
-</ol></section><section id="step-2---update-to-a-posterior" class="level3" data-number="8.2.2"><h3 data-number="8.2.2" class="anchored" data-anchor-id="step-2---update-to-a-posterior">
-<span class="header-section-number">8.2.2</span> Step 2 - Update-to-a-posterior</h3>
+</ol></section><section id="step-2---update-to-a-posterior" class="level3" data-number="9.2.2"><h3 data-number="9.2.2" class="anchored" data-anchor-id="step-2---update-to-a-posterior">
+<span class="header-section-number">9.2.2</span> Step 2 - Update-to-a-posterior</h3>
 <p>Now we have a prior, its time to collect some data and update to the posterior. In the lecture, we will play around with a practical demonstration of testing simulated rigged coins, so set your prior by entering a value for <em>a</em> and <em>b</em>, and we will see what the data tell us. There are two boxes for entering data: the number of yellows you observe (heads in our example), and the number of non-yellows (tails in our example) you observe.</p>
 <p>If you are trying this on your own, explore changing the prior and data to see how it affects the posterior distribution. For some inspiration and key observations:</p>
 <ol type="1">
@@ -401,8 +407,8 @@ window.Quarto = {
 </ol>
 <p>In this demonstration, note we only have two curves for the prior and posterior, without the likelihood. When the prior and posterior come from the same distribution family, it is known as a <a href="https://en.wikipedia.org/wiki/Conjugate_prior" target="_blank">conjugate prior</a>, and the beta distribution is one of the simplest. We are simply modelling the proportion of successes and failures (here yellows vs non-yellows).</p>
 <p>In section 4 of the app, you can also explore Bayes factors applied to this scenario, working out how much you should shift your belief in favour of the alternative hypothesis compared to the null (here, that the proportion is exactly 0.5).</p>
-</section></section><section id="Bayes-factors" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="Bayes-factors">
-<span class="header-section-number">8.3</span> The Logic Behind Bayes Factors</h2>
+</section></section><section id="Bayes-factors" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="Bayes-factors">
+<span class="header-section-number">9.3</span> The Logic Behind Bayes Factors</h2>
 <p>To demonstrate the logic behind Bayes factors, we will play around with <a href="https://rpsychologist.com/d3/bayes/" target="_blank">this interactive app by Magnusson</a>. Building on <a href="#bayes-logic">section 1</a>, the visualisation shows a Bayesian two-sample t-test, demonstrating a more complicated application compared to the beta distribution and proportions. The visualisation shows both Bayesian estimation through the posterior distribution and 95% Highest Density Interval (HDI), and Bayes factors against a null hypothesis centered on 0. We will use this visualisation to reinforce what we learnt earlier and extend it to understanding the logic behind Bayes factors.</p>
 <p>There are three settings on the visualisation, :</p>
 <ol type="1">
@@ -474,10 +480,10 @@ Explain the answer to question 2
 </div>
 </div>
 </div>
-</section><section id="Bayes-independent-samples" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="Bayes-independent-samples">
-<span class="header-section-number">8.4</span> Bayes factors for two independent samples</h2>
-<section id="guided-example-bastian-et-al.-2014" class="level3" data-number="8.4.1"><h3 data-number="8.4.1" class="anchored" data-anchor-id="guided-example-bastian-et-al.-2014">
-<span class="header-section-number">8.4.1</span> Guided example (Bastian et al., 2014)</h3>
+</section><section id="Bayes-independent-samples" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="Bayes-independent-samples">
+<span class="header-section-number">9.4</span> Bayes factors for two independent samples</h2>
+<section id="guided-example-bastian-et-al.-2014" class="level3" data-number="9.4.1"><h3 data-number="9.4.1" class="anchored" data-anchor-id="guided-example-bastian-et-al.-2014">
+<span class="header-section-number">9.4.1</span> Guided example (Bastian et al., 2014)</h3>
 <p>This is the first time we have used R in this chapter, so we need to load some packages and the data for this task. If you do not have any of the packages, make sure you install them first.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(BayesFactor)</span>
@@ -567,8 +573,8 @@ Note
 </div>
 <p>With the medium prior, we have a Bayes factor of 1.45 (<span class="math inline">\(BF\)</span><span class="math inline">\(_1\)</span><span class="math inline">\(_0\)</span> = 1.45), suggesting the experimental hypothesis is 1.45 times more likely than the point null hypothesis. By the guidelines from Wagenmakers et al.&nbsp;(2011), this is quite weak anecdotal evidence.</p>
 <p>There is also a percentage next to the Bayes factor. This is the proportional error estimate and tells you the error in estimating the Bayes factor value. Less error is better and a rough rule of thumb is less than 20% is acceptable <span class="citation" data-cites="van_doorn_jasp_2021">(<a href="references.html#ref-van_doorn_jasp_2021" role="doc-biblioref">Doorn et al., 2021</a>)</span>. In this example, the error estimate is 0.01%, so very small. This means we could expect the Bayes factor to range between 1.44 and 1.45 which makes little impact on the conclusion.</p>
-<section id="robustness-check" class="level4" data-number="8.4.1.1"><h4 data-number="8.4.1.1" class="anchored" data-anchor-id="robustness-check">
-<span class="header-section-number">8.4.1.1</span> Robustness check</h4>
+<section id="robustness-check" class="level4" data-number="9.4.1.1"><h4 data-number="9.4.1.1" class="anchored" data-anchor-id="robustness-check">
+<span class="header-section-number">9.4.1.1</span> Robustness check</h4>
 <p>This will be more important for modelling in the next chapter, but it is good practice to check the sensitivity of your results to your choice of prior. You would exercise caution if your choice of prior affects the conclusions you are making, such as weak evidence turning into strong evidence. If the qualitative conclusions do not change across plausible priors, then your findings are robust. For example, the Bayes factor for the Bastian et al.&nbsp;example decreases as the prior r scale increases.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -597,8 +603,8 @@ Note
 </div>
 </div>
 <p>A wider prior expresses less certainty about the size of the effect; larger effects become more plausible. Remember Bayes factors quantify the degree of belief in one hypothesis compared to another. As the evidence is quite weak, the Bayes factor decreases in favour of the null under weaker priors as you are expressing less certainty about the size of the effect.</p>
-</section><section id="one--vs-two-tailed-tests" class="level4" data-number="8.4.1.2"><h4 data-number="8.4.1.2" class="anchored" data-anchor-id="one--vs-two-tailed-tests">
-<span class="header-section-number">8.4.1.2</span> One- vs two-tailed tests</h4>
+</section><section id="one--vs-two-tailed-tests" class="level4" data-number="9.4.1.2"><h4 data-number="9.4.1.2" class="anchored" data-anchor-id="one--vs-two-tailed-tests">
+<span class="header-section-number">9.4.1.2</span> One- vs two-tailed tests</h4>
 <p>The authors were pretty convinced that the pain group would score higher on the bonding rating than the control group, so lets see what happens with a one-tailed test to see how its done. We need to define the <code>nullInterval</code> argument to state we only consider negative effects.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -652,8 +658,8 @@ Bayes factor type: BFindepSample, JZS</code></pre>
 </div>
 <p>For this object, we already know there is anecdotal evidence in favour of the experimental hypothesis, so this is just telling us the null is less likely than the experimental hypothesis (<span class="math inline">\(BF\)</span><span class="math inline">\(_0\)</span><span class="math inline">\(_1\)</span> = 0.69). This will come in handy when you specifically want to test the null though.</p>
 <p>For the purposes of the rest of the demonstration, we will stick with our original object with a two-tailed test to see how we can interpret inconclusive results. In the original study, the pain group scored significantly higher than the control group, but the p-value was .048, so hardly convincing evidence. With Bayes factors, at least we can see we ideally need more data to make a decision.</p>
-</section><section id="parameter-estimation" class="level4" data-number="8.4.1.3"><h4 data-number="8.4.1.3" class="anchored" data-anchor-id="parameter-estimation">
-<span class="header-section-number">8.4.1.3</span> Parameter estimation</h4>
+</section><section id="parameter-estimation" class="level4" data-number="9.4.1.3"><h4 data-number="9.4.1.3" class="anchored" data-anchor-id="parameter-estimation">
+<span class="header-section-number">9.4.1.3</span> Parameter estimation</h4>
 <p>We will spend more time on this process in the next chapter, but a Bayes factor on its own is normally not enough. It’s equivalent to null hypothesis significance testing in telling us whether we have evidence for an effect or not. We also want an estimate of the effect size and the precision around it. Within the <pkg>BayesFactor</pkg> package, there is a function to sample from the posterior distribution using MCMC sampling. We need to pass the t-test object into the <code>posterior()</code> function, and include the number of iterations we want. We will use 10,000 here. Depending on your computer, this may take a few seconds.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -892,8 +898,8 @@ Warning
 </div>
 </div>
 <p>There are a bunch of tests and tricks we have not covered here, so check out the <a href="https://richarddmorey.github.io/BayesFactor/" target="_blank">Bayesfactor package page online</a> for a series of vignettes.</p>
-</section><section id="reporting-your-findings" class="level4" data-number="8.4.1.4"><h4 data-number="8.4.1.4" class="anchored" data-anchor-id="reporting-your-findings">
-<span class="header-section-number">8.4.1.4</span> Reporting your findings</h4>
+</section><section id="reporting-your-findings" class="level4" data-number="9.4.1.4"><h4 data-number="9.4.1.4" class="anchored" data-anchor-id="reporting-your-findings">
+<span class="header-section-number">9.4.1.4</span> Reporting your findings</h4>
 <p>When reporting your findings, <span class="citation" data-cites="van_doorn_jasp_2021">Doorn et al. (<a href="references.html#ref-van_doorn_jasp_2021" role="doc-biblioref">2021</a>)</span> suggest several key pieces of information to provide your reader:</p>
 <ol type="1">
 <li><p>A complete description and justification of your prior;</p></li>
@@ -903,8 +909,8 @@ Warning
 <li><p>Your parameter estimate (effect size) including the posterior mean or median and its 95% credible / highest density interval (HDI).</p></li>
 </ol>
 <p>Where possible, try and provide the reader with the results in graphical and numerical form, such as including a plot of the posterior distribution. This will be easier in the next chapter as some of the plotting helper functions do not work nicely with the <pkg>BayesFactor</pkg> package.</p>
-</section></section><section id="Schroeder-activity" class="level3" data-number="8.4.2"><h3 data-number="8.4.2" class="anchored" data-anchor-id="Schroeder-activity">
-<span class="header-section-number">8.4.2</span> Independent activity (Schroeder &amp; Epley, 2015)</h3>
+</section></section><section id="Schroeder-activity" class="level3" data-number="9.4.2"><h3 data-number="9.4.2" class="anchored" data-anchor-id="Schroeder-activity">
+<span class="header-section-number">9.4.2</span> Independent activity (Schroeder &amp; Epley, 2015)</h3>
 <p>For an independent activity, we will use data from <span class="citation" data-cites="schroeder_sound_2015">Schroeder &amp; Epley (<a href="references.html#ref-schroeder_sound_2015" role="doc-biblioref">2015</a>)</span>. The aim of the study was to investigate whether delivering a short speech to a potential employer would be more effective at landing you a job than writing the speech down and the employer reading it themselves. Thirty-nine professional recruiters were randomly assigned to receive a job application speech as either a transcript for them to read, or an audio recording of the applicant reading the speech.</p>
 <p>The recruiters then rated the applicants on perceived intellect, their impression of the applicant, and whether they would recommend hiring the candidate. All ratings were originally on a Likert scale ranging from 0 (low intellect, impression etc.) to 10 (high impression, recommendation etc.), with the final value representing the mean across several items.</p>
 <p>For this example, we will focus on the hire rating (variable <code>"Hire_Rating"</code> to see whether the audio condition would lead to higher ratings than the transcript condition (variable <code>"CONDITION"</code>).</p>
@@ -1106,10 +1112,10 @@ Bayes factor type: BFindepSample, JZS</code></pre>
 </div>
 </div>
 </div>
-</section></section><section id="Bayes-dependent-samples" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="Bayes-dependent-samples">
-<span class="header-section-number">8.5</span> Bayes factors for two dependent samples</h2>
-<section id="guided-example-mehr-et-al.-2016" class="level3" data-number="8.5.1"><h3 data-number="8.5.1" class="anchored" data-anchor-id="guided-example-mehr-et-al.-2016">
-<span class="header-section-number">8.5.1</span> Guided example (Mehr et al., 2016)</h3>
+</section></section><section id="Bayes-dependent-samples" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="Bayes-dependent-samples">
+<span class="header-section-number">9.5</span> Bayes factors for two dependent samples</h2>
+<section id="guided-example-mehr-et-al.-2016" class="level3" data-number="9.5.1"><h3 data-number="9.5.1" class="anchored" data-anchor-id="guided-example-mehr-et-al.-2016">
+<span class="header-section-number">9.5.1</span> Guided example (Mehr et al., 2016)</h3>
 <p>For a paired samples t-test, the process is identical to the independent samples t-test apart from defining the variables. So, we will demonstrate a full example like before with less commentary, then you have an independent data set to test your understanding.</p>
 <p>The next study we are going to look at is by <span class="citation" data-cites="mehr_for_2016">Mehr et al. (<a href="references.html#ref-mehr_for_2016" role="doc-biblioref">2016</a>)</span>. They were interested in whether singing to infants conveyed important information about social affiliation. Infants become familiar with melodies that are repeated in their specific culture. The authors were interested in whether a novel person (someone they had never seen before) could signal to the child that they are a member of the same social group and attract their attention by singing a familiar song to them.</p>
 <p>Mehr et al.&nbsp;(2016) invited 32 infants and their parents to participate in a repeated measures experiment. First, the parents were asked to repeatedly sing a previously unfamiliar song to the infants for two weeks. When they returned to the lab, they measured the baseline gaze (where they were looking) of the infants towards two unfamiliar people on a screen who were just silently smiling at them. This was measured as the proportion of time looking at the individual who would later sing the familiar song (0.5 would indicate half the time was spent looking at the familiar singer. Values closer to one indicate looking at them for longer). The two silent people on the screen then took it in turns to sing a lullaby. One of the people sung the song that the infant’s parents had been told to sing for the previous two weeks, and the other one sang a song with the same lyrics and rhythm, but with a different melody. Mehr et al.&nbsp;(2016) then repeated the gaze procedure to the two people at the start of the experiment to provide a second measure of gaze as a proportion of looking at the familiar singer.</p>
@@ -1267,8 +1273,8 @@ Try this
 </div>
 </div>
 <p>We can see here the median posterior estimate of the mean difference is -.07 with a 95% credible interval ranging from -.13 to -.01. As the dependent variable is measured as a proportion of gaze time, infants looked at the familiar singer for 7% (1-13% for the 95% credible interval) longer at test than at baseline. This means we can exclude 0 from the likely effects, but we still only have anecdotal evidence in favour of the experimental hypothesis compared to the null.</p>
-</section><section id="Zwaan-activity" class="level3" data-number="8.5.2"><h3 data-number="8.5.2" class="anchored" data-anchor-id="Zwaan-activity">
-<span class="header-section-number">8.5.2</span> Independent activity (Zwaan et al., 2020)</h3>
+</section><section id="Zwaan-activity" class="level3" data-number="9.5.2"><h3 data-number="9.5.2" class="anchored" data-anchor-id="Zwaan-activity">
+<span class="header-section-number">9.5.2</span> Independent activity (Zwaan et al., 2020)</h3>
 <p>For this independent activity, we have data from <span class="citation" data-cites="zwaan_participant_2018">Zwaan et al. (<a href="references.html#ref-zwaan_participant_2018" role="doc-biblioref">2018</a>)</span> who wanted to see how replicable experiments from cognitive psychology are. For this exercise, we will explore the <a href="https://en.wikipedia.org/wiki/Eriksen_flanker_task" target="_blank">flanker task</a>.</p>
 <p>In short, we have two conditions: congruent and incongruent. In congruent trials, five symbols like arrows are the same and participants must identify the central symbol with a keyboard response. In incongruent trials, the four outer symbols are different to the central symbol. Typically, we find participants respond faster to congruent trials than incongruent trials. The dependent variable here is the mean response time in milliseconds (ms).</p>
 <p>We want to know whether response times are faster to congruent trials (<code>session1_responsecongruent</code>) than incongruent trials (<code>session1_incongruent</code>). Zwaan et al.&nbsp;measured a few things like changing the stimuli and repeating the task in two sessions, so we will just focus on the first session for this example.</p>
@@ -1453,10 +1459,10 @@ Bayes factor type: BFoneSample, JZS</code></pre>
 </div>
 </div>
 </div>
-</section></section><section id="ROPE" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="ROPE">
-<span class="header-section-number">8.6</span> Region of Practical Equivalence (ROPE)</h2>
-<section id="guided-example-for-two-independent-samples-bastian-et-al.-2014" class="level3" data-number="8.6.1"><h3 data-number="8.6.1" class="anchored" data-anchor-id="guided-example-for-two-independent-samples-bastian-et-al.-2014">
-<span class="header-section-number">8.6.1</span> Guided example for two independent samples (Bastian et al., 2014)</h3>
+</section></section><section id="ROPE" class="level2" data-number="9.6"><h2 data-number="9.6" class="anchored" data-anchor-id="ROPE">
+<span class="header-section-number">9.6</span> Region of Practical Equivalence (ROPE)</h2>
+<section id="guided-example-for-two-independent-samples-bastian-et-al.-2014" class="level3" data-number="9.6.1"><h3 data-number="9.6.1" class="anchored" data-anchor-id="guided-example-for-two-independent-samples-bastian-et-al.-2014">
+<span class="header-section-number">9.6.1</span> Guided example for two independent samples (Bastian et al., 2014)</h3>
 <p>In previous sections, we focused on the Bayesian approach to null hypothesis testing. We compared the alternative hypothesis to the null hypothesis and wanted to know how much we should shift our beliefs. However, there are times when comparing against a point null is uninformative. The same advice applies to frequentist statistics where you can use equivalence testing <span class="citation" data-cites="harms_making_2018 lakens_improving_2020 lakens_equivalence_2018">(<a href="references.html#ref-harms_making_2018" role="doc-biblioref">Harms &amp; Lakens, 2018</a>; <a href="references.html#ref-lakens_equivalence_2018" role="doc-biblioref">Lakens et al., 2018</a>, <a href="references.html#ref-lakens_improving_2020" role="doc-biblioref">2020</a>)</span> . In this setup, you set two boundaries representing your smallest effect size of interest (SESOI) and conduct two one-sided tests: one comparing your sample mean (difference) to the upper bound and one comparing your sample mean (difference) to the lower bound. If both tests are significant, you can conclude the mean was within your bounds and it is practically equivalent to zero.</p>
 <p>In a Bayesian framework, we follow a similar approach by setting an upper and lower bound for the interval we consider practically or theoretically meaningful. This is known as the Region of Practical Equivalence (ROPE). However, we do not perform a two one-sided test, we directly compare the posterior distribution to the ROPE and interpret how much of the ROPE captures our 95% credible interval. This creates three decisions <span class="citation" data-cites="kruschke_bayesian_2018-1">(<a href="references.html#ref-kruschke_bayesian_2018-1" role="doc-biblioref">Kruschke &amp; Liddell, 2018a</a>)</span> instead of comparing the experimental hypothesis to the point null:</p>
 <ol type="1">
@@ -1687,8 +1693,8 @@ Bayes factor type: BFoneSample, JZS</code></pre>
 </div>
 <p>Note how changing the ROPE range changes the values for every parameter, so you will need to think which parameter you are interested in and what would be a justifiable ROPE for it. For this example, we will focus on the mean difference between groups (beta). Using a ROPE of plus or minus 1, 99.26% of the 95% HDI is within the ROPE. Its so close, but it falls in the third decision from above where we need more data to make a decision. The lower bound of the HDI is -1.03, so it extends just outside our ROPE region.</p>
 <p>Compared to the standard Bayes factor where we had weak evidence in favour of the alternative hypothesis compared to the point null, using the ROPE approach means we also have an inconclusive decision, but our effect size is almost too small to be practically meaningful.</p>
-</section><section id="independent-activity-for-two-independent-samples-schroeder-epley-2014" class="level3" data-number="8.6.2"><h3 data-number="8.6.2" class="anchored" data-anchor-id="independent-activity-for-two-independent-samples-schroeder-epley-2014">
-<span class="header-section-number">8.6.2</span> Independent activity for two independent samples (Schroeder &amp; Epley, 2014)</h3>
+</section><section id="independent-activity-for-two-independent-samples-schroeder-epley-2014" class="level3" data-number="9.6.2"><h3 data-number="9.6.2" class="anchored" data-anchor-id="independent-activity-for-two-independent-samples-schroeder-epley-2014">
+<span class="header-section-number">9.6.2</span> Independent activity for two independent samples (Schroeder &amp; Epley, 2014)</h3>
 <p>For this activity, you will need the objects you created in the <a href="#Schroeder-activity">Schroeder and Epley task</a> for the independent activity. Remember it is based on a one-tailed t-test as we expected higher ratings for the audio group compared to the transcript group. You will need the samples from the posterior as the only thing you will need to change is the arguments you use in the <code>describe_posterior()</code> function.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1839,8 +1845,8 @@ Solution
 </div>
 </div>
 </div>
-</section><section id="guided-example-for-two-dependent-samples-mehr-et-al.-2014" class="level3" data-number="8.6.3"><h3 data-number="8.6.3" class="anchored" data-anchor-id="guided-example-for-two-dependent-samples-mehr-et-al.-2014">
-<span class="header-section-number">8.6.3</span> Guided example for two dependent samples (Mehr et al., 2014)</h3>
+</section><section id="guided-example-for-two-dependent-samples-mehr-et-al.-2014" class="level3" data-number="9.6.3"><h3 data-number="9.6.3" class="anchored" data-anchor-id="guided-example-for-two-dependent-samples-mehr-et-al.-2014">
+<span class="header-section-number">9.6.3</span> Guided example for two dependent samples (Mehr et al., 2014)</h3>
 <p>For the Mehr et al.&nbsp;(2014) data, the outcome is a little easier to interpret for an unstandardised effect than the two between-subjects examples. They compared infants’ proportion of gaze duration spent on the model that sang the familiar song and wanted to know whether this would increase at test compared to baseline. As the proportion of gaze is bound between 0 (none of the time) to 1 (all of the time), we might consider a 5% (0.05) increase or decrease as theoretically meaningful if we are not very certain the test will be higher than baseline.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">describe_posterior</span>(Mehr_samples,</span>
@@ -1933,8 +1939,8 @@ Solution
 </div>
 </div>
 <p>Our observed mean difference was a posterior median of -0.07, 95% CI = [-.13, -0.01], which is 27.50% within the ROPE region of plus or minus 0.05 points. We are not far off ruling out our ROPE, but we still need more data to make a decision. Hopefully, you can see by this point, many of these studies have more inconclusive conclusions when analysed through a Bayesian framework than the original frequentist statistics.</p>
-</section><section id="independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" class="level3" data-number="8.6.4"><h3 data-number="8.6.4" class="anchored" data-anchor-id="independent-activity-for-two-dependent-samples-zwaan-et-al.-2018">
-<span class="header-section-number">8.6.4</span> Independent activity for two dependent samples (Zwaan et al., 2018)</h3>
+</section><section id="independent-activity-for-two-dependent-samples-zwaan-et-al.-2018" class="level3" data-number="9.6.4"><h3 data-number="9.6.4" class="anchored" data-anchor-id="independent-activity-for-two-dependent-samples-zwaan-et-al.-2018">
+<span class="header-section-number">9.6.4</span> Independent activity for two dependent samples (Zwaan et al., 2018)</h3>
 <p>For this activity, you will need the objects you created for the <a href="#Zwaan-activity">Zwaan et al.</a> independent activity. Remember it is based on a one-tailed t-test as we expected faster response times to congruent trials than incongruent trials. You will need the samples from the posterior as the only thing you will need to change is the arguments you use in the <code>describe_posterior()</code> function.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2072,8 +2078,8 @@ Solution
 </div>
 </div>
 </div>
-</section></section><section id="summary" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="summary">
-<span class="header-section-number">8.7</span> Summary</h2>
+</section></section><section id="summary" class="level2" data-number="9.7"><h2 data-number="9.7" class="anchored" data-anchor-id="summary">
+<span class="header-section-number">9.7</span> Summary</h2>
 <p>In this chapter, you learnt about hypothesis testing using a Bayesian framework. The first two activities explored the logic of Bayesian statistics to make inferences and how it can be used to test hypotheses when expressed as the Bayes factor. You then learnt how to perform Bayes factors applied to the simplest cases of two independent samples and two dependent samples. Bayes factors are a useful way of quantifying the evidence in favour of a hypotheses compared to a competing hypothesis. Bayesian statistics can still be used mindlessly, but hopefully you can see they provide the opportunity to move away from purely dichotomous thinking. Evidence that would be statistically significant (<em>p</em> &lt; .05) but close to alpha only represents anecdotal evidence.</p>
 <p>As with any new skill, practice is the best approach to becoming comfortable in applying your knowledge to novel scenario. Hopefully, you worked through the guided examples and tested your understanding on the independent activities.</p>
 <p>For further learning, we recommend the following resources relevant to this chapter:</p>
@@ -2548,7 +2554,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2580,29 +2597,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2610,7 +2605,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -2939,7 +2934,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03-02-estimation.html" class="pagination-link" aria-label="Bayesian modelling">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

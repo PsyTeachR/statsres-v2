@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
-<title>7&nbsp; Perspectives on group comparisons – Statistics and Research Design</title>
+<title>Statistics and Research Design - 8&nbsp; Perspectives on group comparisons</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -105,7 +105,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
-</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -140,13 +140,13 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-08-gar-gpcomp.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-08-gar-gpcomp.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -177,7 +177,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General linear model</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -212,13 +212,19 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Graphical representations and robust statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -226,13 +232,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
   </div>
 </li>
       </ul>
@@ -241,7 +247,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayesian modelling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -249,13 +255,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -268,9 +274,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -292,62 +298,62 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#chapter-preparation" id="toc-chapter-preparation" class="nav-link active" data-scroll-target="#chapter-preparation"><span class="header-section-number">7.1</span> Chapter preparation</a>
+<a href="#chapter-preparation" id="toc-chapter-preparation" class="nav-link active" data-scroll-target="#chapter-preparation"><span class="header-section-number">8.1</span> Chapter preparation</a>
   <ul class="collapse">
-<li><a href="#organising-your-files-and-project-for-the-chapter" id="toc-organising-your-files-and-project-for-the-chapter" class="nav-link" data-scroll-target="#organising-your-files-and-project-for-the-chapter"><span class="header-section-number">7.1.1</span> Organising your files and project for the chapter</a></li>
+<li><a href="#organising-your-files-and-project-for-the-chapter" id="toc-organising-your-files-and-project-for-the-chapter" class="nav-link" data-scroll-target="#organising-your-files-and-project-for-the-chapter"><span class="header-section-number">8.1.1</span> Organising your files and project for the chapter</a></li>
   </ul>
 </li>
-  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies"><span class="header-section-number">7.2</span> Dependencies</a></li>
+  <li><a href="#dependencies" id="toc-dependencies" class="nav-link" data-scroll-target="#dependencies"><span class="header-section-number">8.2</span> Dependencies</a></li>
   <li>
-<a href="#example-within-x-between-design" id="toc-example-within-x-between-design" class="nav-link" data-scroll-target="#example-within-x-between-design"><span class="header-section-number">7.3</span> Example: within x between design</a>
+<a href="#example-within-x-between-design" id="toc-example-within-x-between-design" class="nav-link" data-scroll-target="#example-within-x-between-design"><span class="header-section-number">8.3</span> Example: within x between design</a>
   <ul class="collapse">
-<li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">7.3.1</span> Load data</a></li>
-  <li><a href="#bar-graph" id="toc-bar-graph" class="nav-link" data-scroll-target="#bar-graph"><span class="header-section-number">7.3.2</span> Bar graph</a></li>
-  <li><a href="#d-scatterplots-stripcharts-of-differences" id="toc-d-scatterplots-stripcharts-of-differences" class="nav-link" data-scroll-target="#d-scatterplots-stripcharts-of-differences"><span class="header-section-number">7.3.3</span> 1D scatterplots = stripcharts of differences</a></li>
-  <li><a href="#stripchart-linked-observations" id="toc-stripchart-linked-observations" class="nav-link" data-scroll-target="#stripchart-linked-observations"><span class="header-section-number">7.3.4</span> Stripchart + linked observations</a></li>
-  <li><a href="#scatterplot-of-paired-observations" id="toc-scatterplot-of-paired-observations" class="nav-link" data-scroll-target="#scatterplot-of-paired-observations"><span class="header-section-number">7.3.5</span> Scatterplot of paired observations</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#examples-of-standard-group-statistics" id="toc-examples-of-standard-group-statistics" class="nav-link" data-scroll-target="#examples-of-standard-group-statistics"><span class="header-section-number">7.4</span> Examples of standard group statistics</a>
-  <ul class="collapse">
-<li><a href="#x-2-anova" id="toc-x-2-anova" class="nav-link" data-scroll-target="#x-2-anova"><span class="header-section-number">7.4.1</span> 2 x 2 ANOVA</a></li>
-  <li><a href="#group-1-t-test" id="toc-group-1-t-test" class="nav-link" data-scroll-target="#group-1-t-test"><span class="header-section-number">7.4.2</span> Group 1 t-test</a></li>
-  <li><a href="#group-2-t-test" id="toc-group-2-t-test" class="nav-link" data-scroll-target="#group-2-t-test"><span class="header-section-number">7.4.3</span> Group 2 t-test</a></li>
-  <li><a href="#make-final-figure-combining-4-panels" id="toc-make-final-figure-combining-4-panels" class="nav-link" data-scroll-target="#make-final-figure-combining-4-panels"><span class="header-section-number">7.4.4</span> Make final figure combining 4 panels</a></li>
+<li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">8.3.1</span> Load data</a></li>
+  <li><a href="#bar-graph" id="toc-bar-graph" class="nav-link" data-scroll-target="#bar-graph"><span class="header-section-number">8.3.2</span> Bar graph</a></li>
+  <li><a href="#d-scatterplots-stripcharts-of-differences" id="toc-d-scatterplots-stripcharts-of-differences" class="nav-link" data-scroll-target="#d-scatterplots-stripcharts-of-differences"><span class="header-section-number">8.3.3</span> 1D scatterplots = stripcharts of differences</a></li>
+  <li><a href="#stripchart-linked-observations" id="toc-stripchart-linked-observations" class="nav-link" data-scroll-target="#stripchart-linked-observations"><span class="header-section-number">8.3.4</span> Stripchart + linked observations</a></li>
+  <li><a href="#scatterplot-of-paired-observations" id="toc-scatterplot-of-paired-observations" class="nav-link" data-scroll-target="#scatterplot-of-paired-observations"><span class="header-section-number">8.3.5</span> Scatterplot of paired observations</a></li>
   </ul>
 </li>
   <li>
-<a href="#inferences-for-all-pairwise-differences" id="toc-inferences-for-all-pairwise-differences" class="nav-link" data-scroll-target="#inferences-for-all-pairwise-differences"><span class="header-section-number">7.5</span> Inferences for all pairwise differences</a>
+<a href="#examples-of-standard-group-statistics" id="toc-examples-of-standard-group-statistics" class="nav-link" data-scroll-target="#examples-of-standard-group-statistics"><span class="header-section-number">8.4</span> Examples of standard group statistics</a>
   <ul class="collapse">
-<li><a href="#more-details-about-inferences-on-all-pairwise-differences" id="toc-more-details-about-inferences-on-all-pairwise-differences" class="nav-link" data-scroll-target="#more-details-about-inferences-on-all-pairwise-differences"><span class="header-section-number">7.5.1</span> More details about inferences on all pairwise differences</a></li>
+<li><a href="#x-2-anova" id="toc-x-2-anova" class="nav-link" data-scroll-target="#x-2-anova"><span class="header-section-number">8.4.1</span> 2 x 2 ANOVA</a></li>
+  <li><a href="#group-1-t-test" id="toc-group-1-t-test" class="nav-link" data-scroll-target="#group-1-t-test"><span class="header-section-number">8.4.2</span> Group 1 t-test</a></li>
+  <li><a href="#group-2-t-test" id="toc-group-2-t-test" class="nav-link" data-scroll-target="#group-2-t-test"><span class="header-section-number">8.4.3</span> Group 2 t-test</a></li>
+  <li><a href="#make-final-figure-combining-4-panels" id="toc-make-final-figure-combining-4-panels" class="nav-link" data-scroll-target="#make-final-figure-combining-4-panels"><span class="header-section-number">8.4.4</span> Make final figure combining 4 panels</a></li>
   </ul>
 </li>
   <li>
-<a href="#two-dependent-groups-learning-experiment" id="toc-two-dependent-groups-learning-experiment" class="nav-link" data-scroll-target="#two-dependent-groups-learning-experiment"><span class="header-section-number">7.6</span> Two dependent groups: learning experiment</a>
+<a href="#inferences-for-all-pairwise-differences" id="toc-inferences-for-all-pairwise-differences" class="nav-link" data-scroll-target="#inferences-for-all-pairwise-differences"><span class="header-section-number">8.5</span> Inferences for all pairwise differences</a>
   <ul class="collapse">
-<li><a href="#simulate-data-from-n-participants" id="toc-simulate-data-from-n-participants" class="nav-link" data-scroll-target="#simulate-data-from-n-participants"><span class="header-section-number">7.6.1</span> Simulate data from n participants</a></li>
-  <li><a href="#illustrate-results" id="toc-illustrate-results" class="nav-link" data-scroll-target="#illustrate-results"><span class="header-section-number">7.6.2</span> Illustrate results</a></li>
-  <li><a href="#d-scatterplot-stripchart-of-differences" id="toc-d-scatterplot-stripchart-of-differences" class="nav-link" data-scroll-target="#d-scatterplot-stripchart-of-differences"><span class="header-section-number">7.6.3</span> 1D scatterplot = stripchart of differences</a></li>
+<li><a href="#more-details-about-inferences-on-all-pairwise-differences" id="toc-more-details-about-inferences-on-all-pairwise-differences" class="nav-link" data-scroll-target="#more-details-about-inferences-on-all-pairwise-differences"><span class="header-section-number">8.5.1</span> More details about inferences on all pairwise differences</a></li>
   </ul>
 </li>
-  <li><a href="#compare-marginals" id="toc-compare-marginals" class="nav-link" data-scroll-target="#compare-marginals"><span class="header-section-number">7.7</span> Compare marginals</a></li>
   <li>
-<a href="#quantify-within-participant-differences" id="toc-quantify-within-participant-differences" class="nav-link" data-scroll-target="#quantify-within-participant-differences"><span class="header-section-number">7.8</span> Quantify within participant differences</a>
+<a href="#two-dependent-groups-learning-experiment" id="toc-two-dependent-groups-learning-experiment" class="nav-link" data-scroll-target="#two-dependent-groups-learning-experiment"><span class="header-section-number">8.6</span> Two dependent groups: learning experiment</a>
   <ul class="collapse">
-<li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">7.8.1</span> Summary statistics</a></li>
-  <li><a href="#bootstrap-test" id="toc-bootstrap-test" class="nav-link" data-scroll-target="#bootstrap-test"><span class="header-section-number">7.8.2</span> Bootstrap test</a></li>
-  <li><a href="#pdiff-0" id="toc-pdiff-0" class="nav-link" data-scroll-target="#pdiff-0"><span class="header-section-number">7.8.3</span> <span class="math inline">\(P(diff &gt; 0)\)</span></a></li>
-  <li><a href="#pdiff-0-confidence-interval" id="toc-pdiff-0-confidence-interval" class="nav-link" data-scroll-target="#pdiff-0-confidence-interval"><span class="header-section-number">7.8.4</span> <span class="math inline">\(P(diff &gt; 0)\)</span> + confidence interval</a></li>
+<li><a href="#simulate-data-from-n-participants" id="toc-simulate-data-from-n-participants" class="nav-link" data-scroll-target="#simulate-data-from-n-participants"><span class="header-section-number">8.6.1</span> Simulate data from n participants</a></li>
+  <li><a href="#illustrate-results" id="toc-illustrate-results" class="nav-link" data-scroll-target="#illustrate-results"><span class="header-section-number">8.6.2</span> Illustrate results</a></li>
+  <li><a href="#d-scatterplot-stripchart-of-differences" id="toc-d-scatterplot-stripchart-of-differences" class="nav-link" data-scroll-target="#d-scatterplot-stripchart-of-differences"><span class="header-section-number">8.6.3</span> 1D scatterplot = stripchart of differences</a></li>
   </ul>
 </li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7.9</span> References</a></li>
+  <li><a href="#compare-marginals" id="toc-compare-marginals" class="nav-link" data-scroll-target="#compare-marginals"><span class="header-section-number">8.7</span> Compare marginals</a></li>
+  <li>
+<a href="#quantify-within-participant-differences" id="toc-quantify-within-participant-differences" class="nav-link" data-scroll-target="#quantify-within-participant-differences"><span class="header-section-number">8.8</span> Quantify within participant differences</a>
+  <ul class="collapse">
+<li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">8.8.1</span> Summary statistics</a></li>
+  <li><a href="#bootstrap-test" id="toc-bootstrap-test" class="nav-link" data-scroll-target="#bootstrap-test"><span class="header-section-number">8.8.2</span> Bootstrap test</a></li>
+  <li><a href="#pdiff-0" id="toc-pdiff-0" class="nav-link" data-scroll-target="#pdiff-0"><span class="header-section-number">8.8.3</span> <span class="math inline">\(P(diff &gt; 0)\)</span></a></li>
+  <li><a href="#pdiff-0-confidence-interval" id="toc-pdiff-0-confidence-interval" class="nav-link" data-scroll-target="#pdiff-0-confidence-interval"><span class="header-section-number">8.8.4</span> <span class="math inline">\(P(diff &gt; 0)\)</span> + confidence interval</a></li>
+  </ul>
+</li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">8.9</span> References</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-08-gar-gpcomp.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-00-graph_robust.html">Graphical representations and robust statistics</a></li><li class="breadcrumb-item"><a href="./02-08-gar-gpcomp.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span>
+<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span>
 </h1>
 </div>
 
@@ -362,11 +368,11 @@ window.Quarto = {
   
 
 
-</header><section id="chapter-preparation" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="chapter-preparation">
-<span class="header-section-number">7.1</span> Chapter preparation</h2>
+</header><section id="chapter-preparation" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="chapter-preparation">
+<span class="header-section-number">8.1</span> Chapter preparation</h2>
 <p>In this chapter, we need a few different datasets and source files, so we will introduce them as we need them.</p>
-<section id="organising-your-files-and-project-for-the-chapter" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="organising-your-files-and-project-for-the-chapter">
-<span class="header-section-number">7.1.1</span> Organising your files and project for the chapter</h3>
+<section id="organising-your-files-and-project-for-the-chapter" class="level3" data-number="8.1.1"><h3 data-number="8.1.1" class="anchored" data-anchor-id="organising-your-files-and-project-for-the-chapter">
+<span class="header-section-number">8.1.1</span> Organising your files and project for the chapter</h3>
 <p>Before we can get started, you need to organise your files and project for the chapter, so your working directory is in order.</p>
 <ol type="1">
 <li><p>In your folder for statistics and research design <code>Stats_Research_Design</code>, create a new folder called <code>08_group_comparisons</code>.</p></li>
@@ -375,8 +381,8 @@ window.Quarto = {
 <li><p>Create a new Quarto document and give it a sensible title describing the chapter, such as <code>08 Perspectives on Group Comparisons</code>. Save the file in your <code>08_group_comparisons</code> folder.</p></li>
 </ol>
 <p>You are now ready to start working on the chapter!</p>
-</section></section><section id="dependencies" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="dependencies">
-<span class="header-section-number">7.2</span> Dependencies</h2>
+</section></section><section id="dependencies" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="dependencies">
+<span class="header-section-number">8.2</span> Dependencies</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tibble)</span>
@@ -392,17 +398,17 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12"></a><span class="fu">library</span>(plyr)</span>
 <span id="cb1-13"><a href="#cb1-13"></a><span class="fu">library</span>(cowplot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="example-within-x-between-design" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="example-within-x-between-design">
-<span class="header-section-number">7.3</span> Example: within x between design</h2>
+</section><section id="example-within-x-between-design" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="example-within-x-between-design">
+<span class="header-section-number">8.3</span> Example: within x between design</h2>
 <p>The example is from a 2016 editorial published in the <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ejn.13400">European Journal of Neuroscience</a>.</p>
-<section id="load-data" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="load-data">
-<span class="header-section-number">7.3.1</span> Load data</h3>
+<section id="load-data" class="level3" data-number="8.3.1"><h3 data-number="8.3.1" class="anchored" data-anchor-id="load-data">
+<span class="header-section-number">8.3.1</span> Load data</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/ejn_data.csv"</span>,<span class="at">header=</span>T)</span>
 <span id="cb2-2"><a href="#cb2-2"></a>data<span class="sc">$</span>participant <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>participant)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="bar-graph" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="bar-graph">
-<span class="header-section-number">7.3.2</span> Bar graph</h3>
+</section><section id="bar-graph" class="level3" data-number="8.3.2"><h3 data-number="8.3.2" class="anchored" data-anchor-id="bar-graph">
+<span class="header-section-number">8.3.2</span> Bar graph</h3>
 <p>Making a bar graph in <code>ggplot2</code> is actually harder than making a more informative alternative.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>datas <span class="ot">&lt;-</span> <span class="fu">summarySE</span>(data, <span class="at">measurevar=</span><span class="st">"value"</span>, <span class="at">groupvars=</span><span class="fu">c</span>(<span class="st">"group"</span>,<span class="st">"condition"</span>))</span>
@@ -436,8 +442,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="d-scatterplots-stripcharts-of-differences" class="level3" data-number="7.3.3"><h3 data-number="7.3.3" class="anchored" data-anchor-id="d-scatterplots-stripcharts-of-differences">
-<span class="header-section-number">7.3.3</span> 1D scatterplots = stripcharts of differences</h3>
+</section><section id="d-scatterplots-stripcharts-of-differences" class="level3" data-number="8.3.3"><h3 data-number="8.3.3" class="anchored" data-anchor-id="d-scatterplots-stripcharts-of-differences">
+<span class="header-section-number">8.3.3</span> 1D scatterplots = stripcharts of differences</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>value <span class="ot">&lt;-</span> data<span class="sc">$</span>value[data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition2"</span>]<span class="sc">-</span>data<span class="sc">$</span>value[data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition1"</span>]</span>
 <span id="cb4-2"><a href="#cb4-2"></a>participant <span class="ot">&lt;-</span> data<span class="sc">$</span>participant[data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition2"</span>]</span>
@@ -471,8 +477,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="stripchart-linked-observations" class="level3" data-number="7.3.4"><h3 data-number="7.3.4" class="anchored" data-anchor-id="stripchart-linked-observations">
-<span class="header-section-number">7.3.4</span> Stripchart + linked observations</h3>
+</section><section id="stripchart-linked-observations" class="level3" data-number="8.3.4"><h3 data-number="8.3.4" class="anchored" data-anchor-id="stripchart-linked-observations">
+<span class="header-section-number">8.3.4</span> Stripchart + linked observations</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span>condition, <span class="at">y=</span>value, <span class="at">fill=</span>condition, <span class="at">group=</span>participant,<span class="at">shape=</span>group)) <span class="sc">+</span> <span class="fu">theme_linedraw</span>() <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth=</span><span class="dv">1</span>, <span class="at">alpha=</span><span class="dv">1</span>) <span class="sc">+</span></span>
@@ -503,8 +509,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section><section id="scatterplot-of-paired-observations" class="level3" data-number="7.3.5"><h3 data-number="7.3.5" class="anchored" data-anchor-id="scatterplot-of-paired-observations">
-<span class="header-section-number">7.3.5</span> Scatterplot of paired observations</h3>
+</section><section id="scatterplot-of-paired-observations" class="level3" data-number="8.3.5"><h3 data-number="8.3.5" class="anchored" data-anchor-id="scatterplot-of-paired-observations">
+<span class="header-section-number">8.3.5</span> Scatterplot of paired observations</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>condition1 <span class="ot">&lt;-</span> data<span class="sc">$</span>value[data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition1"</span>]</span>
 <span id="cb6-2"><a href="#cb6-2"></a>condition2 <span class="ot">&lt;-</span> data<span class="sc">$</span>value[data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition2"</span>]</span>
@@ -546,11 +552,11 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section></section><section id="examples-of-standard-group-statistics" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="examples-of-standard-group-statistics">
-<span class="header-section-number">7.4</span> Examples of standard group statistics</h2>
+</section></section><section id="examples-of-standard-group-statistics" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="examples-of-standard-group-statistics">
+<span class="header-section-number">8.4</span> Examples of standard group statistics</h2>
 <p>Stats results as reported in the EJN editorial.</p>
-<section id="x-2-anova" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="x-2-anova">
-<span class="header-section-number">7.4.1</span> 2 x 2 ANOVA</h3>
+<section id="x-2-anova" class="level3" data-number="8.4.1"><h3 data-number="8.4.1" class="anchored" data-anchor-id="x-2-anova">
+<span class="header-section-number">8.4.1</span> 2 x 2 ANOVA</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>aov_gp_cond <span class="ot">&lt;-</span> <span class="fu">aov</span>(value <span class="sc">~</span> group<span class="sc">*</span>condition <span class="sc">+</span> <span class="fu">Error</span>(participant<span class="sc">/</span>condition), <span class="at">data=</span>data)</span>
 <span id="cb9-2"><a href="#cb9-2"></a></span>
@@ -571,8 +577,8 @@ Residuals       20 10.617   0.531
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</section><section id="group-1-t-test" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="group-1-t-test">
-<span class="header-section-number">7.4.2</span> Group 1 t-test</h3>
+</section><section id="group-1-t-test" class="level3" data-number="8.4.2"><h3 data-number="8.4.2" class="anchored" data-anchor-id="group-1-t-test">
+<span class="header-section-number">8.4.2</span> Group 1 t-test</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>x <span class="ot">&lt;-</span> data[data<span class="sc">$</span>group<span class="sc">==</span><span class="st">"group1"</span> <span class="sc">&amp;</span> data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition1"</span> ,<span class="st">"value"</span>]</span>
 <span id="cb11-2"><a href="#cb11-2"></a>y <span class="ot">&lt;-</span> data[data<span class="sc">$</span>group<span class="sc">==</span><span class="st">"group1"</span> <span class="sc">&amp;</span> data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition2"</span> ,<span class="st">"value"</span>]</span>
@@ -591,8 +597,8 @@ mean difference
       -1.236545 </code></pre>
 </div>
 </div>
-</section><section id="group-2-t-test" class="level3" data-number="7.4.3"><h3 data-number="7.4.3" class="anchored" data-anchor-id="group-2-t-test">
-<span class="header-section-number">7.4.3</span> Group 2 t-test</h3>
+</section><section id="group-2-t-test" class="level3" data-number="8.4.3"><h3 data-number="8.4.3" class="anchored" data-anchor-id="group-2-t-test">
+<span class="header-section-number">8.4.3</span> Group 2 t-test</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>x <span class="ot">&lt;-</span> data[data<span class="sc">$</span>group<span class="sc">==</span><span class="st">"group2"</span> <span class="sc">&amp;</span> data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition1"</span> ,<span class="st">"value"</span>]</span>
 <span id="cb13-2"><a href="#cb13-2"></a>y <span class="ot">&lt;-</span> data[data<span class="sc">$</span>group<span class="sc">==</span><span class="st">"group2"</span> <span class="sc">&amp;</span> data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition2"</span> ,<span class="st">"value"</span>]</span>
@@ -611,8 +617,8 @@ mean difference
      0.03263636 </code></pre>
 </div>
 </div>
-</section><section id="make-final-figure-combining-4-panels" class="level3" data-number="7.4.4"><h3 data-number="7.4.4" class="anchored" data-anchor-id="make-final-figure-combining-4-panels">
-<span class="header-section-number">7.4.4</span> Make final figure combining 4 panels</h3>
+</section><section id="make-final-figure-combining-4-panels" class="level3" data-number="8.4.4"><h3 data-number="8.4.4" class="anchored" data-anchor-id="make-final-figure-combining-4-panels">
+<span class="header-section-number">8.4.4</span> Make final figure combining 4 panels</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
 <span id="cb15-2"><a href="#cb15-2"></a></span>
@@ -627,8 +633,8 @@ mean difference
 <span id="cb15-11"><a href="#cb15-11"></a></span>
 <span id="cb15-12"><a href="#cb15-12"></a><span class="co"># ggsave(filename='./figures/ejn_summary_figure.pdf', units = "cm", width = 30, height = 30)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section></section><section id="inferences-for-all-pairwise-differences" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="inferences-for-all-pairwise-differences">
-<span class="header-section-number">7.5</span> Inferences for all pairwise differences</h2>
+</section></section><section id="inferences-for-all-pairwise-differences" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="inferences-for-all-pairwise-differences">
+<span class="header-section-number">8.5</span> Inferences for all pairwise differences</h2>
 <p>One way to illustrate the 2x2 interaction is to plot the distribution of all pairwise differences, between the two independent groups, of the condition differences. Indeed, an interaction is a difference of differences.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>g1diff <span class="ot">&lt;-</span> data[data<span class="sc">$</span>group<span class="sc">==</span><span class="st">"group1"</span> <span class="sc">&amp;</span> data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition2"</span> ,<span class="st">"value"</span>] <span class="sc">-</span> data[data<span class="sc">$</span>group<span class="sc">==</span><span class="st">"group1"</span> <span class="sc">&amp;</span> data<span class="sc">$</span>condition<span class="sc">==</span><span class="st">"condition1"</span> ,<span class="st">"value"</span>]</span>
@@ -659,15 +665,15 @@ mean difference
 </div>
 </div>
 </div>
-<section id="more-details-about-inferences-on-all-pairwise-differences" class="level3" data-number="7.5.1"><h3 data-number="7.5.1" class="anchored" data-anchor-id="more-details-about-inferences-on-all-pairwise-differences">
-<span class="header-section-number">7.5.1</span> More details about inferences on all pairwise differences</h3>
-<section id="compute" class="level4" data-number="7.5.1.1"><h4 data-number="7.5.1.1" class="anchored" data-anchor-id="compute">
-<span class="header-section-number">7.5.1.1</span> Compute</h4>
+<section id="more-details-about-inferences-on-all-pairwise-differences" class="level3" data-number="8.5.1"><h3 data-number="8.5.1" class="anchored" data-anchor-id="more-details-about-inferences-on-all-pairwise-differences">
+<span class="header-section-number">8.5.1</span> More details about inferences on all pairwise differences</h3>
+<section id="compute" class="level4" data-number="8.5.1.1"><h4 data-number="8.5.1.1" class="anchored" data-anchor-id="compute">
+<span class="header-section-number">8.5.1.1</span> Compute</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>apd <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">outer</span>(g1diff, g2diff, <span class="at">FUN=</span><span class="st">"-"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="all-pairwise-differences-implementation" class="level4" data-number="7.5.1.2"><h4 data-number="7.5.1.2" class="anchored" data-anchor-id="all-pairwise-differences-implementation">
-<span class="header-section-number">7.5.1.2</span> All pairwise differences: implementation</h4>
+</section><section id="all-pairwise-differences-implementation" class="level4" data-number="8.5.1.2"><h4 data-number="8.5.1.2" class="anchored" data-anchor-id="all-pairwise-differences-implementation">
+<span class="header-section-number">8.5.1.2</span> All pairwise differences: implementation</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
@@ -681,16 +687,16 @@ mean difference
 [5,]    4    3    2    1    0</code></pre>
 </div>
 </div>
-</section><section id="median-of-all-pairwise-differences" class="level4" data-number="7.5.1.3"><h4 data-number="7.5.1.3" class="anchored" data-anchor-id="median-of-all-pairwise-differences">
-<span class="header-section-number">7.5.1.3</span> Median of all pairwise differences</h4>
+</section><section id="median-of-all-pairwise-differences" class="level4" data-number="8.5.1.3"><h4 data-number="8.5.1.3" class="anchored" data-anchor-id="median-of-all-pairwise-differences">
+<span class="header-section-number">8.5.1.3</span> Median of all pairwise differences</h4>
 <p>For a measure of effect size preserving the original units, we could report the median of all pairwise differences and its percentile bootstrap confidence interval:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>out <span class="ot">&lt;-</span> <span class="fu">wmwpb</span>(g1diff, g2diff, <span class="at">est=</span>median, <span class="at">alpha=</span>.<span class="dv">05</span>, <span class="at">nboot=</span><span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Median of all pairwise differences = 1.2 [0.347, 2.092], <em>P</em>=0.003.</p>
 <p>This measure answer the questions: what is the typical difference between two observations selected at random from the two groups?</p>
-</section><section id="plot-bootstrap-distribution" class="level4" data-number="7.5.1.4"><h4 data-number="7.5.1.4" class="anchored" data-anchor-id="plot-bootstrap-distribution">
-<span class="header-section-number">7.5.1.4</span> Plot bootstrap distribution</h4>
+</section><section id="plot-bootstrap-distribution" class="level4" data-number="8.5.1.4"><h4 data-number="8.5.1.4" class="anchored" data-anchor-id="plot-bootstrap-distribution">
+<span class="header-section-number">8.5.1.4</span> Plot bootstrap distribution</h4>
 <p>Here we calculate and plot the bootstrap distribution of the medians of all pairwise differences between the two independent groups. The results should be very similar to the ones from the <code>wmwpb</code> function we used in the previous chunk.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
@@ -735,8 +741,8 @@ mean difference
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># ggsave(filename=('./figures/nbx_fig_2gpsbootres.pdf'),width=7,height=5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="pxy" class="level4" data-number="7.5.1.5"><h4 data-number="7.5.1.5" class="anchored" data-anchor-id="pxy">
-<span class="header-section-number">7.5.1.5</span> <span class="math inline">\(P(X&gt;Y)\)</span>
+</section><section id="pxy" class="level4" data-number="8.5.1.5"><h4 data-number="8.5.1.5" class="anchored" data-anchor-id="pxy">
+<span class="header-section-number">8.5.1.5</span> <span class="math inline">\(P(X&gt;Y)\)</span>
 </h4>
 <p>Given two observations selected at random from these two groups, what is the probability that an observation from group 1 will be larger than one in group 2?</p>
 <p>Using the <code>cid()</code> function:</p>
@@ -761,8 +767,8 @@ mean difference
 <pre><code>[1] 0.8181818</code></pre>
 </div>
 </div>
-</section><section id="confidence-interval" class="level4" data-number="7.5.1.6"><h4 data-number="7.5.1.6" class="anchored" data-anchor-id="confidence-interval">
-<span class="header-section-number">7.5.1.6</span> Confidence interval</h4>
+</section><section id="confidence-interval" class="level4" data-number="8.5.1.6"><h4 data-number="8.5.1.6" class="anchored" data-anchor-id="confidence-interval">
+<span class="header-section-number">8.5.1.6</span> Confidence interval</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">set.seed</span>(<span class="dv">21</span>)</span>
 <span id="cb29-2"><a href="#cb29-2"></a></span>
@@ -779,8 +785,8 @@ mean difference
 0.6198347 0.9752066 </code></pre>
 </div>
 </div>
-</section><section id="plot-bootstrap-distribution-1" class="level4" data-number="7.5.1.7"><h4 data-number="7.5.1.7" class="anchored" data-anchor-id="plot-bootstrap-distribution-1">
-<span class="header-section-number">7.5.1.7</span> Plot bootstrap distribution</h4>
+</section><section id="plot-bootstrap-distribution-1" class="level4" data-number="8.5.1.7"><h4 data-number="8.5.1.7" class="anchored" data-anchor-id="plot-bootstrap-distribution-1">
+<span class="header-section-number">8.5.1.7</span> Plot bootstrap distribution</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>diff <span class="ot">&lt;-</span> <span class="fu">pxgy</span>(g1diff, g2diff) <span class="co"># group difference</span></span>
 <span id="cb31-2"><a href="#cb31-2"></a>ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(b.res, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
@@ -818,11 +824,11 @@ mean difference
 </div>
 </div>
 </div>
-</section></section></section><section id="two-dependent-groups-learning-experiment" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="two-dependent-groups-learning-experiment">
-<span class="header-section-number">7.6</span> Two dependent groups: learning experiment</h2>
+</section></section></section><section id="two-dependent-groups-learning-experiment" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="two-dependent-groups-learning-experiment">
+<span class="header-section-number">8.6</span> Two dependent groups: learning experiment</h2>
 <p>Here are two vectors of paired scores from a cognitive test in two sessions. We are interested in learning effects between sessions.</p>
-<section id="simulate-data-from-n-participants" class="level3" data-number="7.6.1"><h3 data-number="7.6.1" class="anchored" data-anchor-id="simulate-data-from-n-participants">
-<span class="header-section-number">7.6.1</span> Simulate data from n participants</h3>
+<section id="simulate-data-from-n-participants" class="level3" data-number="8.6.1"><h3 data-number="8.6.1" class="anchored" data-anchor-id="simulate-data-from-n-participants">
+<span class="header-section-number">8.6.1</span> Simulate data from n participants</h3>
 <p>We use the <code>faux</code> package from Lisa Debruine to do that.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
@@ -850,18 +856,18 @@ mean difference
 </div>
 </div>
 </div>
-</section><section id="illustrate-results" class="level3" data-number="7.6.2"><h3 data-number="7.6.2" class="anchored" data-anchor-id="illustrate-results">
-<span class="header-section-number">7.6.2</span> Illustrate results</h3>
-<section id="make-data-frame" class="level4" data-number="7.6.2.1"><h4 data-number="7.6.2.1" class="anchored" data-anchor-id="make-data-frame">
-<span class="header-section-number">7.6.2.1</span> Make data frame</h4>
+</section><section id="illustrate-results" class="level3" data-number="8.6.2"><h3 data-number="8.6.2" class="anchored" data-anchor-id="illustrate-results">
+<span class="header-section-number">8.6.2</span> Illustrate results</h3>
+<section id="make-data-frame" class="level4" data-number="8.6.2.1"><h4 data-number="8.6.2.1" class="anchored" data-anchor-id="make-data-frame">
+<span class="header-section-number">8.6.2.1</span> Make data frame</h4>
 <p>Reformat data frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="dv">2</span>),</span>
 <span id="cb34-2"><a href="#cb34-2"></a>              <span class="at">score =</span> <span class="fu">c</span>(df1<span class="sc">$</span>session1, df1<span class="sc">$</span>session2),</span>
 <span id="cb34-3"><a href="#cb34-3"></a>              <span class="at">group =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Session 1"</span>, <span class="st">"Session 2"</span>), <span class="at">each =</span> n)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="independent-stripcharts-1d-scatterplots" class="level4" data-number="7.6.2.2"><h4 data-number="7.6.2.2" class="anchored" data-anchor-id="independent-stripcharts-1d-scatterplots">
-<span class="header-section-number">7.6.2.2</span> Independent stripcharts (1D scatterplots)</h4>
+</section><section id="independent-stripcharts-1d-scatterplots" class="level4" data-number="8.6.2.2"><h4 data-number="8.6.2.2" class="anchored" data-anchor-id="independent-stripcharts-1d-scatterplots">
+<span class="header-section-number">8.6.2.2</span> Independent stripcharts (1D scatterplots)</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>) <span class="co"># reproducible jitter</span></span>
 <span id="cb35-2"><a href="#cb35-2"></a></span>
@@ -887,8 +893,8 @@ mean difference
 </div>
 </div>
 </div>
-</section><section id="stripcharts-with-medians" class="level4" data-number="7.6.2.3"><h4 data-number="7.6.2.3" class="anchored" data-anchor-id="stripcharts-with-medians">
-<span class="header-section-number">7.6.2.3</span> Stripcharts with medians</h4>
+</section><section id="stripcharts-with-medians" class="level4" data-number="8.6.2.3"><h4 data-number="8.6.2.3" class="anchored" data-anchor-id="stripcharts-with-medians">
+<span class="header-section-number">8.6.2.3</span> Stripcharts with medians</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>) <span class="co"># reproducible jitter</span></span>
 <span id="cb36-2"><a href="#cb36-2"></a></span>
@@ -922,8 +928,8 @@ mean difference
 </div>
 </div>
 </div>
-</section><section id="linked-stripcharts" class="level4" data-number="7.6.2.4"><h4 data-number="7.6.2.4" class="anchored" data-anchor-id="linked-stripcharts">
-<span class="header-section-number">7.6.2.4</span> Linked stripcharts</h4>
+</section><section id="linked-stripcharts" class="level4" data-number="8.6.2.4"><h4 data-number="8.6.2.4" class="anchored" data-anchor-id="linked-stripcharts">
+<span class="header-section-number">8.6.2.4</span> Linked stripcharts</h4>
 <p>New illustration in which coloured lines link paired observations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>) <span class="co"># reproducible jitter</span></span>
@@ -947,8 +953,8 @@ mean difference
 </div>
 </div>
 </div>
-</section></section><section id="d-scatterplot-stripchart-of-differences" class="level3" data-number="7.6.3"><h3 data-number="7.6.3" class="anchored" data-anchor-id="d-scatterplot-stripchart-of-differences">
-<span class="header-section-number">7.6.3</span> 1D scatterplot = stripchart of differences</h3>
+</section></section><section id="d-scatterplot-stripchart-of-differences" class="level3" data-number="8.6.3"><h3 data-number="8.6.3" class="anchored" data-anchor-id="d-scatterplot-stripchart-of-differences">
+<span class="header-section-number">8.6.3</span> 1D scatterplot = stripchart of differences</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>) <span class="co"># reproducible jitter</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a></span>
@@ -984,8 +990,8 @@ mean difference
 </div>
 </div>
 </div>
-<section id="scatterplot-of-paired-observations-1" class="level4" data-number="7.6.3.1"><h4 data-number="7.6.3.1" class="anchored" data-anchor-id="scatterplot-of-paired-observations-1">
-<span class="header-section-number">7.6.3.1</span> Scatterplot of paired observations</h4>
+<section id="scatterplot-of-paired-observations-1" class="level4" data-number="8.6.3.1"><h4 data-number="8.6.3.1" class="anchored" data-anchor-id="scatterplot-of-paired-observations-1">
+<span class="header-section-number">8.6.3.1</span> Scatterplot of paired observations</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">ggplot</span>(df1, <span class="fu">aes</span>(<span class="at">x =</span> session1, <span class="at">y =</span> session2)) <span class="sc">+</span> <span class="fu">theme_linedraw</span>() <span class="sc">+</span></span>
 <span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
@@ -1014,8 +1020,8 @@ mean difference
 </div>
 </div>
 </div>
-</section></section></section><section id="compare-marginals" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="compare-marginals">
-<span class="header-section-number">7.7</span> Compare marginals</h2>
+</section></section></section><section id="compare-marginals" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="compare-marginals">
+<span class="header-section-number">8.7</span> Compare marginals</h2>
 <p>Treated (wrongly) as two independent groups, is the typical score in session 2 higher than in session 1?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># percentile bootstrap confidence interval of the difference between</span></span>
@@ -1047,11 +1053,11 @@ $n2
 [1] 100</code></pre>
 </div>
 </div>
-</section><section id="quantify-within-participant-differences" class="level2" data-number="7.8"><h2 data-number="7.8" class="anchored" data-anchor-id="quantify-within-participant-differences">
-<span class="header-section-number">7.8</span> Quantify within participant differences</h2>
+</section><section id="quantify-within-participant-differences" class="level2" data-number="8.8"><h2 data-number="8.8" class="anchored" data-anchor-id="quantify-within-participant-differences">
+<span class="header-section-number">8.8</span> Quantify within participant differences</h2>
 <p>Can we conclude that, within participants, scores are higher in session 2 relative to session 1?</p>
-<section id="summary-statistics" class="level3" data-number="7.8.1"><h3 data-number="7.8.1" class="anchored" data-anchor-id="summary-statistics">
-<span class="header-section-number">7.8.1</span> Summary statistics</h3>
+<section id="summary-statistics" class="level3" data-number="8.8.1"><h3 data-number="8.8.1" class="anchored" data-anchor-id="summary-statistics">
+<span class="header-section-number">8.8.1</span> Summary statistics</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">summary</span>(df1<span class="sc">$</span>session2 <span class="sc">-</span> df1<span class="sc">$</span>session1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1059,8 +1065,8 @@ $n2
 -0.249530 -0.004875  0.077910  0.094901  0.176995  0.465837 </code></pre>
 </div>
 </div>
-</section><section id="bootstrap-test" class="level3" data-number="7.8.2"><h3 data-number="7.8.2" class="anchored" data-anchor-id="bootstrap-test">
-<span class="header-section-number">7.8.2</span> Bootstrap test</h3>
+</section><section id="bootstrap-test" class="level3" data-number="8.8.2"><h3 data-number="8.8.2" class="anchored" data-anchor-id="bootstrap-test">
+<span class="header-section-number">8.8.2</span> Bootstrap test</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># Compute confidence interval of the median of the paired differences</span></span>
 <span id="cb45-2"><a href="#cb45-2"></a><span class="fu">onesampb</span>(df1<span class="sc">$</span>session2 <span class="sc">-</span> df1<span class="sc">$</span>session1, <span class="at">alpha=</span>.<span class="dv">05</span>, <span class="at">nboot=</span><span class="dv">2000</span>, <span class="at">est=</span>median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1078,8 +1084,8 @@ $p.value
 [1] 0</code></pre>
 </div>
 </div>
-<section id="plot-bootstrap-distribution-of-median-pairwise-differences" class="level4" data-number="7.8.2.1"><h4 data-number="7.8.2.1" class="anchored" data-anchor-id="plot-bootstrap-distribution-of-median-pairwise-differences">
-<span class="header-section-number">7.8.2.1</span> Plot bootstrap distribution of median pairwise differences</h4>
+<section id="plot-bootstrap-distribution-of-median-pairwise-differences" class="level4" data-number="8.8.2.1"><h4 data-number="8.8.2.1" class="anchored" data-anchor-id="plot-bootstrap-distribution-of-median-pairwise-differences">
+<span class="header-section-number">8.8.2.1</span> Plot bootstrap distribution of median pairwise differences</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb47-2"><a href="#cb47-2"></a>nboot <span class="ot">&lt;-</span> <span class="dv">2000</span></span>
@@ -1123,8 +1129,8 @@ $p.value
 </div>
 </div>
 </div>
-</section></section><section id="pdiff-0" class="level3" data-number="7.8.3"><h3 data-number="7.8.3" class="anchored" data-anchor-id="pdiff-0">
-<span class="header-section-number">7.8.3</span> <span class="math inline">\(P(diff &gt; 0)\)</span>
+</section></section><section id="pdiff-0" class="level3" data-number="8.8.3"><h3 data-number="8.8.3" class="anchored" data-anchor-id="pdiff-0">
+<span class="header-section-number">8.8.3</span> <span class="math inline">\(P(diff &gt; 0)\)</span>
 </h3>
 <p>In what proportion of participants is performance better in session 2?</p>
 <div class="cell">
@@ -1134,19 +1140,19 @@ $p.value
 <pre><code>[1] 0.74</code></pre>
 </div>
 </div>
-</section><section id="pdiff-0-confidence-interval" class="level3" data-number="7.8.4"><h3 data-number="7.8.4" class="anchored" data-anchor-id="pdiff-0-confidence-interval">
-<span class="header-section-number">7.8.4</span> <span class="math inline">\(P(diff &gt; 0)\)</span> + confidence interval</h3>
+</section><section id="pdiff-0-confidence-interval" class="level3" data-number="8.8.4"><h3 data-number="8.8.4" class="anchored" data-anchor-id="pdiff-0-confidence-interval">
+<span class="header-section-number">8.8.4</span> <span class="math inline">\(P(diff &gt; 0)\)</span> + confidence interval</h3>
 <p>Fancy a confidence interval for that interesting and perfectly legitimate quantity? The only thing we need is a function we can plug into <code>onesampb()</code>.</p>
-<section id="define-function" class="level4" data-number="7.8.4.1"><h4 data-number="7.8.4.1" class="anchored" data-anchor-id="define-function">
-<span class="header-section-number">7.8.4.1</span> Define function</h4>
+<section id="define-function" class="level4" data-number="8.8.4.1"><h4 data-number="8.8.4.1" class="anchored" data-anchor-id="define-function">
+<span class="header-section-number">8.8.4.1</span> Define function</h4>
 <p>Probability that x is larger than zero.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>pxlz<span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">mean</span>(x <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb50-3"><a href="#cb50-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="percentile-bootstrap" class="level4" data-number="7.8.4.2"><h4 data-number="7.8.4.2" class="anchored" data-anchor-id="percentile-bootstrap">
-<span class="header-section-number">7.8.4.2</span> Percentile bootstrap</h4>
+</section><section id="percentile-bootstrap" class="level4" data-number="8.8.4.2"><h4 data-number="8.8.4.2" class="anchored" data-anchor-id="percentile-bootstrap">
+<span class="header-section-number">8.8.4.2</span> Percentile bootstrap</h4>
 <p>Note how argument <code>est</code> is set to our new quantity defined by function <code>pxlz</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">onesampb</span>(pdiff, <span class="at">alpha=</span>.<span class="dv">05</span>, <span class="at">nboot=</span><span class="dv">2000</span>, <span class="at">est=</span>pxlz, <span class="at">null.value =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1164,8 +1170,8 @@ $p.value
 [1] 0</code></pre>
 </div>
 </div>
-</section></section></section><section id="references" class="level2" data-number="7.9"><h2 data-number="7.9" class="anchored" data-anchor-id="references">
-<span class="header-section-number">7.9</span> References</h2>
+</section></section></section><section id="references" class="level2" data-number="8.9"><h2 data-number="8.9" class="anchored" data-anchor-id="references">
+<span class="header-section-number">8.9</span> References</h2>
 <p>Rousselet, G. A., Pernet, C. R., &amp; Wilcox, R. R. (2017). Beyond differences in means: Robust graphical methods to compare two groups in neuroscience. European Journal of Neuroscience, 46(2), 1738–1748. https://doi.org/10.1111/ejn.13610</p>
 
 
@@ -1580,7 +1586,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1612,29 +1629,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1642,7 +1637,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1966,7 +1961,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./02-07-gar-ci.html" class="pagination-link" aria-label="Confidence intervals">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

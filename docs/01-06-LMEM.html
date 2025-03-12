@@ -1,0 +1,2579 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
+<title>Statistics and Research Design - 6&nbsp; Introduction to linear mixed effects models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-00-graph_robust.html" rel="next">
+<link href="./01-05-glm.html" rel="prev">
+<link href="./images/logos/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+<link rel="stylesheet" href="include/booktem.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/glossary.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-00-GLM.html">General linear model</a></li><li class="breadcrumb-item"><a href="./01-06-LMEM.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics and Research Design</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General linear model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-01-lm-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Regression with one continuous predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-02-lm-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regression with one categorical predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-03-lm-multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-04-screening-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-05-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graphical representations and robust statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian modelling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-a-installing-brms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installing the <code>brms</code> package</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">6.1</span> Learning objectives</a></li>
+  <li><a href="#packages-and-the-data-sets" id="toc-packages-and-the-data-sets" class="nav-link" data-scroll-target="#packages-and-the-data-sets"><span class="header-section-number">6.2</span> Packages and the data sets</a></li>
+  <li>
+<a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation"><span class="header-section-number">6.3</span> Simulation</a>
+  <ul class="collapse">
+<li><a href="#random-factors" id="toc-random-factors" class="nav-link" data-scroll-target="#random-factors"><span class="header-section-number">6.3.1</span> Random Factors</a></li>
+  <li><a href="#fixed-factors" id="toc-fixed-factors" class="nav-link" data-scroll-target="#fixed-factors"><span class="header-section-number">6.3.2</span> Fixed Factors</a></li>
+  <li><a href="#contrast-coding" id="toc-contrast-coding" class="nav-link" data-scroll-target="#contrast-coding"><span class="header-section-number">6.3.3</span> Contrast Coding</a></li>
+  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects"><span class="header-section-number">6.3.4</span> Random Effects</a></li>
+  <li><a href="#error-term" id="toc-error-term" class="nav-link" data-scroll-target="#error-term"><span class="header-section-number">6.3.5</span> Error Term</a></li>
+  <li><a href="#calculate-the-dv" id="toc-calculate-the-dv" class="nav-link" data-scroll-target="#calculate-the-dv"><span class="header-section-number">6.3.6</span> Calculate the DV</a></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions"><span class="header-section-number">6.3.7</span> Interactions</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="header-section-number">6.4</span> Analysis</a>
+  <ul class="collapse">
+<li><a href="#sense-checks" id="toc-sense-checks" class="nav-link" data-scroll-target="#sense-checks"><span class="header-section-number">6.4.1</span> Sense checks</a></li>
+  <li><a href="#random-effects-1" id="toc-random-effects-1" class="nav-link" data-scroll-target="#random-effects-1"><span class="header-section-number">6.4.2</span> Random effects</a></li>
+  <li><a href="#function" id="toc-function" class="nav-link" data-scroll-target="#function"><span class="header-section-number">6.4.3</span> Function</a></li>
+  <li><a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis"><span class="header-section-number">6.4.4</span> Power analysis</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#random-slopes" id="toc-random-slopes" class="nav-link" data-scroll-target="#random-slopes"><span class="header-section-number">6.5</span> Random slopes</a>
+  <ul class="collapse">
+<li><a href="#slopes" id="toc-slopes" class="nav-link" data-scroll-target="#slopes"><span class="header-section-number">6.5.1</span> Slopes</a></li>
+  <li><a href="#correlated-slopes" id="toc-correlated-slopes" class="nav-link" data-scroll-target="#correlated-slopes"><span class="header-section-number">6.5.2</span> Correlated Slopes</a></li>
+  <li><a href="#calculate-the-dv-1" id="toc-calculate-the-dv-1" class="nav-link" data-scroll-target="#calculate-the-dv-1"><span class="header-section-number">6.5.3</span> Calculate the DV</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#analysis-1" id="toc-analysis-1" class="nav-link" data-scroll-target="#analysis-1"><span class="header-section-number">6.6</span> Analysis</a>
+  <ul class="collapse">
+<li><a href="#sense-checks-1" id="toc-sense-checks-1" class="nav-link" data-scroll-target="#sense-checks-1"><span class="header-section-number">6.6.1</span> Sense checks</a></li>
+  <li><a href="#function-1" id="toc-function-1" class="nav-link" data-scroll-target="#function-1"><span class="header-section-number">6.6.2</span> Function</a></li>
+  </ul>
+</li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.7</span> Exercises</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-00-GLM.html">General linear model</a></li><li class="breadcrumb-item"><a href="./01-06-LMEM.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>In this chapter, we will explore linear mixed effects models by simulating data. Experimental designs that sample both subjects and stimuli from a larger population need to account for random effects of both subjects and stimuli using mixed-effects models. However, much of this research is analyzed using analysis of variance on aggregated responses because researchers are not confident specifying and interpreting mixed-effects models. This chapter will explain how to simulate data with random-effects structure (using the faux R package) and analyze the data using linear mixed-effects regression (with the lme4 R package), with a focus on interpreting the output in light of the simulated parameters. You will also learn to calculate power using simulation.</p>
+<section id="learning-objectives" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="learning-objectives">
+<span class="header-section-number">6.1</span> Learning objectives</h2>
+<p>By the end of this chapter, you should be able to:</p>
+<ol type="1">
+<li><p>Understand how data are structured for a linear mixed effects model</p></li>
+<li><p>Be able to simulate data with a cross-classified structure</p></li>
+<li><p>Understand how to run and interpret a linear mixed effects model</p></li>
+<li><p>Run a power calculation for LMEM</p></li>
+</ol>
+<p>To follow along to this chapter and try the code yourself, please download the Rmd file we will be using in <a href="data/LMEM_data.zip">this zip file</a>.</p>
+</section><section id="packages-and-the-data-sets" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="packages-and-the-data-sets">
+<span class="header-section-number">6.2</span> Packages and the data sets</h2>
+<p>We will simulate data using the faux package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># for data wrangling, pipes, and good dataviz</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(afex)        <span class="co"># for mixed effect models</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(broom.mixed) <span class="co"># for getting tidy data tables from mixed models</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(faux)        <span class="co"># for simulating correlated variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="simulation" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="simulation">
+<span class="header-section-number">6.3</span> Simulation</h2>
+<p>First, we need to generate some data with the right structure for a mixed effects analysis. Here, we will simulate data for a Stroop task where subjects (<code>sub</code>) say the colour of colour words (<code>stim</code>) shown in each of two versions (<code>congruent</code> and <code>incongruent</code>). Subjects are in one of two conditions (<code>hard</code> or <code>easy</code>). The dependent variable is reaction time (`rt``).</p>
+<p>We expect people to have faster reaction times for congruent stimuli than incongruent stimuli (main effect of version) and to be faster in the easy condition than the hard condition (main effect of condition). We’ll look at some different interaction patterns below.</p>
+<section id="random-factors" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="random-factors">
+<span class="header-section-number">6.3.1</span> Random Factors</h3>
+<p>First, set up the overall structure of your data by specifying the number of observations for each random factor. Here, we have a crossed design, so each subject responds to each stimulus. We’ll set the numbers to small numbers as a demo first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>sub_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>stim_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n)</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">sub</th>
+<th style="text-align: left;">stim</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="fixed-factors" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="fixed-factors">
+<span class="header-section-number">6.3.2</span> Fixed Factors</h3>
+<p>Next, add the fixed factors. Specify if they vary between one of the random factors and specify the names of the levels.</p>
+<p>Each subject is in only one condition, so the code below assigns half <code>easy</code> and half <code>hard</code>. You can change the proportion of subjects assigned each level with the <code>.prob</code> argument.</p>
+<p>Stimuli are seen in both <code>congruent</code> and <code>incongruent</code> versions, so this will double the number of rows in our resulting data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>sub_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>stim_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>))</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">sub</th>
+<th style="text-align: left;">stim</th>
+<th style="text-align: left;">condition</th>
+<th style="text-align: left;">version</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">congruent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">incongruent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">congruent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">incongruent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">congruent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">incongruent</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">congruent</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">incongruent</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="contrast-coding" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="contrast-coding">
+<span class="header-section-number">6.3.3</span> Contrast Coding</h3>
+<p>To be able to calculate the dependent variable, you need to recode categorical variables into numbers. Use the helper function <code>add_contrast()</code> for this. The code below creates anova-coded versions of <code>condition</code> and <code>version</code>. Luckily for us, the factor levels default to a sensible order, with “easy” predicted to have a faster (lower) reactive time than “hard”, and “congruent” predicted to have a faster RT than “incongruent”, but we can also customise the order of levels with <code>add_contrast()</code>; see the <a href="https://debruine.github.io/faux/articles/contrasts.html" target="_blank">contrasts vignette</a> for more details.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>sub_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>stim_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="fu">add_contrast</span>(<span class="st">"condition"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="fu">add_contrast</span>(<span class="st">"version"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 24%">
+<col style="width: 36%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">sub</th>
+<th style="text-align: left;">stim</th>
+<th style="text-align: left;">condition</th>
+<th style="text-align: left;">version</th>
+<th style="text-align: right;">condition.hard-easy</th>
+<th style="text-align: right;">version.incongruent-congruent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>The function defaults to very descriptive names that help you interpret the fixed factors. Here, “condition.hard-easy” means the main effect of this factor is interpreted as the RT for hard trials minus the RT for easy trials, and “version.incongruent-congruent” means the main effect of this factor is interpreted as the RT for incongruent trials minus the RT for congruent trials. However, we can change these to simpler labels with the <code>colnames</code> argument.</p>
+</section><section id="random-effects" class="level3" data-number="6.3.4"><h3 data-number="6.3.4" class="anchored" data-anchor-id="random-effects">
+<span class="header-section-number">6.3.4</span> Random Effects</h3>
+<p>Now we specify the random effect structure. We’ll just add random intercepts to start, but will cover random slopes later.</p>
+<p>Each subject will have slightly faster or slower reaction times on average; this is their random intercept (<code>sub_i</code>). We’ll model it from a normal distribution with a mean of 0 and SD of 100ms.</p>
+<p>Each stimulus will have slightly faster or slower reaction times on average; this is their random intercept (<code>stim_i</code>). We’ll model it from a normal distribution with a mean of 0 and SD of 50ms (it seems reasonable to expect less variability between words than people for this task).</p>
+<p>Run this code a few times to see how the random effects change each time. this is because they are <strong>sampled</strong> from populations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>sub_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>stim_n  <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>sub_sd <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># SD for the subjects' random intercept</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>stim_sd <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="co"># SD for the stimuli's random intercept</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd) <span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd)</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">sub</th>
+<th style="text-align: left;">stim</th>
+<th style="text-align: left;">condition</th>
+<th style="text-align: left;">version</th>
+<th style="text-align: right;">cond</th>
+<th style="text-align: right;">vers</th>
+<th style="text-align: right;">sub_i</th>
+<th style="text-align: right;">stim_i</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-70.88001</td>
+<td style="text-align: right;">-37.35485</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-70.88001</td>
+<td style="text-align: right;">-37.35485</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-70.88001</td>
+<td style="text-align: right;">36.16864</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub1</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">easy</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-70.88001</td>
+<td style="text-align: right;">36.16864</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-15.17107</td>
+<td style="text-align: right;">-37.35485</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim1</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-15.17107</td>
+<td style="text-align: right;">-37.35485</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">congruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-0.5</td>
+<td style="text-align: right;">-15.17107</td>
+<td style="text-align: right;">36.16864</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub2</td>
+<td style="text-align: left;">stim2</td>
+<td style="text-align: left;">hard</td>
+<td style="text-align: left;">incongruent</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">-15.17107</td>
+<td style="text-align: right;">36.16864</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="error-term" class="level3" data-number="6.3.5"><h3 data-number="6.3.5" class="anchored" data-anchor-id="error-term">
+<span class="header-section-number">6.3.5</span> Error Term</h3>
+<p>Finally, add an error term. This uses the same <code>add_ranef()</code> function, just without specifying which random factor it’s for with <code>.by</code>. In essence, this samples an error value from a normal distribution with a mean of 0 and the specified SD for each trial. We’ll also increase the number of subjects and stimuli to more realistic values now.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>sub_n    <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>stim_n   <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>sub_sd   <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># SD for the subjects' random intercept</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>stim_sd  <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># SD for the stimuli's random intercept</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>error_sd <span class="ot">&lt;-</span> <span class="dv">25</span>  <span class="co"># residual (error) SD</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd) <span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd) <span class="sc">|&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">add_ranef</span>(<span class="at">err =</span> error_sd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="calculate-the-dv" class="level3" data-number="6.3.6"><h3 data-number="6.3.6" class="anchored" data-anchor-id="calculate-the-dv">
+<span class="header-section-number">6.3.6</span> Calculate the DV</h3>
+<p>Now we can calculate the dependent variable (<code>rt</code>) by adding together an overall intercept (mean reaction time for all trials), the subject-specific intercept, the stimulus-specific intercept, and an error term, plus the effect of subject condition, the effect of stimulus version, and the interaction between condition and version.</p>
+<p>We set these effects in raw units (ms). So when we set the effect of subject condition (<code>sub_cond_eff</code>) to 50, that means the average difference between the easy and hard condition is 50ms. <code>Easy</code> was coded as -0.5 and <code>hard</code> was coded as +0.5, which means that trials in the easy condition have -0.5 * 50ms (i.e., -25ms) added to their reaction time, while trials in the hard condition have +0.5 * 50ms (i.e., +25ms) added to their reaction time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>sub_n         <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>stim_n        <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>sub_sd        <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># SD for the subjects' random intercept</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>stim_sd       <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># SD for the stimuli's random intercept</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>error_sd      <span class="ot">&lt;-</span> <span class="dv">25</span>  <span class="co"># residual (error) SD</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>grand_i       <span class="ot">&lt;-</span> <span class="dv">400</span> <span class="co"># overall mean rt</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>cond_eff      <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># mean difference between conditions: hard - easy</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>vers_eff      <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># mean difference between versions: incongruent - congruent</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>cond_vers_ixn <span class="ot">&lt;-</span>  <span class="dv">0</span>  <span class="co"># interaction between version and condition</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>  <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd) <span class="sc">|&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd) <span class="sc">|&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>  <span class="fu">add_ranef</span>(<span class="at">err =</span> error_sd) <span class="sc">|&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>  <span class="fu">mutate</span>(<span class="at">rt =</span> grand_i <span class="sc">+</span> sub_i <span class="sc">+</span> stim_i <span class="sc">+</span> err <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a>         (cond <span class="sc">*</span> cond_eff) <span class="sc">+</span> </span>
+<span id="cb7-22"><a href="#cb7-22"></a>         (vers <span class="sc">*</span> vers_eff) <span class="sc">+</span> </span>
+<span id="cb7-23"><a href="#cb7-23"></a>         (cond <span class="sc">*</span> vers <span class="sc">*</span> cond_vers_ixn) <span class="co"># in this example, this is always 0 and could be omitted</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As always, graph to make sure you’ve simulated the general pattern you expected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(condition, rt, <span class="at">color =</span> version)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> grand_i) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
+<span id="cb8-5"><a href="#cb8-5"></a>               <span class="at">fun.min =</span> \(x){<span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">sd</span>(x)},</span>
+<span id="cb8-6"><a href="#cb8-6"></a>               <span class="at">fun.max =</span> \(x){<span class="fu">mean</span>(x) <span class="sc">+</span> <span class="fu">sd</span>(x)},</span>
+<span id="cb8-7"><a href="#cb8-7"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="01-06-LMEM_files/figure-html/plot-rt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Double-check the simulated pattern</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="interactions" class="level3" data-number="6.3.7"><h3 data-number="6.3.7" class="anchored" data-anchor-id="interactions">
+<span class="header-section-number">6.3.7</span> Interactions</h3>
+<p>If you want to simulate an interaction, it can sometimes be tricky to figure out what to set the main effects and interaction effect to. It can often be easier to think about the simple main effects for each cell. Create four new variables and set them to the deviations from the overall mean you’d expect for each condition (so they should add up to 0). Here, we’re simulating a small effect of version in the hard condition (50ms difference) and double that effect of version in the easy condition (100ms difference).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># set variables to use in calculations below</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>easy_congr <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">50</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>easy_incon <span class="ot">&lt;-</span> <span class="sc">+</span><span class="dv">50</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>hard_congr <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">25</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>hard_incon <span class="ot">&lt;-</span> <span class="sc">+</span><span class="dv">25</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use the code below to transform the simple main effects above into main effects and interactions for use in the equations below. This uses the <code>sim_design()</code> function from faux to set up a fixed-design simulated sample with the exact cell means above (using <code>empirical = TRUE</code>), runs a linear model on the data, and extracts the coefficients. This only works if you contrast-code the factors in the same way, and use the same formula as your LMEM. It doesn’t matter if you set the factors to between or within for this, so it’s easiest to set them all to between.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># simulated the data</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>fixed_data <span class="ot">&lt;-</span> <span class="fu">sim_design</span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="at">between =</span> <span class="fu">list</span>(<span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>),</span>
+<span id="cb10-4"><a href="#cb10-4"></a>                 <span class="at">version   =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)),</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="at">mu =</span> <span class="fu">c</span>(easy_congr, easy_incon, hard_congr, hard_incon),</span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="at">dv =</span> <span class="st">"rt"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="at">empirical =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="at">plot =</span> <span class="cn">FALSE</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="co"># add the same contrasts you'll use in your LMEM </span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>  <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>)</span>
+<span id="cb10-13"><a href="#cb10-13"></a></span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="co"># run the same formula using lm()</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>fixed_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(rt <span class="sc">~</span> cond <span class="sc">*</span> vers, <span class="at">data =</span> fixed_data)</span>
+<span id="cb10-16"><a href="#cb10-16"></a></span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="co"># extract and round the coefficients</span></span>
+<span id="cb10-18"><a href="#cb10-18"></a>fixed_coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(fixed_model) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb10-19"><a href="#cb10-19"></a></span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="co"># assign the coefficients to the relevant variables</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a>cond_eff <span class="ot">&lt;-</span> fixed_coefs[<span class="st">"cond"</span>]</span>
+<span id="cb10-22"><a href="#cb10-22"></a>vers_eff <span class="ot">&lt;-</span> fixed_coefs[<span class="st">"vers"</span>]</span>
+<span id="cb10-23"><a href="#cb10-23"></a>cond_vers_ixn <span class="ot">&lt;-</span> fixed_coefs[<span class="st">"cond:vers"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then generate the rt the same way we did above, but also add the interaction effect multiplied by the effect-coded subject condition and stimulus version.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd) <span class="sc">|&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>  <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd) <span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>  <span class="fu">add_ranef</span>(<span class="at">err =</span> error_sd) <span class="sc">|&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>  <span class="fu">mutate</span>(<span class="at">rt =</span> grand_i <span class="sc">+</span> sub_i <span class="sc">+</span> stim_i <span class="sc">+</span> err <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>         (cond <span class="sc">*</span> cond_eff) <span class="sc">+</span> </span>
+<span id="cb11-12"><a href="#cb11-12"></a>         (vers <span class="sc">*</span> vers_eff) <span class="sc">+</span> </span>
+<span id="cb11-13"><a href="#cb11-13"></a>         (cond <span class="sc">*</span> vers <span class="sc">*</span> cond_vers_ixn)</span>
+<span id="cb11-14"><a href="#cb11-14"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(condition, rt, <span class="at">color =</span> version)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> grand_i) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
+<span id="cb12-5"><a href="#cb12-5"></a>               <span class="at">fun.min =</span> \(x){<span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">sd</span>(x)},</span>
+<span id="cb12-6"><a href="#cb12-6"></a>               <span class="at">fun.max =</span> \(x){<span class="fu">mean</span>(x) <span class="sc">+</span> <span class="fu">sd</span>(x)},</span>
+<span id="cb12-7"><a href="#cb12-7"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="01-06-LMEM_files/figure-html/plot-ixn-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Double-check the interaction between condition and version</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">group_by</span>(dat, condition, version) <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">summarise</span>(<span class="at">m =</span> <span class="fu">mean</span>(rt) <span class="sc">-</span> grand_i <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">1</span>),</span>
+<span id="cb13-3"><a href="#cb13-3"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> version, </span>
+<span id="cb13-5"><a href="#cb13-5"></a>              <span class="at">values_from =</span> m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">condition</th>
+<th style="text-align: right;">congruent</th>
+<th style="text-align: right;">incongruent</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">easy</td>
+<td style="text-align: right;">-56.51638</td>
+<td style="text-align: right;">42.72694</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hard</td>
+<td style="text-align: right;">-39.04890</td>
+<td style="text-align: right;">11.41831</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section></section><section id="analysis" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="analysis">
+<span class="header-section-number">6.4</span> Analysis</h2>
+<p>Now we will run a linear mixed effects model with <code>lmer</code> and look at the summary.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(rt <span class="sc">~</span> cond <span class="sc">*</span> vers <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>              (<span class="dv">1</span> <span class="sc">|</span> sub) <span class="sc">+</span> </span>
+<span id="cb14-3"><a href="#cb14-3"></a>              (<span class="dv">1</span> <span class="sc">|</span> stim),</span>
+<span id="cb14-4"><a href="#cb14-4"></a>            <span class="at">data =</span> dat)</span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a>mod.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod)</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>mod.sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: rt ~ cond * vers + (1 | sub) + (1 | stim)
+   Data: dat
+
+REML criterion at convergence: 187114.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.8059 -0.6771  0.0008  0.6630  3.7988 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 9449.4   97.21   
+ stim     (Intercept) 2065.5   45.45   
+ Residual              618.8   24.88   
+Number of obs: 20000, groups:  sub, 200; stim, 50
+
+Fixed effects:
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)   389.6450     9.4121   169.9851  41.398   &lt;2e-16 ***
+cond           -6.9206    13.7518   197.9999  -0.503    0.615    
+vers           74.8553     0.3518 19748.9999 212.782   &lt;2e-16 ***
+cond:vers     -48.7761     0.7036 19748.9999 -69.325   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr) cond  vers 
+cond      0.000             
+vers      0.000  0.000      
+cond:vers 0.000  0.000 0.000</code></pre>
+</div>
+</div>
+<section id="sense-checks" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="sense-checks">
+<span class="header-section-number">6.4.1</span> Sense checks</h3>
+<p>First, check that your groups make sense.</p>
+<ul>
+<li>The number of obs should be the total number of trials analysed.</li>
+<li>
+<code>sub</code> should be what we set <code>sub_n</code> to above.</li>
+<li>
+<code>stim</code> should be what we set <code>stim_n</code> to above.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Random.Fator</th>
+<th style="text-align: right;">value</th>
+<th style="text-align: right;">parameters</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stim</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Next, look at the random effects.</p>
+<ul>
+<li>The SD for <code>sub</code> should be near <code>sub_sd</code>.</li>
+<li>The SD for <code>stim</code> should be near <code>stim_sd</code>.</li>
+<li>The residual SD should be near <code>error_sd</code>.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Groups</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">parameters</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">25</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Finally, look at the fixed effects.</p>
+<ul>
+<li>The estimate for the Intercept should be near the <code>grand_i</code>.</li>
+<li>The main effect of <code>cond</code> should be near what we calculated for <code>cond_eff</code>.</li>
+<li>The main effect of <code>vers</code> should be near what we calculated for <code>vers_eff</code>.</li>
+<li>The interaction between <code>cond</code>:<code>vers</code> should be near what we calculated for <code>cond_vers_ixn</code>.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Effect</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">parameters</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">400</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cond</td>
+<td style="text-align: right;">-7</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vers</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cond:vers</td>
+<td style="text-align: right;">-49</td>
+<td style="text-align: right;">-50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="random-effects-1" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="random-effects-1">
+<span class="header-section-number">6.4.2</span> Random effects</h3>
+<p>Plot the subject intercepts from our code above (<code>dat$sub_i</code>) against the subject intercepts calculated by <code>lmer</code> (<code>ranef(mod)$sub_id</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># get simulated random intercept for each subject</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>sub_sim <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">group_by</span>(sub, sub_i) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">summarise</span>(<span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co"># join to calculated random intercept from model</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>sub_sim_mod <span class="ot">&lt;-</span> <span class="fu">ranef</span>(mod)<span class="sc">$</span>sub <span class="sc">|&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"sub"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>  <span class="fu">rename</span>(<span class="at">mod_sub_i =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>  <span class="fu">left_join</span>(sub_sim, <span class="at">by =</span> <span class="st">"sub"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11"></a></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="co"># plot to check correspondence</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a>sub_sim_mod <span class="sc">|&gt;</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sub_i,mod_sub_i)) <span class="sc">+</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y<span class="sc">~</span>x) <span class="sc">+</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>  <span class="fu">xlab</span>(<span class="st">"Simulated random intercepts (sub_i)"</span>) <span class="sc">+</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>  <span class="fu">ylab</span>(<span class="st">"Modeled random intercepts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="01-06-LMEM_files/figure-html/plot-sub-ranef-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Compare simulated subject random intercepts to those from the model</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Plot the stimulus intercepts from our code above (<code>dat$stim_i</code>) against the stimulus intercepts calculated by <code>lmer</code> (<code>ranef(mod)$stim_id</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># get simulated random intercept for each stimulus</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>stim_sim <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">group_by</span>(stim, stim_i) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">summarise</span>(<span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># join to calculated random intercept from model</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>stim_sim_mod <span class="ot">&lt;-</span> <span class="fu">ranef</span>(mod)<span class="sc">$</span>stim <span class="sc">|&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"stim"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="fu">rename</span>(<span class="at">mod_stim_i =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>  <span class="fu">left_join</span>(stim_sim, <span class="at">by =</span> <span class="st">"stim"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11"></a></span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="co"># plot to check correspondence</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a>stim_sim_mod <span class="sc">|&gt;</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(stim_i,mod_stim_i)) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb17-16"><a href="#cb17-16"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y<span class="sc">~</span>x) <span class="sc">+</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a>  <span class="fu">xlab</span>(<span class="st">"Simulated random intercepts (stim_i)"</span>) <span class="sc">+</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a>  <span class="fu">ylab</span>(<span class="st">"Modeled random intercepts"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="01-06-LMEM_files/figure-html/plot-stim-ranef-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Compare simulated stimulus random intercepts to those from the model</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="function" class="level3" data-number="6.4.3"><h3 data-number="6.4.3" class="anchored" data-anchor-id="function">
+<span class="header-section-number">6.4.3</span> Function</h3>
+<p>You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above with all fixed effects set to 0, but you can set them to other patterns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>sim_lmer <span class="ot">&lt;-</span> <span class="cf">function</span>( <span class="at">sub_n =</span> <span class="dv">200</span>,</span>
+<span id="cb18-2"><a href="#cb18-2"></a>                      <span class="at">stim_n =</span> <span class="dv">50</span>,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>                      <span class="at">sub_sd =</span> <span class="dv">100</span>,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>                      <span class="at">stim_sd =</span> <span class="dv">50</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>                      <span class="at">error_sd =</span> <span class="dv">25</span>,</span>
+<span id="cb18-6"><a href="#cb18-6"></a>                      <span class="at">grand_i =</span> <span class="dv">400</span>,</span>
+<span id="cb18-7"><a href="#cb18-7"></a>                      <span class="at">cond_eff =</span> <span class="dv">0</span>,</span>
+<span id="cb18-8"><a href="#cb18-8"></a>                      <span class="at">vers_eff =</span> <span class="dv">0</span>, </span>
+<span id="cb18-9"><a href="#cb18-9"></a>                      <span class="at">cond_vers_ixn =</span> <span class="dv">0</span>) {</span>
+<span id="cb18-10"><a href="#cb18-10"></a>  dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>    <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a>    <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-13"><a href="#cb18-13"></a>    <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-14"><a href="#cb18-14"></a>    <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-15"><a href="#cb18-15"></a>    <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-16"><a href="#cb18-16"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd) <span class="sc">|&gt;</span></span>
+<span id="cb18-17"><a href="#cb18-17"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd) <span class="sc">|&gt;</span></span>
+<span id="cb18-18"><a href="#cb18-18"></a>    <span class="fu">add_ranef</span>(<span class="at">err =</span> error_sd) <span class="sc">|&gt;</span></span>
+<span id="cb18-19"><a href="#cb18-19"></a>    <span class="fu">mutate</span>(<span class="at">rt =</span> grand_i <span class="sc">+</span> sub_i <span class="sc">+</span> stim_i <span class="sc">+</span> err <span class="sc">+</span></span>
+<span id="cb18-20"><a href="#cb18-20"></a>           (cond <span class="sc">*</span> cond_eff) <span class="sc">+</span> </span>
+<span id="cb18-21"><a href="#cb18-21"></a>           (vers <span class="sc">*</span> vers_eff) <span class="sc">+</span> </span>
+<span id="cb18-22"><a href="#cb18-22"></a>           (cond <span class="sc">*</span> vers <span class="sc">*</span> cond_vers_ixn)</span>
+<span id="cb18-23"><a href="#cb18-23"></a>    )</span>
+<span id="cb18-24"><a href="#cb18-24"></a>  </span>
+<span id="cb18-25"><a href="#cb18-25"></a>  mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(rt <span class="sc">~</span> cond <span class="sc">*</span> vers <span class="sc">+</span></span>
+<span id="cb18-26"><a href="#cb18-26"></a>                (<span class="dv">1</span> <span class="sc">|</span> sub) <span class="sc">+</span> </span>
+<span id="cb18-27"><a href="#cb18-27"></a>                (<span class="dv">1</span> <span class="sc">|</span> stim),</span>
+<span id="cb18-28"><a href="#cb18-28"></a>              <span class="at">data =</span> dat)</span>
+<span id="cb18-29"><a href="#cb18-29"></a>  </span>
+<span id="cb18-30"><a href="#cb18-30"></a>  <span class="fu">return</span>(mod)</span>
+<span id="cb18-31"><a href="#cb18-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the function with the default values (so all fixed effects set to 0).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">sim_lmer</span>() <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+Model failed to converge with max|grad| = 0.00218895 (tol = 0.002, component 1)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: rt ~ cond * vers + (1 | sub) + (1 | stim)
+   Data: dat
+
+REML criterion at convergence: 187219.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.5583 -0.6718 -0.0079  0.6697  4.2774 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 10934    104.56  
+ stim     (Intercept)  2291     47.87  
+ Residual               621     24.92  
+Number of obs: 20000, groups:  sub, 200; stim, 50
+
+Fixed effects:
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)   383.0591    10.0263   174.1988  38.205   &lt;2e-16 ***
+cond            1.9853    14.7918   197.9753   0.134    0.893    
+vers            0.1509     0.3524 19749.0005   0.428    0.669    
+cond:vers      -0.6116     0.7049 19749.0005  -0.868    0.386    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr) cond  vers 
+cond      0.000             
+vers      0.000  0.000      
+cond:vers 0.000  0.000 0.000
+optimizer (nloptwrap) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.00218895 (tol = 0.002, component 1)</code></pre>
+</div>
+</div>
+<p>Try changing some variables to simulate different patterns of fixed effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">sim_lmer</span>(<span class="at">cond_eff =</span> <span class="dv">0</span>,</span>
+<span id="cb22-2"><a href="#cb22-2"></a>         <span class="at">vers_eff =</span> <span class="dv">75</span>, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>         <span class="at">cond_vers_ixn =</span> <span class="sc">-</span><span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: rt ~ cond * vers + (1 | sub) + (1 | stim)
+   Data: dat
+
+REML criterion at convergence: 187507.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.1725 -0.6709  0.0007  0.6713  3.8084 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 11018.5  104.97  
+ stim     (Intercept)  2797.0   52.89  
+ Residual               629.8   25.10  
+Number of obs: 20000, groups:  sub, 200; stim, 50
+
+Fixed effects:
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)   409.0266    10.5387   155.5888  38.812   &lt;2e-16 ***
+cond          -14.9163    14.8491   198.0001  -1.005    0.316    
+vers           74.8284     0.3549 19748.9998 210.838   &lt;2e-16 ***
+cond:vers     -48.6871     0.7098 19748.9998 -68.591   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr) cond  vers 
+cond      0.000             
+vers      0.000  0.000      
+cond:vers 0.000  0.000 0.000</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Try this
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How would you modify the function above to take the input of the four cell means (<code>easy_congr</code>, <code>easy_incon</code> <code>hard_congr</code>, <code>hard_incon</code>), instead of the coefficients (<code>cond_eff</code>, <code>vers_eff</code>, <code>cond_vers_ixn</code>)?</p>
+</div>
+</div>
+</section><section id="power-analysis" class="level3" data-number="6.4.4"><h3 data-number="6.4.4" class="anchored" data-anchor-id="power-analysis">
+<span class="header-section-number">6.4.4</span> Power analysis</h3>
+<p>Calculating power for a LMEM can seem really tricky, but if you can simulate the data you expect, you can calculate power for anything!</p>
+<p>First, wrap your simulation function inside of another function that takes the argument of a replication number, runs a simulated analysis, and returns a data table of the fixed and random effects (made with <code><a href="https://generics.r-lib.org/reference/tidy.html">broom.mixed::tidy()</a></code>). You can use purrr’s <code>map_df()</code> function to create a data table of results from multiple replications of this function. We’re only running 10 replications here in the interests of time, but you’ll want to run 100 or more for a proper power calculation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>sim_lmer_pwr <span class="ot">&lt;-</span> <span class="cf">function</span>(rep) {</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  s <span class="ot">&lt;-</span> <span class="fu">sim_lmer</span>(<span class="at">cond_eff =</span> <span class="dv">0</span>,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>                <span class="at">vers_eff =</span> <span class="dv">75</span>, </span>
+<span id="cb24-4"><a href="#cb24-4"></a>                <span class="at">cond_vers_ixn =</span> <span class="dv">50</span>)</span>
+<span id="cb24-5"><a href="#cb24-5"></a>  </span>
+<span id="cb24-6"><a href="#cb24-6"></a>  <span class="co"># put just the fixed effects into a data table</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>  broom.mixed<span class="sc">::</span><span class="fu">tidy</span>(s, <span class="st">"fixed"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>    <span class="fu">mutate</span>(<span class="at">rep =</span> rep) <span class="co"># add a column for which rep</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>}</span>
+<span id="cb24-10"><a href="#cb24-10"></a></span>
+<span id="cb24-11"><a href="#cb24-11"></a>my_power <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, sim_lmer_pwr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can then plot the distribution of estimates across your simulations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">ggplot</span>(my_power, <span class="fu">aes</span>(estimate, <span class="at">color =</span> term)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="01-06-LMEM_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also just calculate power as the proportion of p-values less than your alpha.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>my_power <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="fu">summarise</span>(<span class="at">power =</span> <span class="fu">mean</span>(p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>),</span>
+<span id="cb26-4"><a href="#cb26-4"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">power</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cond</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cond:vers</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">vers</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section></section><section id="random-slopes" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="random-slopes">
+<span class="header-section-number">6.5</span> Random slopes</h2>
+<p>In the example so far we’ve ignored random variation among subjects or stimuli in the size of the fixed effects (i.e., <strong>random slopes</strong>).</p>
+<p>First, let’s reset the parameters we set above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>sub_n         <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># number of subjects in this simulation</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>stim_n        <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># number of stimuli in this simulation</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>sub_sd        <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># SD for the subjects' random intercept</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>stim_sd       <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># SD for the stimuli's random intercept</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>error_sd      <span class="ot">&lt;-</span> <span class="dv">25</span>  <span class="co"># residual (error) SD</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a>grand_i       <span class="ot">&lt;-</span> <span class="dv">400</span> <span class="co"># overall mean rt</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>cond_eff      <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># mean difference between conditions: hard - easy</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a>vers_eff      <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># mean difference between versions: incongruent - congruent</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a>cond_vers_ixn <span class="ot">&lt;-</span>  <span class="dv">0</span>  <span class="co"># interaction between version and condition</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="slopes" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="slopes">
+<span class="header-section-number">6.5.1</span> Slopes</h3>
+<p>In addition to generating a random intercept for each subject, now we will also generate a random slope for any within-subject factors. The only within-subject factor in this design is <code>version</code>. The main effect of <code>version</code> is set to 50 above, but different subjects will show variation in the size of this effect. That’s what the random slope captures. We’ll set <code>sub_vers_sd</code> below to the SD of this variation and use this to calculate the random slope (<code>sub_version_slope</code>) for each subject.</p>
+<p>Also, it’s likely that the variation between subjects in the size of the effect of version is related in some way to between-subject variation in the intercept. So we want the random intercept and slope to be correlated. Here, we’ll simulate a case where subjects who have slower (larger) reaction times across the board show a smaller effect of condition, so we set <code>sub_i_vers_cor</code> below to a negative number (-0.2).</p>
+<p>We just have to edit the first <code>add_ranef()</code> to add two variables (<code>sub_i</code>, <code>sub_vers_slope</code>) that are correlated with r = -0.2, means of 0, and SDs equal to what we set <code>sub_sd</code> above and <code>sub_vers_sd</code> below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>sub_vers_sd <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>sub_i_vers_cor <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>    <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>    <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>    <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>    <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>    <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd, </span>
+<span id="cb28-11"><a href="#cb28-11"></a>              <span class="at">sub_vers_slope =</span> sub_vers_sd,</span>
+<span id="cb28-12"><a href="#cb28-12"></a>              <span class="at">.cors =</span> sub_i_vers_cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="correlated-slopes" class="level3" data-number="6.5.2"><h3 data-number="6.5.2" class="anchored" data-anchor-id="correlated-slopes">
+<span class="header-section-number">6.5.2</span> Correlated Slopes</h3>
+<p>In addition to generating a random intercept for each stimulus, we will also generate a random slope for any within-stimulus factors. Both <code>version</code> and <code>condition</code> are within-stimulus factors (i.e., all stimuli are seen in both <code>congruent</code> and <code>incongruent</code> versions and both <code>easy</code> and <code>hard</code> conditions). So the main effects of version and condition (and their interaction) will vary depending on the stimulus.</p>
+<p>They will also be correlated, but in a more complex way than above. You need to set the correlations for all pairs of slopes and intercept. Let’s set the correlation between the random intercept and each of the slopes to -0.4 and the slopes all correlate with each other +0.2 (You could set each of the six correlations separately if you want, though).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>stim_vers_sd <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># SD for the stimuli's random slope for stim_version</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>stim_cond_sd <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># SD for the stimuli's random slope for sub_cond</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>stim_cond_vers_sd <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="co"># SD for the stimuli's random slope for sub_cond:stim_version</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>stim_i_cor <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.4</span> <span class="co"># correlations between intercept and slopes</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>stim_s_cor <span class="ot">&lt;-</span> <span class="sc">+</span><span class="fl">0.2</span> <span class="co"># correlations among slopes</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="co"># specify correlations for rnorm_multi (one of several methods)</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>stim_cors <span class="ot">&lt;-</span> <span class="fu">c</span>(stim_i_cor, stim_i_cor, stim_i_cor,</span>
+<span id="cb29-9"><a href="#cb29-9"></a>                           stim_s_cor, stim_s_cor,</span>
+<span id="cb29-10"><a href="#cb29-10"></a>                                       stim_s_cor)</span>
+<span id="cb29-11"><a href="#cb29-11"></a></span>
+<span id="cb29-12"><a href="#cb29-12"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb29-13"><a href="#cb29-13"></a>    <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb29-14"><a href="#cb29-14"></a>    <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb29-15"><a href="#cb29-15"></a>    <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb29-16"><a href="#cb29-16"></a>    <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-17"><a href="#cb29-17"></a>    <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-18"><a href="#cb29-18"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd, </span>
+<span id="cb29-19"><a href="#cb29-19"></a>              <span class="at">sub_vers_slope =</span> sub_vers_sd,</span>
+<span id="cb29-20"><a href="#cb29-20"></a>              <span class="at">.cors =</span> sub_i_vers_cor) <span class="sc">|&gt;</span></span>
+<span id="cb29-21"><a href="#cb29-21"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd,</span>
+<span id="cb29-22"><a href="#cb29-22"></a>              <span class="at">stim_vers_slope =</span> stim_vers_sd,</span>
+<span id="cb29-23"><a href="#cb29-23"></a>              <span class="at">stim_cond_slope =</span> stim_cond_sd,</span>
+<span id="cb29-24"><a href="#cb29-24"></a>              <span class="at">stim_cond_vers_slope =</span> stim_cond_vers_sd,</span>
+<span id="cb29-25"><a href="#cb29-25"></a>              <span class="at">.cors =</span> stim_cors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="calculate-the-dv-1" class="level3" data-number="6.5.3"><h3 data-number="6.5.3" class="anchored" data-anchor-id="calculate-the-dv-1">
+<span class="header-section-number">6.5.3</span> Calculate the DV</h3>
+<p>Now we can calculate the rt by adding together an overall intercept (mean RT for all trials), the subject-specific intercept, the stimulus-specific intercept, the effect of subject condition, the stimulus-specific slope for condition, the effect of stimulus version, the stimulus-specific slope for version, the subject-specific slope for condition, the interaction between condition and version (set to 0 for this example), the stimulus-specific slope for the interaction between condition and version, and an error term.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>    <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>    <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a>    <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a>    <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd, </span>
+<span id="cb30-8"><a href="#cb30-8"></a>              <span class="at">sub_vers_slope =</span> sub_vers_sd,</span>
+<span id="cb30-9"><a href="#cb30-9"></a>              <span class="at">.cors =</span> sub_i_vers_cor) <span class="sc">|&gt;</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd,</span>
+<span id="cb30-11"><a href="#cb30-11"></a>              <span class="at">stim_vers_slope =</span> stim_vers_sd,</span>
+<span id="cb30-12"><a href="#cb30-12"></a>              <span class="at">stim_cond_slope =</span> stim_cond_sd,</span>
+<span id="cb30-13"><a href="#cb30-13"></a>              <span class="at">stim_cond_vers_slope =</span> stim_cond_vers_sd,</span>
+<span id="cb30-14"><a href="#cb30-14"></a>              <span class="at">.cors =</span> stim_cors) <span class="sc">|&gt;</span></span>
+<span id="cb30-15"><a href="#cb30-15"></a>    <span class="fu">add_ranef</span>(<span class="at">err =</span> error_sd) <span class="sc">|&gt;</span></span>
+<span id="cb30-16"><a href="#cb30-16"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-17"><a href="#cb30-17"></a>    <span class="at">trial_cond_eff =</span> cond_eff <span class="sc">+</span> stim_cond_slope,</span>
+<span id="cb30-18"><a href="#cb30-18"></a>    <span class="at">trial_vers_eff =</span> vers_eff <span class="sc">+</span> sub_vers_slope <span class="sc">+</span> stim_vers_slope,</span>
+<span id="cb30-19"><a href="#cb30-19"></a>    <span class="at">trial_cond_vers_ixn =</span> cond_vers_ixn <span class="sc">+</span> stim_cond_vers_slope,</span>
+<span id="cb30-20"><a href="#cb30-20"></a>    <span class="at">rt =</span> grand_i <span class="sc">+</span> sub_i <span class="sc">+</span> stim_i <span class="sc">+</span> err <span class="sc">+</span></span>
+<span id="cb30-21"><a href="#cb30-21"></a>         (cond <span class="sc">*</span> trial_cond_eff) <span class="sc">+</span> </span>
+<span id="cb30-22"><a href="#cb30-22"></a>         (vers <span class="sc">*</span> trial_vers_eff) <span class="sc">+</span> </span>
+<span id="cb30-23"><a href="#cb30-23"></a>         (cond <span class="sc">*</span> vers <span class="sc">*</span> trial_cond_vers_ixn)</span>
+<span id="cb30-24"><a href="#cb30-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As always, graph to make sure you’ve simulated the general pattern you expected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(condition, rt, <span class="at">color =</span> version)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> grand_i) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean,</span>
+<span id="cb31-5"><a href="#cb31-5"></a>               <span class="at">fun.min =</span> \(x){<span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">sd</span>(x)},</span>
+<span id="cb31-6"><a href="#cb31-6"></a>               <span class="at">fun.max =</span> \(x){<span class="fu">mean</span>(x) <span class="sc">+</span> <span class="fu">sd</span>(x)},</span>
+<span id="cb31-7"><a href="#cb31-7"></a>               <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>)) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="01-06-LMEM_files/figure-html/rslope-plot-rt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Double-check the simulated pattern</figcaption></figure>
+</div>
+</div>
+</div>
+</section></section><section id="analysis-1" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="analysis-1">
+<span class="header-section-number">6.6</span> Analysis</h2>
+<p>New we’ll run a linear mixed effects model with <code>lmer</code> and look at the summary. You specify random slopes by adding the within-level effects to the random intercept specifications. Since the only within-subject factor is version, the random effects specification for subjects is <code>(1 + vers | sub)</code>. Since both condition and version are within-stimuli factors, the random effects specification for stimuli is <code>(1 + vers*cond | stim)</code>.</p>
+<p>This model will take a lot longer to run than one without random slopes specified. This might be a good time for a coffee break.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(rt <span class="sc">~</span> cond <span class="sc">*</span> vers <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>              (<span class="dv">1</span> <span class="sc">+</span> vers <span class="sc">|</span> sub) <span class="sc">+</span> </span>
+<span id="cb32-3"><a href="#cb32-3"></a>              (<span class="dv">1</span> <span class="sc">+</span> vers<span class="sc">*</span>cond <span class="sc">|</span> stim),</span>
+<span id="cb32-4"><a href="#cb32-4"></a>            <span class="at">data =</span> dat)</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a>mod.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod)</span>
+<span id="cb32-7"><a href="#cb32-7"></a></span>
+<span id="cb32-8"><a href="#cb32-8"></a>mod.sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: rt ~ cond * vers + (1 + vers | sub) + (1 + vers * cond | stim)
+   Data: dat
+
+REML criterion at convergence: 188355.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9599 -0.6694  0.0042  0.6623  3.9732 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr             
+ sub      (Intercept) 10007.2  100.04                    
+          vers          353.7   18.81   -0.16            
+ stim     (Intercept)  2367.9   48.66                    
+          vers          171.6   13.10   -0.51            
+          cond         1180.1   34.35   -0.44  0.25      
+          vers:cond     285.4   16.89   -0.56  0.36  0.32
+ Residual               624.7   24.99                    
+Number of obs: 20000, groups:  sub, 200; stim, 50
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  391.554      9.870 162.280  39.670  &lt; 2e-16 ***
+cond          83.280     14.962 234.113   5.566 7.11e-08 ***
+vers          49.453      2.308 102.640  21.430  &lt; 2e-16 ***
+cond:vers      1.256      3.644 163.942   0.345    0.731    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr) cond   vers  
+cond      -0.099              
+vers      -0.354  0.066       
+cond:vers -0.255 -0.045  0.192</code></pre>
+</div>
+</div>
+<section id="sense-checks-1" class="level3" data-number="6.6.1"><h3 data-number="6.6.1" class="anchored" data-anchor-id="sense-checks-1">
+<span class="header-section-number">6.6.1</span> Sense checks</h3>
+<p>First, check that your groups make sense.</p>
+<ul>
+<li>
+<code>sub</code> = <code>sub_n</code> (200)</li>
+<li>
+<code>stim</code> = <code>stim_n</code> (50)</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Random.Fator</th>
+<th style="text-align: right;">value</th>
+<th style="text-align: right;">parameters</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stim</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Next, look at the SDs for the random effects.</p>
+<ul>
+<li>Group:<code>sub</code>
+<ul>
+<li>
+<code>(Intercept)</code> ~= <code>sub_sd</code>
+</li>
+<li>
+<code>vers</code> ~= <code>sub_vers_sd</code>
+</li>
+</ul>
+</li>
+<li>Group: <code>stim</code>
+<ul>
+<li>
+<code>(Intercept)</code> ~= <code>stim_sd</code>
+</li>
+<li>
+<code>vers</code> ~= <code>stim_vers_sd</code>
+</li>
+<li>
+<code>cond</code> ~= <code>stim_cond_sd</code>
+</li>
+<li>
+<code>vers:cond</code> ~= <code>stim_cond_vers_sd</code>
+</li>
+</ul>
+</li>
+<li>Residual ~= <code>error_sd</code>
+</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Groups</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: right;">SD</th>
+<th style="text-align: right;">parameters</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">sub</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sub</td>
+<td style="text-align: left;">vers</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;">vers</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;">cond</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;">vers:cond</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Residual</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">25</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>The correlations are a bit more difficult to parse. The first column under <code>Corr</code> shows the correlation between the random slope for that row and the random intercept. So for <code>vers</code> under <code>sub</code>, the correlation should be close to <code>sub_i_vers_cor</code>. For all three random slopes under <code>stim</code>, the correlation with the random intercept should be near <code>stim_i_cor</code> and their correlations with each other should be near <code>stim_s_cor</code>.</p>
+<p>Finally, look at the fixed effects.</p>
+<ul>
+<li>
+<code>(Intercept)</code> ~= <code>grand_i</code>
+</li>
+<li>
+<code>sub_cond.e</code> ~= <code>sub_cond_eff</code>
+</li>
+<li>
+<code>stim_version.e</code> ~= <code>stim_vers_eff</code>
+</li>
+<li>
+<code>sub_cond.e</code>:<code>stim_version.e</code> ~= <code>cond_vers_ixn</code>
+</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Effect</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">parameters</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">392</td>
+<td style="text-align: right;">400</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cond</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vers</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cond:vers</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section><section id="function-1" class="level3" data-number="6.6.2"><h3 data-number="6.6.2" class="anchored" data-anchor-id="function-1">
+<span class="header-section-number">6.6.2</span> Function</h3>
+<p>You can put the code above in a function so you can run it more easily and change the parameters. I removed the plot and set the argument defaults to the same as the example above, but you can set them to other patterns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>sim_lmer_slope <span class="ot">&lt;-</span> <span class="cf">function</span>( <span class="at">sub_n =</span> <span class="dv">200</span>,</span>
+<span id="cb34-2"><a href="#cb34-2"></a>                            <span class="at">stim_n =</span> <span class="dv">50</span>,</span>
+<span id="cb34-3"><a href="#cb34-3"></a>                            <span class="at">sub_sd =</span> <span class="dv">100</span>,</span>
+<span id="cb34-4"><a href="#cb34-4"></a>                            <span class="at">sub_vers_sd =</span> <span class="dv">20</span>, </span>
+<span id="cb34-5"><a href="#cb34-5"></a>                            <span class="at">sub_i_vers_cor =</span> <span class="sc">-</span><span class="fl">0.2</span>,</span>
+<span id="cb34-6"><a href="#cb34-6"></a>                            <span class="at">stim_sd =</span> <span class="dv">50</span>,</span>
+<span id="cb34-7"><a href="#cb34-7"></a>                            <span class="at">stim_vers_sd =</span> <span class="dv">10</span>,</span>
+<span id="cb34-8"><a href="#cb34-8"></a>                            <span class="at">stim_cond_sd =</span> <span class="dv">30</span>,</span>
+<span id="cb34-9"><a href="#cb34-9"></a>                            <span class="at">stim_cond_vers_sd =</span> <span class="dv">15</span>,</span>
+<span id="cb34-10"><a href="#cb34-10"></a>                            <span class="at">stim_i_cor =</span> <span class="sc">-</span><span class="fl">0.4</span>,</span>
+<span id="cb34-11"><a href="#cb34-11"></a>                            <span class="at">stim_s_cor =</span> <span class="sc">+</span><span class="fl">0.2</span>,</span>
+<span id="cb34-12"><a href="#cb34-12"></a>                            <span class="at">error_sd =</span> <span class="dv">25</span>,</span>
+<span id="cb34-13"><a href="#cb34-13"></a>                            <span class="at">grand_i =</span> <span class="dv">400</span>,</span>
+<span id="cb34-14"><a href="#cb34-14"></a>                            <span class="at">sub_cond_eff =</span> <span class="dv">0</span>,</span>
+<span id="cb34-15"><a href="#cb34-15"></a>                            <span class="at">stim_vers_eff =</span> <span class="dv">0</span>, </span>
+<span id="cb34-16"><a href="#cb34-16"></a>                            <span class="at">cond_vers_ixn =</span> <span class="dv">0</span>) {</span>
+<span id="cb34-17"><a href="#cb34-17"></a>  dat <span class="ot">&lt;-</span> <span class="fu">add_random</span>(<span class="at">sub =</span> sub_n) <span class="sc">|&gt;</span></span>
+<span id="cb34-18"><a href="#cb34-18"></a>    <span class="fu">add_random</span>(<span class="at">stim =</span> stim_n) <span class="sc">|&gt;</span></span>
+<span id="cb34-19"><a href="#cb34-19"></a>    <span class="fu">add_between</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"easy"</span>,<span class="st">"hard"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb34-20"><a href="#cb34-20"></a>    <span class="fu">add_within</span>(<span class="at">version =</span> <span class="fu">c</span>(<span class="st">"congruent"</span>, <span class="st">"incongruent"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb34-21"><a href="#cb34-21"></a>    <span class="fu">add_contrast</span>(<span class="st">"condition"</span>, <span class="at">colnames =</span> <span class="st">"cond"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-22"><a href="#cb34-22"></a>    <span class="fu">add_contrast</span>(<span class="st">"version"</span>, <span class="at">colnames =</span> <span class="st">"vers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-23"><a href="#cb34-23"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"sub"</span>, <span class="at">sub_i =</span> sub_sd, </span>
+<span id="cb34-24"><a href="#cb34-24"></a>              <span class="at">sub_vers_slope =</span> sub_vers_sd,</span>
+<span id="cb34-25"><a href="#cb34-25"></a>              <span class="at">.cors =</span> sub_i_vers_cor) <span class="sc">|&gt;</span></span>
+<span id="cb34-26"><a href="#cb34-26"></a>    <span class="fu">add_ranef</span>(<span class="at">.by =</span> <span class="st">"stim"</span>, <span class="at">stim_i =</span> stim_sd,</span>
+<span id="cb34-27"><a href="#cb34-27"></a>              <span class="at">stim_vers_slope =</span> stim_vers_sd,</span>
+<span id="cb34-28"><a href="#cb34-28"></a>              <span class="at">stim_cond_slope =</span> stim_cond_sd,</span>
+<span id="cb34-29"><a href="#cb34-29"></a>              <span class="at">stim_cond_vers_slope =</span> stim_cond_vers_sd,</span>
+<span id="cb34-30"><a href="#cb34-30"></a>              <span class="at">.cors =</span> stim_cors) <span class="sc">|&gt;</span></span>
+<span id="cb34-31"><a href="#cb34-31"></a>    <span class="fu">add_ranef</span>(<span class="at">err =</span> error_sd) <span class="sc">|&gt;</span></span>
+<span id="cb34-32"><a href="#cb34-32"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb34-33"><a href="#cb34-33"></a>      <span class="at">trial_cond_eff =</span> cond_eff <span class="sc">+</span> stim_cond_slope,</span>
+<span id="cb34-34"><a href="#cb34-34"></a>      <span class="at">trial_vers_eff =</span> vers_eff <span class="sc">+</span> sub_vers_slope <span class="sc">+</span> stim_vers_slope,</span>
+<span id="cb34-35"><a href="#cb34-35"></a>      <span class="at">trial_cond_vers_ixn =</span> cond_vers_ixn <span class="sc">+</span> stim_cond_vers_slope,</span>
+<span id="cb34-36"><a href="#cb34-36"></a>      <span class="at">rt =</span> grand_i <span class="sc">+</span> sub_i <span class="sc">+</span> stim_i <span class="sc">+</span> err <span class="sc">+</span></span>
+<span id="cb34-37"><a href="#cb34-37"></a>           (cond <span class="sc">*</span> trial_cond_eff) <span class="sc">+</span> </span>
+<span id="cb34-38"><a href="#cb34-38"></a>           (vers <span class="sc">*</span> trial_vers_eff) <span class="sc">+</span> </span>
+<span id="cb34-39"><a href="#cb34-39"></a>           (cond <span class="sc">*</span> vers <span class="sc">*</span> trial_cond_vers_ixn)</span>
+<span id="cb34-40"><a href="#cb34-40"></a>    )</span>
+<span id="cb34-41"><a href="#cb34-41"></a>  </span>
+<span id="cb34-42"><a href="#cb34-42"></a>  mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(rt <span class="sc">~</span> cond <span class="sc">*</span> vers <span class="sc">+</span></span>
+<span id="cb34-43"><a href="#cb34-43"></a>                (<span class="dv">1</span> <span class="sc">+</span> vers <span class="sc">|</span> sub) <span class="sc">+</span> </span>
+<span id="cb34-44"><a href="#cb34-44"></a>                (<span class="dv">1</span> <span class="sc">+</span> vers<span class="sc">*</span>cond <span class="sc">|</span> stim),</span>
+<span id="cb34-45"><a href="#cb34-45"></a>              <span class="at">data =</span> dat)</span>
+<span id="cb34-46"><a href="#cb34-46"></a>  </span>
+<span id="cb34-47"><a href="#cb34-47"></a>  <span class="fu">return</span>(mod)</span>
+<span id="cb34-48"><a href="#cb34-48"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the function with the default values (null fixed effects).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">sim_lmer_slope</span>() <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: rt ~ cond * vers + (1 + vers | sub) + (1 + vers * cond | stim)
+   Data: dat
+
+REML criterion at convergence: 188115.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.1938 -0.6535  0.0018  0.6614  3.9680 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr             
+ sub      (Intercept) 10490.3  102.42                    
+          vers          405.1   20.13   -0.12            
+ stim     (Intercept)  2851.9   53.40                    
+          vers          111.1   10.54   -0.39            
+          cond          720.1   26.84   -0.46  0.43      
+          vers:cond     166.2   12.89   -0.42  0.17  0.18
+ Residual               617.4   24.85                    
+Number of obs: 20000, groups:  sub, 200; stim, 50
+
+Fixed effects:
+            Estimate Std. Error       df t value Pr(&gt;|t|)    
+(Intercept) 388.0982    10.4652 149.2332  37.085   &lt;2e-16 ***
+cond         26.7866    14.9777 221.8166   1.788   0.0751 .  
+vers         51.7489     2.0905 140.9327  24.755   &lt;2e-16 ***
+cond:vers     0.8172     3.4525 211.8457   0.237   0.8131    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr) cond   vers  
+cond      -0.085              
+vers      -0.258  0.078       
+cond:vers -0.161 -0.076  0.065</code></pre>
+</div>
+</div>
+<p>Try changing some variables to simulate fixed effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">sim_lmer_slope</span>(<span class="at">sub_cond_eff =</span> <span class="dv">50</span>,</span>
+<span id="cb37-2"><a href="#cb37-2"></a>               <span class="at">stim_vers_eff =</span> <span class="dv">50</span>, </span>
+<span id="cb37-3"><a href="#cb37-3"></a>               <span class="at">cond_vers_ixn =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+Model failed to converge with max|grad| = 0.00215872 (tol = 0.002, component 1)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerModLmerTest']
+Formula: rt ~ cond * vers + (1 + vers | sub) + (1 + vers * cond | stim)
+   Data: dat
+REML criterion at convergence: 188570.3
+Random effects:
+ Groups   Name        Std.Dev. Corr             
+ sub      (Intercept) 106.04                    
+          vers         20.59   -0.25            
+ stim     (Intercept)  49.59                    
+          vers         11.36   -0.39            
+          cond         28.45   -0.37  0.08      
+          vers:cond    13.30   -0.44  0.34  0.38
+ Residual              25.12                    
+Number of obs: 20000, groups:  sub, 200; stim, 50
+Fixed Effects:
+(Intercept)         cond         vers    cond:vers  
+    409.496       39.132       50.436        1.762  
+optimizer (nloptwrap) convergence code: 0 (OK) ; 0 optimizer warnings; 1 lme4 warnings </code></pre>
+</div>
+</div>
+</section></section><section id="exercises" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">6.7</span> Exercises</h2>
+<ol type="1">
+<li><p>Calculate power for the parameters in the last example using the <code>sim_lmer_slope()</code> function.</p></li>
+<li><p>Simulate data for the following design:</p></li>
+</ol>
+<ul>
+<li>100 raters rate 50 faces from group A and 50 faces from group B</li>
+<li>The rt has a mean value of 50</li>
+<li>Group B values are 5 points higher than group A</li>
+<li>Rater intercepts have an SD of 5</li>
+<li>Face intercepts have an SD of 10</li>
+<li>The residual error has an SD of 8</li>
+</ul>
+<ol start="3" type="1">
+<li><p>For the design from exercise 2, write a function that simulates data and runs a mixed effects analysis on it.</p></li>
+<li><p>The package <code>faux</code> has a built-in dataset called <code>fr4</code>. Type <code><a href="https://debruine.github.io/faux/reference/fr4.html">?faux::fr4</a></code> into the console to view the help for this dataset. Run a mixed effects model on this dataset looking at the effect of <code>face_sex</code> on ratings. Remember to include a random slope for the effect of face sex and explicitly add a contrast code.</p></li>
+<li><p>Use the parameters from this analysis to simulate a new dataset with 50 male and 50 female faces, and 100 raters.</p></li>
+</ol>
+
+
+</section></main><!-- /main --><script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+// open rdrr links externally ----
+
+var exlinks = document.querySelectorAll("a[href^='https://rdrr.io']");
+var exlink_func = function(){
+  window.open(this.href);
+  return false;
+};
+for (var i = 0; i < exlinks.length; i++) {
+    exlinks[i].addEventListener('click', exlink_func, false);
+}
+
+// visible second sidebar in mobile ----
+
+function move_sidebar() {
+  var toc = document.getElementById("TOC");
+  var small_sidebar = document.querySelector("#quarto-sidebar .sidebar-menu-container");
+  var right_sidebar = document.getElementById("quarto-margin-sidebar");
+
+  if (window.innerWidth < 768) {
+    small_sidebar.append(toc);
+  } else {
+    right_sidebar.append(toc);
+  }
+}
+move_sidebar();
+window.onresize = move_sidebar;
+</script><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./01-05-glm.html" class="pagination-link" aria-label="Generalised linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02-00-graph_robust.html" class="pagination-link" aria-label="Graphical representations and robust statistics">
+        <span class="nav-page-text">Graphical representations and robust statistics</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>CC-BY (2025) Bartlett, Rousselet, &amp; DeBruine.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>

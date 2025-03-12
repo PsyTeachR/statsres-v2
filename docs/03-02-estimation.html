@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
-<title>Statistics and Research Design - 9&nbsp; Bayesian modelling</title>
+<title>Statistics and Research Design - 10&nbsp; Bayesian modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -163,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-02-estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-02-estimation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -232,6 +232,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -246,13 +252,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
   </div>
 </li>
       </ul>
@@ -269,13 +275,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -311,35 +317,35 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">9.1</span> Learning objectives</a></li>
+<li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">10.1</span> Learning objectives</a></li>
   <li>
-<a href="#simpleregression" id="toc-simpleregression" class="nav-link" data-scroll-target="#simpleregression"><span class="header-section-number">9.2</span> Simple Linear Regression</a>
+<a href="#simpleregression" id="toc-simpleregression" class="nav-link" data-scroll-target="#simpleregression"><span class="header-section-number">10.2</span> Simple Linear Regression</a>
   <ul class="collapse">
-<li><a href="#guided-example-schroeder-epley-2015" id="toc-guided-example-schroeder-epley-2015" class="nav-link" data-scroll-target="#guided-example-schroeder-epley-2015"><span class="header-section-number">9.2.1</span> Guided example (Schroeder &amp; Epley, 2015)</a></li>
-  <li><a href="#independent-activity-brandt-et-al.-2014" id="toc-independent-activity-brandt-et-al.-2014" class="nav-link" data-scroll-target="#independent-activity-brandt-et-al.-2014"><span class="header-section-number">9.2.2</span> Independent activity (Brandt et al., 2014)</a></li>
+<li><a href="#guided-example-schroeder-epley-2015" id="toc-guided-example-schroeder-epley-2015" class="nav-link" data-scroll-target="#guided-example-schroeder-epley-2015"><span class="header-section-number">10.2.1</span> Guided example (Schroeder &amp; Epley, 2015)</a></li>
+  <li><a href="#independent-activity-brandt-et-al.-2014" id="toc-independent-activity-brandt-et-al.-2014" class="nav-link" data-scroll-target="#independent-activity-brandt-et-al.-2014"><span class="header-section-number">10.2.2</span> Independent activity (Brandt et al., 2014)</a></li>
   </ul>
 </li>
   <li>
-<a href="#multipleregression" id="toc-multipleregression" class="nav-link" data-scroll-target="#multipleregression"><span class="header-section-number">9.3</span> Multiple Linear Regression</a>
+<a href="#multipleregression" id="toc-multipleregression" class="nav-link" data-scroll-target="#multipleregression"><span class="header-section-number">10.3</span> Multiple Linear Regression</a>
   <ul class="collapse">
-<li><a href="#guided-example-heino-et-al.-2018" id="toc-guided-example-heino-et-al.-2018" class="nav-link" data-scroll-target="#guided-example-heino-et-al.-2018"><span class="header-section-number">9.3.1</span> Guided example (Heino et al., 2018)</a></li>
-  <li><a href="#independent-activity-coleman-et-al.-2019" id="toc-independent-activity-coleman-et-al.-2019" class="nav-link" data-scroll-target="#independent-activity-coleman-et-al.-2019"><span class="header-section-number">9.3.2</span> Independent activity (Coleman et al., 2019)</a></li>
+<li><a href="#guided-example-heino-et-al.-2018" id="toc-guided-example-heino-et-al.-2018" class="nav-link" data-scroll-target="#guided-example-heino-et-al.-2018"><span class="header-section-number">10.3.1</span> Guided example (Heino et al., 2018)</a></li>
+  <li><a href="#independent-activity-coleman-et-al.-2019" id="toc-independent-activity-coleman-et-al.-2019" class="nav-link" data-scroll-target="#independent-activity-coleman-et-al.-2019"><span class="header-section-number">10.3.2</span> Independent activity (Coleman et al., 2019)</a></li>
   </ul>
 </li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.4</span> Summary</a></li>
-  <li><a href="#taking-this-further" id="toc-taking-this-further" class="nav-link" data-scroll-target="#taking-this-further"><span class="header-section-number">9.5</span> Taking this further</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">10.4</span> Summary</a></li>
+  <li><a href="#taking-this-further" id="toc-taking-this-further" class="nav-link" data-scroll-target="#taking-this-further"><span class="header-section-number">10.5</span> Taking this further</a></li>
   <li>
-<a href="#bonus-content" id="toc-bonus-content" class="nav-link" data-scroll-target="#bonus-content"><span class="header-section-number">9.6</span> Bonus content</a>
+<a href="#bonus-content" id="toc-bonus-content" class="nav-link" data-scroll-target="#bonus-content"><span class="header-section-number">10.6</span> Bonus content</a>
   <ul class="collapse">
-<li><a href="#Brandt-bonus" id="toc-Brandt-bonus" class="nav-link" data-scroll-target="#Brandt-bonus"><span class="header-section-number">9.6.1</span> Ordinal model of Brandt et al.&nbsp;</a></li>
+<li><a href="#Brandt-bonus" id="toc-Brandt-bonus" class="nav-link" data-scroll-target="#Brandt-bonus"><span class="header-section-number">10.6.1</span> Ordinal model of Brandt et al.&nbsp;</a></li>
   </ul>
 </li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-02-estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-02-estimation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span>
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span>
 </h1>
 </div>
 
@@ -355,8 +361,8 @@ window.Quarto = {
 
 
 </header><p>In this chapter, you will learn about the Bayesian approach to estimation by fitting regression models using the <pkg>brms</pkg> package <span class="citation" data-cites="burkner_brms_2017">(<a href="references.html#ref-burkner_brms_2017" role="doc-biblioref">Bürkner, 2017</a>)</span>. This is the most flexible approach to modelling as you can select your relevant outcome and predictors rather than relying on out-of-the-box statistical tests. We will be focusing on estimation and exploring the posterior of your model to make inferences. You will build on the skills you learnt in the previous chapter, but extending it to more flexible priors and statistical models. We are mainly going to focus on simple and multiple linear regression in this chapter, but the final section outlines further resources to learn about more advanced distribution families and models.</p>
-<section id="learning-objectives" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="learning-objectives">
-<span class="header-section-number">9.1</span> Learning objectives</h2>
+<section id="learning-objectives" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="learning-objectives">
+<span class="header-section-number">10.1</span> Learning objectives</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ol type="1">
 <li><p>Understand the steps involved in fitting and exploring Bayesian regression models.</p></li>
@@ -375,10 +381,10 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(emmeans) <span class="co"># Handy function for calculating (marginal) effect sizes</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(patchwork) <span class="co"># Combine multiple plots</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="simpleregression" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="simpleregression">
-<span class="header-section-number">9.2</span> Simple Linear Regression</h2>
-<section id="guided-example-schroeder-epley-2015" class="level3" data-number="9.2.1"><h3 data-number="9.2.1" class="anchored" data-anchor-id="guided-example-schroeder-epley-2015">
-<span class="header-section-number">9.2.1</span> Guided example (Schroeder &amp; Epley, 2015)</h3>
+</section><section id="simpleregression" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="simpleregression">
+<span class="header-section-number">10.2</span> Simple Linear Regression</h2>
+<section id="guided-example-schroeder-epley-2015" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="guided-example-schroeder-epley-2015">
+<span class="header-section-number">10.2.1</span> Guided example (Schroeder &amp; Epley, 2015)</h3>
 <p>For this guided activity, we will use data from the study by <span class="citation" data-cites="schroeder_sound_2015">Schroeder &amp; Epley (<a href="references.html#ref-schroeder_sound_2015" role="doc-biblioref">2015</a>)</span>. We used this in the previous chapter for the independent activity, so we will explore the data set as the guided example in this chapter to see how we can refit it as a Bayesian regression model.</p>
 <p>As a reminder, the aim of the study was to investigate whether delivering a short speech to a potential employer would be more effective at landing you a job than writing the speech down and the employer reading it themselves. Thirty-nine professional recruiters were randomly assigned to receive a job application speech as either a transcript for them to read or an audio recording of them reading the speech.</p>
 <p>The recruiters then rated the applicants on perceived intellect, their impression of the applicant, and whether they would recommend hiring the candidate. All ratings were originally on a Likert scale ranging from 0 (low intellect, impression etc.) to 10 (high impression, recommendation etc.), with the final value representing the mean across several items.</p>
@@ -391,21 +397,21 @@ window.Quarto = {
 <li><p>Update the prior to a posterior distribution using Bayesian inference;</p></li>
 <li><p>Check your model against data, and identify potential problems.</p></li>
 </ol>
-<section id="identify-data" class="level4" data-number="9.2.1.1"><h4 data-number="9.2.1.1" class="anchored" data-anchor-id="identify-data">
-<span class="header-section-number">9.2.1.1</span> Identify data</h4>
+<section id="identify-data" class="level4" data-number="10.2.1.1"><h4 data-number="10.2.1.1" class="anchored" data-anchor-id="identify-data">
+<span class="header-section-number">10.2.1.1</span> Identify data</h4>
 <p>For this example, we have the data from Schroeder and Epley with one outcome and one categorical predictor. The data are coded 0 for those in the transcript group and 1 for those in the audio group.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>schroeder_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Schroeder_hiring.csv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">mutate</span>(<span class="at">CONDITION =</span> <span class="fu">as.factor</span>(CONDITION))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="define-a-descriptive-model" class="level4" data-number="9.2.1.2"><h4 data-number="9.2.1.2" class="anchored" data-anchor-id="define-a-descriptive-model">
-<span class="header-section-number">9.2.1.2</span> Define a descriptive model</h4>
+</section><section id="define-a-descriptive-model" class="level4" data-number="10.2.1.2"><h4 data-number="10.2.1.2" class="anchored" data-anchor-id="define-a-descriptive-model">
+<span class="header-section-number">10.2.1.2</span> Define a descriptive model</h4>
 <p>The next step is to define a descriptive model. In the previous chapter, we used the <pkg>BayesFactor</pkg> package to use out-of-the-box tests like a t-test, but we saw in the lecture with the <a href="https://lindeloev.github.io/tests-as-linear/" target="_blank">Lindelöv (2019) blog post</a>, common statistical models are just different expressions of linear models. So, we can express the same t-test as a linear model, using <code>"CONDITION"</code> as a single categorical predictor of <code>"Hire_Rating"</code> as our outcome. You can enter this directly in the <code>brm()</code> function below, but its normally a good idea to clearly outline each component.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>schroeder_model1 <span class="ot">&lt;-</span> <span class="fu">bf</span>(Hire_Rating <span class="sc">~</span> CONDITION)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="specify-prior-probability-of-parameters" class="level4" data-number="9.2.1.3"><h4 data-number="9.2.1.3" class="anchored" data-anchor-id="specify-prior-probability-of-parameters">
-<span class="header-section-number">9.2.1.3</span> Specify prior probability of parameters</h4>
+</section><section id="specify-prior-probability-of-parameters" class="level4" data-number="10.2.1.3"><h4 data-number="10.2.1.3" class="anchored" data-anchor-id="specify-prior-probability-of-parameters">
+<span class="header-section-number">10.2.1.3</span> Specify prior probability of parameters</h4>
 <p>Once you get used to the <pkg>brms</pkg> package, you start to learn which priors you need for simple cases, but now we have stated a model, we can see which parameters can be assigned a prior.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">get_prior</span>(schroeder_model1, <span class="co"># Model we defined above</span></span>
@@ -586,8 +592,8 @@ Note
 <p>Remember it is important to check the sensitivity of the results to the choice of prior. So, once we’re finished, we will check how stable the results are to an uninformative prior, keeping the defaults. Normally it is the opposite way around and using uninformative priors first, but I did not want to put off thinking about the priors.</p>
 </div>
 </div>
-</section><section id="update-the-prior-to-the-posterior" class="level4" data-number="9.2.1.4"><h4 data-number="9.2.1.4" class="anchored" data-anchor-id="update-the-prior-to-the-posterior">
-<span class="header-section-number">9.2.1.4</span> Update the prior to the posterior</h4>
+</section><section id="update-the-prior-to-the-posterior" class="level4" data-number="10.2.1.4"><h4 data-number="10.2.1.4" class="anchored" data-anchor-id="update-the-prior-to-the-posterior">
+<span class="header-section-number">10.2.1.4</span> Update the prior to the posterior</h4>
 <p>This is going to be the longest section as we are going to fit the <pkg>brms</pkg> model and then explore the posterior.</p>
 <p>As the process relies on sampling using MCMC, it is important to set a seed within the function for reproducibility, so the semi-random numbers have a consistent starting point. This might take a while depending on your computer, then you will get a bunch of output for fitting the model and sampling from the MCMC chains.</p>
 <div class="cell">
@@ -805,8 +811,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 <p>We can use this as a way to create ROPE regions for the effects and it tells us useful things like the probability of direction for the effect (how much of the posterior is above or below zero).</p>
-<section id="plotting-the-posterior-distributions" class="level5" data-number="9.2.1.4.1"><h5 data-number="9.2.1.4.1" class="anchored" data-anchor-id="plotting-the-posterior-distributions">
-<span class="header-section-number">9.2.1.4.1</span> Plotting the posterior distributions</h5>
+<section id="plotting-the-posterior-distributions" class="level5" data-number="10.2.1.4.1"><h5 data-number="10.2.1.4.1" class="anchored" data-anchor-id="plotting-the-posterior-distributions">
+<span class="header-section-number">10.2.1.4.1</span> Plotting the posterior distributions</h5>
 <p>Until now, we have focused on point-estimates and intervals of the posterior, but the main strength of Bayesian statistics is summarising the parameters as a whole posterior probability distribution, so we will now turn to the various plotting options.</p>
 <p>The first plot is useful for seeing the posterior of each parameter and the trace plots to check on any convergence issues.</p>
 <div class="cell">
@@ -883,8 +889,8 @@ Note
 </div>
 </div>
 <p>For this example, for a sample size of 39, we have pretty strong evidence in favour of a positive effect in the audio group. The 95% HDI excludes zero, but if we set a ROPE of 1 unit, we do not quite exclude it. This means if we wanted to be more confident that the effect exceeded the ROPE, we would need more data. This is just for demonstration purposes, I’m not sure if the original study would consider an effect of 1 as practically meaningful, or whether they would just be happy with any non-zero effect.</p>
-</section><section id="hypothesis-testing-in-brms" class="level5" data-number="9.2.1.4.2"><h5 data-number="9.2.1.4.2" class="anchored" data-anchor-id="hypothesis-testing-in-brms">
-<span class="header-section-number">9.2.1.4.2</span> Hypothesis testing in brms</h5>
+</section><section id="hypothesis-testing-in-brms" class="level5" data-number="10.2.1.4.2"><h5 data-number="10.2.1.4.2" class="anchored" data-anchor-id="hypothesis-testing-in-brms">
+<span class="header-section-number">10.2.1.4.2</span> Hypothesis testing in brms</h5>
 <p>Following from the previous chapter, we saw we can also use Bayesian statistics to test hypotheses. This works in a modelling approach as <pkg>brms</pkg> has a function to test hypotheses. We must provide the fitted model object and state a hypothesis to test. This relies on a character description of the parameter and test value. For a full explanation, see the <a href="https://paul-buerkner.github.io/brms/reference/hypothesis.html" target="_blank">brms documentation online</a> for the function. Here, we will test the coefficient/slope against a point-null of 0.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">hypothesis</span>(schroeder_fit, <span class="co"># brms model we fitted earlier</span></span>
@@ -933,8 +939,8 @@ for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
 </div>
-</section><section id="calculating-and-plotting-conditional-effects" class="level5" data-number="9.2.1.4.3"><h5 data-number="9.2.1.4.3" class="anchored" data-anchor-id="calculating-and-plotting-conditional-effects">
-<span class="header-section-number">9.2.1.4.3</span> Calculating and plotting conditional effects</h5>
+</section><section id="calculating-and-plotting-conditional-effects" class="level5" data-number="10.2.1.4.3"><h5 data-number="10.2.1.4.3" class="anchored" data-anchor-id="calculating-and-plotting-conditional-effects">
+<span class="header-section-number">10.2.1.4.3</span> Calculating and plotting conditional effects</h5>
 <p>For the final part of exploring the posterior, you might be interested in the estimates for each group or condition in your predictor. When you only have two groups, you can calculate the point estimate using the intercept and slope, but we can use the <pkg>emmeans</pkg> package <span class="citation" data-cites="Lenth2022">(<a href="references.html#ref-Lenth2022" role="doc-biblioref">Lenth, 2024</a>)</span> to calculate conditional effects on the posterior distribution.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">emmeans</span>(schroeder_fit, <span class="co"># add the model object  </span></span>
@@ -988,8 +994,8 @@ Warning
 </div>
 </div>
 </div>
-</section></section><section id="model-checking" class="level4" data-number="9.2.1.5"><h4 data-number="9.2.1.5" class="anchored" data-anchor-id="model-checking">
-<span class="header-section-number">9.2.1.5</span> Model checking</h4>
+</section></section><section id="model-checking" class="level4" data-number="10.2.1.5"><h4 data-number="10.2.1.5" class="anchored" data-anchor-id="model-checking">
+<span class="header-section-number">10.2.1.5</span> Model checking</h4>
 <p>Finally, we have our model checking procedure. We already looked at some information for this such as Rhat, effect sample size, and the trace plots. This suggests the model fitted OK. We also want to check the model reflects the properties of the data. This does not mean we want it exactly the same and overfit to the data, but it should follow a similar pattern to show our model captures the features of the data.</p>
 <p>Bayesian models are generative, which means once they are fitted, we can use them to sample values from the posterior and make predictions from it. One key process is called a posterior predictive check which takes the model and uses is to generate new samples. This shows how you have conditioned the model and what it expects.</p>
 <p>The plot below is a <pkg>brms</pkg> function for facilitating this. The thick blue line is your data for the outcome. The light blue lines are 100 samples from the posterior to show what the model expects about the outcome.</p>
@@ -1004,8 +1010,8 @@ Warning
 </div>
 </div>
 <p>For this example, it does an OK job at capturing the pattern of data and the bulk of the observed data follows the generated curves. However, you can see the data are quite flat compared to the predicted values. As we expect a Gaussian distribution, the model will happily produce normal curves. The model also happily expects values beyond the range of data as our scale is bound to 0 and 10. This is hugely common in psychological research as we expect Gaussian distributions from ordinal bound data. So, while this model does an OK job, we could potentially improve it by focusing on an ordinal regression model so we can factor in the bounded nature of the measure if we had the raw items.</p>
-<section id="check-model-sensitivity-to-different-priors" class="level5" data-number="9.2.1.5.1"><h5 data-number="9.2.1.5.1" class="anchored" data-anchor-id="check-model-sensitivity-to-different-priors">
-<span class="header-section-number">9.2.1.5.1</span> Check model sensitivity to different priors</h5>
+<section id="check-model-sensitivity-to-different-priors" class="level5" data-number="10.2.1.5.1"><h5 data-number="10.2.1.5.1" class="anchored" data-anchor-id="check-model-sensitivity-to-different-priors">
+<span class="header-section-number">10.2.1.5.1</span> Check model sensitivity to different priors</h5>
 <p>The final thing we will check for this model is how sensitive it is to the choice of prior. A justifiable informative prior is a key strength of Bayesian statistics, but it is important to check the model under at least two sets of priors. For this example, we will compare the model output under the default package priors and our user defined priors we used all along.</p>
 <p>In the code below, we have omitted the prior argument, so we are fitting the exact same model as before but using the default package priors.</p>
 <div class="cell">
@@ -1099,8 +1105,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </table>
 </div>
 </div>
-</section></section></section><section id="independent-activity-brandt-et-al.-2014" class="level3" data-number="9.2.2"><h3 data-number="9.2.2" class="anchored" data-anchor-id="independent-activity-brandt-et-al.-2014">
-<span class="header-section-number">9.2.2</span> Independent activity (Brandt et al., 2014)</h3>
+</section></section></section><section id="independent-activity-brandt-et-al.-2014" class="level3" data-number="10.2.2"><h3 data-number="10.2.2" class="anchored" data-anchor-id="independent-activity-brandt-et-al.-2014">
+<span class="header-section-number">10.2.2</span> Independent activity (Brandt et al., 2014)</h3>
 <p>For an independent activity, we will use data from the study by <span class="citation" data-cites="brandt_does_2014">(<a href="references.html#ref-brandt_does_2014" role="doc-biblioref">Brandt et al., 2014</a>)</span>. The aim of Brandt et al.&nbsp;was to replicate a relatively famous social psychology study (Banerjee et al., 2012) on the effect of recalling unethical behaviour on the perception of brightness.</p>
 <p>In common language, unethical behaviour is considered as “dark”, so the original authors designed a priming experiment where participants were randomly allocated to recall an unethical behaviour or an ethical behaviour from their past. Participants then completed a series of measures including their perception of how bright the testing room was. Brandt et al.&nbsp;were sceptical and wanted to replicate this study to see if they could find similar results.</p>
 <p>Participants were randomly allocated (<code>"ExpCond"</code>) to recall an unethical behaviour (n = 49) or an ethical behaviour (n = 51). The key outcome was their perception of how bright the room was (<code>"welllit"</code>), from 1 (not bright at all) to 7 (very bright). The research question was: Does recalling unethical behaviour lead people to perceive a room as darker than if they recall ethical behaviour?</p>
@@ -1499,14 +1505,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </div>
-</section></section><section id="multipleregression" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="multipleregression">
-<span class="header-section-number">9.3</span> Multiple Linear Regression</h2>
-<section id="guided-example-heino-et-al.-2018" class="level3" data-number="9.3.1"><h3 data-number="9.3.1" class="anchored" data-anchor-id="guided-example-heino-et-al.-2018">
-<span class="header-section-number">9.3.1</span> Guided example (Heino et al., 2018)</h3>
+</section></section><section id="multipleregression" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="multipleregression">
+<span class="header-section-number">10.3</span> Multiple Linear Regression</h2>
+<section id="guided-example-heino-et-al.-2018" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="guided-example-heino-et-al.-2018">
+<span class="header-section-number">10.3.1</span> Guided example (Heino et al., 2018)</h3>
 <p>For the second guided example we covered in the lecture, we will explore the model included in <span class="citation" data-cites="heino_bayesian_2018">Heino et al. (<a href="references.html#ref-heino_bayesian_2018" role="doc-biblioref">2018</a>)</span> for their Bayesian data analysis tutorial. They explored the feasibility and acceptability of the ”Let’s Move It” intervention to increase physical activity in 43 older adolescents.</p>
 <p>In this section, we will work through their multiple regression model following the Bayesian modelling steps. There will be less explanation than the simple linear regression section as we are following the same processes, but I will highlight if there is anything new or important to consider when we have two or more predictors.</p>
-<section id="identify-data-1" class="level4" data-number="9.3.1.1"><h4 data-number="9.3.1.1" class="anchored" data-anchor-id="identify-data-1">
-<span class="header-section-number">9.3.1.1</span> Identify data</h4>
+<section id="identify-data-1" class="level4" data-number="10.3.1.1"><h4 data-number="10.3.1.1" class="anchored" data-anchor-id="identify-data-1">
+<span class="header-section-number">10.3.1.1</span> Identify data</h4>
 <p><span class="citation" data-cites="heino_bayesian_2018">Heino et al. (<a href="references.html#ref-heino_bayesian_2018" role="doc-biblioref">2018</a>)</span> randomised participants into two groups (<code>"intervention"</code>) for control (0) and intervention (1) arms (group sessions on motivation and self-regulation skills, and teacher training). Their outcome was a measure of autonomous motivation (<code>"value"</code>) on a 1-5 scale, with higher values meaning greater motivation. They measured the outcome at both baseline (0) and six weeks after (1; <code>"time"</code>).</p>
 <p>Their research question was: To what extent does the intervention affect autonomous motivation?</p>
 <div class="cell">
@@ -1531,8 +1537,8 @@ Note
 <p>Part of their tutorial discusses a bigger mixed effects model considering different scenarios, but for this demonstration, we’re just averaging over the scenarios to get the mean motivation. We also convert intervention and time to factors so they work nicely in plotting options later.</p>
 </div>
 </div>
-</section><section id="define-a-descriptive-model-1" class="level4" data-number="9.3.1.2"><h4 data-number="9.3.1.2" class="anchored" data-anchor-id="define-a-descriptive-model-1">
-<span class="header-section-number">9.3.1.2</span> Define a descriptive model</h4>
+</section><section id="define-a-descriptive-model-1" class="level4" data-number="10.3.1.2"><h4 data-number="10.3.1.2" class="anchored" data-anchor-id="define-a-descriptive-model-1">
+<span class="header-section-number">10.3.1.2</span> Define a descriptive model</h4>
 <p>I recommend reading the article as they explain this process in more detail. We essentially have an outcome of autonomous motivation (<code>"value"</code>) and we want to look at the interaction between <code>"intervention"</code> and <code>"time"</code>. They define a fixed intercept in the model with the <code>1 +</code> part. Its also technically a mixed effects model as they define a random intercept for each participant (<code>(1 | ID)</code>) to ensure we recognise time is within-subjects.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1550,8 +1556,8 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>heino_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> time <span class="sc">*</span> intervention <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="specify-prior-probability-of-parameters-1" class="level4" data-number="9.3.1.3"><h4 data-number="9.3.1.3" class="anchored" data-anchor-id="specify-prior-probability-of-parameters-1">
-<span class="header-section-number">9.3.1.3</span> Specify prior probability of parameters</h4>
+</section><section id="specify-prior-probability-of-parameters-1" class="level4" data-number="10.3.1.3"><h4 data-number="10.3.1.3" class="anchored" data-anchor-id="specify-prior-probability-of-parameters-1">
+<span class="header-section-number">10.3.1.3</span> Specify prior probability of parameters</h4>
 <p>Compared to simple linear regression, as you add predictors, the number of priors you can set also increase. In the output below, you will see how you can enter a prior for all beta coefficients or one specific for each predictors. There are also different options for setting a prior for standard deviations since we now have the group-level standard deviation for the random effect and sigma for the distribution family since we are assuming the outcome is normal.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">get_prior</span>(heino_model, </span>
@@ -1715,8 +1721,8 @@ Note
 </div>
 </div>
 </div>
-</section><section id="update-prior-to-posterior" class="level4" data-number="9.3.1.4"><h4 data-number="9.3.1.4" class="anchored" data-anchor-id="update-prior-to-posterior">
-<span class="header-section-number">9.3.1.4</span> Update prior to posterior</h4>
+</section><section id="update-prior-to-posterior" class="level4" data-number="10.3.1.4"><h4 data-number="10.3.1.4" class="anchored" data-anchor-id="update-prior-to-posterior">
+<span class="header-section-number">10.3.1.4</span> Update prior to posterior</h4>
 <p>This is going to be the longest section as we are going to fit the <pkg>brms</pkg> model and then explore the posterior.</p>
 <p>As the process relies on sampling using MCMC, it is important to set a seed for reproducibility, so the semi-random numbers have a consistent starting point. This might take a while depending on your computer, then you will get a bunch of output for fitting the model and sampling from the MCMC chains. Remember, we save all the models using the <code>file</code> argument, so its easier to load them later. If you update the model, you must use the <code>file_refit</code> argument or it will not change when you use the same file name.</p>
 <div class="cell">
@@ -1808,8 +1814,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 <p>Now we zoom in a little more without the scale of the wide priors and there is further indication the mass of the coefficient posteriors are centered over 0. We would need more data to make firm conclusions about the effectiveness of the intervention. The data comes from a feasibility study, so the sample size was pretty small and its mainly about how receptive participants are to the intervention.</p>
-<section id="calculating-and-plotting-conditional-effects-1" class="level5" data-number="9.3.1.4.1"><h5 data-number="9.3.1.4.1" class="anchored" data-anchor-id="calculating-and-plotting-conditional-effects-1">
-<span class="header-section-number">9.3.1.4.1</span> Calculating and plotting conditional effects</h5>
+<section id="calculating-and-plotting-conditional-effects-1" class="level5" data-number="10.3.1.4.1"><h5 data-number="10.3.1.4.1" class="anchored" data-anchor-id="calculating-and-plotting-conditional-effects-1">
+<span class="header-section-number">10.3.1.4.1</span> Calculating and plotting conditional effects</h5>
 <p>As a bonus extra since its not included in Heino et al., you can also use the <pkg>emmeans</pkg> package to calculate marginal effects on the posterior distribution. Its not important here as there is little we can learn from breaking down the interaction further, but it might come in handy in future.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co"># Surround with brackets to both save and output</span></span>
@@ -1886,8 +1892,8 @@ HPD interval probability: 0.95 </code></pre>
 </div>
 </div>
 </div>
-</section><section id="model-fit-and-comparison" class="level5" data-number="9.3.1.4.2"><h5 data-number="9.3.1.4.2" class="anchored" data-anchor-id="model-fit-and-comparison">
-<span class="header-section-number">9.3.1.4.2</span> Model fit and comparison</h5>
+</section><section id="model-fit-and-comparison" class="level5" data-number="10.3.1.4.2"><h5 data-number="10.3.1.4.2" class="anchored" data-anchor-id="model-fit-and-comparison">
+<span class="header-section-number">10.3.1.4.2</span> Model fit and comparison</h5>
 <p>Depending on your research question and theoretical understanding of the variables you are working with, you might be interested in comparing different models and assessing their fit. It is not something Heino et al.&nbsp;included, but you could compare their model to one without the interaction (lets pretend that is theoretically justified). Instead of refitting a whole new model, we can update the model to a change in formula. All other settings like the priors remain the same.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co"># Update model to a new formula</span></span>
@@ -1950,8 +1956,8 @@ R2 0.7983655 0.05632931 0.6604283 0.8748871</code></pre>
 </table>
 </div>
 </div>
-</section></section><section id="model-check" class="level4" data-number="9.3.1.5"><h4 data-number="9.3.1.5" class="anchored" data-anchor-id="model-check">
-<span class="header-section-number">9.3.1.5</span> Model check</h4>
+</section></section><section id="model-check" class="level4" data-number="10.3.1.5"><h4 data-number="10.3.1.5" class="anchored" data-anchor-id="model-check">
+<span class="header-section-number">10.3.1.5</span> Model check</h4>
 <p>In previous output, there were no immediate causes of concern. Trace plots showed good mixing of the chains, R-hat values were no higher than 1.01, and effective sample size values were close to the thousands or higher.</p>
 <p>As the final step, we can look at the posterior predictive check to make sure the model is capturing the features of the data. The model maps onto the data quite well, with the samples largely following the underlying data. We are still using metric models to analyse ultimately ordinal data (despite calculating the mean response), so the expected values go beyond the range of data (1-5), but it is good enough with that caveat in mind.</p>
 <div class="cell">
@@ -1977,8 +1983,8 @@ Try this
 <p>If you scroll to the end of the Heino et al.&nbsp;article, they demonstrate how you can fit an ordinal model to the data when you do not average over the different situations, but this relies on a more complex mixed effects model you will not have learnt about yet.</p>
 </div>
 </div>
-<section id="check-model-sensitivity-to-different-priors-1" class="level5" data-number="9.3.1.5.1"><h5 data-number="9.3.1.5.1" class="anchored" data-anchor-id="check-model-sensitivity-to-different-priors-1">
-<span class="header-section-number">9.3.1.5.1</span> Check model sensitivity to different priors</h5>
+<section id="check-model-sensitivity-to-different-priors-1" class="level5" data-number="10.3.1.5.1"><h5 data-number="10.3.1.5.1" class="anchored" data-anchor-id="check-model-sensitivity-to-different-priors-1">
+<span class="header-section-number">10.3.1.5.1</span> Check model sensitivity to different priors</h5>
 <p>The final thing we will check for this model is how sensitive it is to the choice of prior. For this example, we will compare the model output under the default package priors and the user defined priors from Heino et al.</p>
 <p>In the code below, we have omitted the prior argument, so we are fitting the exact same model as before but using the default package priors. This time we can’t just update the model, we need to refit it.</p>
 <div class="cell">
@@ -2106,8 +2112,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </table>
 </div>
 </div>
-</section></section></section><section id="independent-activity-coleman-et-al.-2019" class="level3" data-number="9.3.2"><h3 data-number="9.3.2" class="anchored" data-anchor-id="independent-activity-coleman-et-al.-2019">
-<span class="header-section-number">9.3.2</span> Independent activity (Coleman et al., 2019)</h3>
+</section></section></section><section id="independent-activity-coleman-et-al.-2019" class="level3" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="independent-activity-coleman-et-al.-2019">
+<span class="header-section-number">10.3.2</span> Independent activity (Coleman et al., 2019)</h3>
 <p>For an independent activity, we will use data from the study by <span class="citation" data-cites="coleman_absorption_2019">Coleman et al. (<a href="references.html#ref-coleman_absorption_2019" role="doc-biblioref">2019</a>)</span>. Coleman et al.&nbsp;contains two studies investigating religious mystical experiences. One study focused on undergraduates and a second study focused on experienced meditators who were part of a unique religious group.</p>
 <p>The data set contains a range of variables used for the full model in the paper. We are going to focus on a small part of it for this exercise, but feel free to explore developing the full model as was used in study 1. The key variables are:</p>
 <ol type="1">
@@ -2514,8 +2520,8 @@ shorter object length</code></pre>
 </div>
 </div>
 <p>The upward part of the curve is not too far off, but there is clearly something we are not capturing for the upper values of the outcome. This is probably another case of the model going beyond the limits of the data as the sum M scale has a maximum value of 160. We’re telling the model to apply a normal distribution, so it will happily accept values towards 200 which is beyond the scale. Its good enough for our purposes here, but you could explore whether assuming a different distribution family fits the outcome better.</p>
-<section id="model-fit-and-prior-sensitivity" class="level5" data-number="9.3.2.0.1"><h5 data-number="9.3.2.0.1" class="anchored" data-anchor-id="model-fit-and-prior-sensitivity">
-<span class="header-section-number">9.3.2.0.1</span> Model fit and prior sensitivity</h5>
+<section id="model-fit-and-prior-sensitivity" class="level5" data-number="10.3.2.0.1"><h5 data-number="10.3.2.0.1" class="anchored" data-anchor-id="model-fit-and-prior-sensitivity">
+<span class="header-section-number">10.3.2.0.1</span> Model fit and prior sensitivity</h5>
 <p>The final thing we will check is the model fit and how sensitive the results were to our choice of priors. We can explore the impact of removing the interaction to demonstrate the process, but note in this study it was of theoretical interest to include and focus on the interaction.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="co"># Update model to a new formula</span></span>
@@ -2693,12 +2699,12 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </div>
-</section></section><section id="summary" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="summary">
-<span class="header-section-number">9.4</span> Summary</h2>
+</section></section><section id="summary" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="summary">
+<span class="header-section-number">10.4</span> Summary</h2>
 <p>In this chapter, you learnt about the Bayesian modelling process. This works through 1) identifying data, 2) defining a descriptive model, 3) specifying prior probability distributions over your parameters, 4) updating the priors to the posterior probability distributions, and 5) model checking. This is the most flexible approach to data analysis as you have control over your outcome, predictors, and distribution family. It also scales well to work from single predictors all the way to complex multi-level models.</p>
 <p>Modelling is where Bayesian statistics is most powerful and encourages a more thoughtful approach to data analysis. Just keep in mind, it can still be done mindlessly and it is no silver bullet to problems with data analysis in psychology. For me though, the process of setting priors, model checking, and exploring uncertainty reinforces good thoughtful habits.</p>
-</section><section id="taking-this-further" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="taking-this-further">
-<span class="header-section-number">9.5</span> Taking this further</h2>
+</section><section id="taking-this-further" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="taking-this-further">
+<span class="header-section-number">10.5</span> Taking this further</h2>
 <p>The content in this chapter scales well to different use cases, so hopefully you can apply what you learnt to different types of outcome and predictors. For some suggested reading on where to expand your knowledge on these techniques, see the following list of resources.</p>
 <p><strong>Reporting guidelines</strong></p>
 <ul>
@@ -2720,10 +2726,10 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <ul>
 <li>
 <span class="citation" data-cites="flores_beforeafter_2022">Flores et al. (<a href="references.html#ref-flores_beforeafter_2022" role="doc-biblioref">2022</a>)</span> compares the results you receive from Bayesian and frequentist mixed effects models</li>
-</ul></section><section id="bonus-content" class="level2" data-number="9.6"><h2 data-number="9.6" class="anchored" data-anchor-id="bonus-content">
-<span class="header-section-number">9.6</span> Bonus content</h2>
-<section id="Brandt-bonus" class="level3" data-number="9.6.1"><h3 data-number="9.6.1" class="anchored" data-anchor-id="Brandt-bonus">
-<span class="header-section-number">9.6.1</span> Ordinal model of Brandt et al.&nbsp;</h3>
+</ul></section><section id="bonus-content" class="level2" data-number="10.6"><h2 data-number="10.6" class="anchored" data-anchor-id="bonus-content">
+<span class="header-section-number">10.6</span> Bonus content</h2>
+<section id="Brandt-bonus" class="level3" data-number="10.6.1"><h3 data-number="10.6.1" class="anchored" data-anchor-id="Brandt-bonus">
+<span class="header-section-number">10.6.1</span> Ordinal model of Brandt et al.&nbsp;</h3>
 <p>Instead of assuming a Gaussian distribution, we can fit a cumulative probit model, assuming there is some normally distributed latent variable behind the ordinal item. For this demonstration, we will just use default priors and see <span class="citation" data-cites="burkner_ordinal_2019">Bürkner &amp; Vuorre (<a href="references.html#ref-burkner_ordinal_2019" role="doc-biblioref">2019</a>)</span> for a full discussion of Bayesian ordinal regression models. Almost all the other arguments are identical to our previous models, apart from one feature.</p>
 <p>In the regular models, we avoided many fitting problems. In this model though, we get some warnings if you leave the default settings. One is “Warning: There were X divergent transitions after warmup. Increasing adapt_delta above 0.8 may help”. This means when we are sampling from the posterior, there can be divergent transitions that cause bias. Increasing delta to 0.9 or 0.99 (it must be smaller than 1) slows down the fitting process, but often helps avoid these issues. At least on my computer, increasing delta to 0.99 fixed the warnings.</p>
 <div class="cell">
@@ -3647,7 +3653,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./03-01-hypothesis.html" class="pagination-link" aria-label="Bayesian hypothesis testing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

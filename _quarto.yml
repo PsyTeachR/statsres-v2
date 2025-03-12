@@ -56,6 +56,7 @@ book:
       - 01-03-lm-multiple.qmd
       - 01-04-screening-data.qmd
       - 01-05-glm.qmd
+      - 01-06-LMEM.qmd
   - part: 02-00-graph_robust.qmd
     chapters:
       - 02-07-gar-ci.qmd

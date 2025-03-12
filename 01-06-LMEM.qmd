@@ -14,13 +14,13 @@ By the end of this chapter, you should be able to:
 
 4. Run a power calculation for LMEM
 
-To follow along to this chapter and try the code yourself, please download the Rmd file we will be using in [this zip file](data/11_data.zip).
+To follow along to this chapter and try the code yourself, please download the Rmd file we will be using in [this zip file](data/LMEM_data.zip).
 
 ## Packages and the data sets
 
 We will simulate data using the faux package.
 
-```{r setup, message=FALSE}
+```{r setup, message=FALSE, warning=FALSE}
 library(tidyverse)   # for data wrangling, pipes, and good dataviz
 library(afex)        # for mixed effect models
 library(broom.mixed) # for getting tidy data tables from mixed models
@@ -70,7 +70,7 @@ dat
 
 ### Contrast Coding
 
-To be able to calculate the dependent variable, you need to recode categorical variables into numbers. Use the helper function `add_contrast()` for this. The code below creates anova-coded versions of `condition` and `version`. Luckily for us, the factor levels default to a sensible order, with "easy" predicted to have a faster (lower) reactive time than "hard", and "congruent" predicted to have a faster RT than "incongruent", but we can also customise the order of levels with `add_contrast()`; see the [contrasts vignette](https://debruine.github.io/faux/articles/contrasts.html) for more details.
+To be able to calculate the dependent variable, you need to recode categorical variables into numbers. Use the helper function `add_contrast()` for this. The code below creates anova-coded versions of `condition` and `version`. Luckily for us, the factor levels default to a sensible order, with "easy" predicted to have a faster (lower) reactive time than "hard", and "congruent" predicted to have a faster RT than "incongruent", but we can also customise the order of levels with `add_contrast()`; see the [contrasts vignette](https://debruine.github.io/faux/articles/contrasts.html){target="_blank"} for more details.
 
 ```{r}
 sub_n  <- 2 # number of subjects in this simulation
@@ -269,7 +269,7 @@ group_by(dat, condition, version) %>%
 
 ## Analysis
 
-New we will run a linear mixed effects model with `lmer` and look at the summary. 
+Now we will run a linear mixed effects model with `lmer` and look at the summary. 
 
 ```{r lmer}
 mod <- lmer(rt ~ cond * vers +
@@ -427,7 +427,8 @@ sim_lmer(cond_eff = 0,
   summary()
 ```
 
-::: {.try data-latex=""}
+::: {.callout-tip}
+#### Try this
 How would you modify the function above to take the input of the four cell means (`easy_congr`, `easy_incon` `hard_congr`, `hard_incon`), instead of the coefficients (`cond_eff`, `vers_eff`, `cond_vers_ixn`)?
 :::
 
@@ -469,7 +470,6 @@ my_power %>%
   summarise(power = mean(p.value < 0.05),
             .groups = "drop")
 ```
-
 
 ## Random slopes
 
