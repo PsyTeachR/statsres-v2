@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
-<title>9&nbsp; Bayesian modelling – Statistics and Research Design</title>
+<title>Statistics and Research Design - 9&nbsp; Bayesian modelling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -125,7 +125,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
-</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -160,13 +160,13 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-02-estimation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -197,7 +197,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">General linear model</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -238,7 +238,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Graphical representations and robust statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -261,7 +261,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bayesian modelling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -288,9 +288,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -365,7 +365,7 @@ window.Quarto = {
 <li><p>Create data visualisation to graphically communication the results of your Bayesian regression models.</p></li>
 </ol>
 <p>To follow along to this chapter and try the code yourself, please download the data files we will be using in <a href="data/Bayes_estimation_data.zip">this zip file</a>.</p>
-<p>In this chapter, we need a few extra packages. The one most likely to cause trouble is the main <pkg>brms</pkg> package since it uses Stan and you need a C++ compiler. See the <a href="appendix-a-installing-brms.html">installing R appendix</a> for guidance. If you are really struggling or its very slow on your computer, please contact one of the course team as soon as possible.</p>
+<p>In this chapter, we need a few extra packages. The one most likely to cause trouble is the main <pkg>brms</pkg> package since it uses Stan and you need a C++ compiler. See the <a href="#install-brms">installing R appendix</a> for guidance. If you are really struggling or its very slow on your computer, please contact one of the course team as soon as possible.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(brms) <span class="co"># fitting Bayesian models</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(bayestestR) <span class="co"># helper functions for plotting and understanding the models</span></span>
@@ -1155,26 +1155,26 @@ Try this
 <option value="x">Negative</option></select></p></li>
 <li>
 <p>Can we be confident in the direction of the coefficient?</p>
-<div id="radio_FWCDGVFATY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_FWCDGVFATY" value="x"><span>Yes, the 95% HDI excludes 0</span></label><label><input type="radio" autocomplete="off" name="radio_FWCDGVFATY" value="answer"><span>No, the 95% HDI crosses 0</span></label>
+<div id="radio_CDDZUKZODV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CDDZUKZODV" value="x"><span>Yes, the 95% HDI excludes 0</span></label><label><input type="radio" autocomplete="off" name="radio_CDDZUKZODV" value="answer"><span>No, the 95% HDI crosses 0</span></label>
 </div>
 </li>
 <li>
 <p>What would your conclusion be for the research question?</p>
-<div id="radio_TKYZUQXDHM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TKYZUQXDHM" value="x"><span>Recalling unethical behaviour lead people to perceive a room as darker.</span></label><label><input type="radio" autocomplete="off" name="radio_TKYZUQXDHM" value="answer"><span>The effect was in the opposite direction but we would not be confident that the manipulation had an effect.</span></label>
+<div id="radio_ENGXTPGBOM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ENGXTPGBOM" value="x"><span>Recalling unethical behaviour lead people to perceive a room as darker.</span></label><label><input type="radio" autocomplete="off" name="radio_ENGXTPGBOM" value="answer"><span>The effect was in the opposite direction but we would not be confident that the manipulation had an effect.</span></label>
 </div>
 </li>
 <li>
 <p>Are the results sensitive to the choice between default and user priors?</p>
-<div id="radio_KLJUAODZDW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KLJUAODZDW" value="answer"><span>No, there is little difference in the parameters and our conclusions do not change.</span></label><label><input type="radio" autocomplete="off" name="radio_KLJUAODZDW" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label>
+<div id="radio_LLIVCZRKIZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LLIVCZRKIZ" value="answer"><span>No, there is little difference in the parameters and our conclusions do not change.</span></label><label><input type="radio" autocomplete="off" name="radio_LLIVCZRKIZ" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label>
 </div>
 </li>
 <li>
 <p>Does the normal model capture the features of the data?</p>
-<div id="radio_NBZQDFSMQB" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NBZQDFSMQB" value="answer"><span>No, assuming a normal distribution misses key features of the data.</span></label><label><input type="radio" autocomplete="off" name="radio_NBZQDFSMQB" value="x"><span>Yes, assuming a normal distribution captures key features of the data.</span></label>
+<div id="radio_BJKUNKSEQB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BJKUNKSEQB" value="answer"><span>No, assuming a normal distribution misses key features of the data.</span></label><label><input type="radio" autocomplete="off" name="radio_BJKUNKSEQB" value="x"><span>Yes, assuming a normal distribution captures key features of the data.</span></label>
 </div>
 </li>
 </ul>
@@ -2175,27 +2175,27 @@ Try this
 <option value="x">Negative</option></select></p></li>
 <li>
 <p>Can we be confident in the direction of the individual predictors?</p>
-<div id="radio_QKFAVYZJZO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QKFAVYZJZO" value="x"><span>No, the 95% HDI of both coefficients contain 0.</span></label><label><input type="radio" autocomplete="off" name="radio_QKFAVYZJZO" value="x"><span>The 95% HDI of absorption contains 0, but theory of mind is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_QKFAVYZJZO" value="x"><span>The 95% HDI of theory of mind contains 0, but absorption is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_QKFAVYZJZO" value="answer"><span>Yes, both individual predictors are positive and their 95% HDI excludes 0.</span></label>
+<div id="radio_RCGXNGNFMT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="x"><span>No, the 95% HDI of both coefficients contain 0.</span></label><label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="x"><span>The 95% HDI of absorption contains 0, but theory of mind is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="x"><span>The 95% HDI of theory of mind contains 0, but absorption is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="answer"><span>Yes, both individual predictors are positive and their 95% HDI excludes 0.</span></label>
 </div>
 </li>
 <li>
 <p>How can you interpret the interaction?</p>
-<div id="radio_KBVQXWJYEZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KBVQXWJYEZ" value="x"><span>There is no clear interaction.</span></label><label><input type="radio" autocomplete="off" name="radio_KBVQXWJYEZ" value="answer"><span>For lower values of theory of mind, the slope becomes more positive.</span></label><label><input type="radio" autocomplete="off" name="radio_KBVQXWJYEZ" value="x"><span>For lower values of theory of mind, the slope becomes more negative.</span></label>
+<div id="radio_QHQKBSQOBE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QHQKBSQOBE" value="x"><span>There is no clear interaction.</span></label><label><input type="radio" autocomplete="off" name="radio_QHQKBSQOBE" value="answer"><span>For lower values of theory of mind, the slope becomes more positive.</span></label><label><input type="radio" autocomplete="off" name="radio_QHQKBSQOBE" value="x"><span>For lower values of theory of mind, the slope becomes more negative.</span></label>
 </div>
 </li>
 </ul>
 <p><strong>Hint: </strong> You will need to look at the conditional effects plot and see how one predictor moderates the effect of the other predictor.</p>
 <ul>
 <li>Comparing the models with and without the interaction term, which would you retain?
-<div id="radio_ULBIMTQVAR" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ULBIMTQVAR" value="x"><span>The model with the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_ULBIMTQVAR" value="x"><span>The model without the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_ULBIMTQVAR" value="answer"><span>There is little difference between the two models, but we would retain the interaction for theoretical interest.</span></label>
+<div id="radio_SUHPRWGKEU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_SUHPRWGKEU" value="x"><span>The model with the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_SUHPRWGKEU" value="x"><span>The model without the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_SUHPRWGKEU" value="answer"><span>There is little difference between the two models, but we would retain the interaction for theoretical interest.</span></label>
 </div>
 </li>
 <li>Are the results sensitive to the choice between default and user priors?
-<div id="radio_TPCWWOCWOZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TPCWWOCWOZ" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label><label><input type="radio" autocomplete="off" name="radio_TPCWWOCWOZ" value="answer"><span>No, there is almost no difference in the parameters and our conclusions do not change.</span></label>
+<div id="radio_JCTJGOBTRM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JCTJGOBTRM" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label><label><input type="radio" autocomplete="off" name="radio_JCTJGOBTRM" value="answer"><span>No, there is almost no difference in the parameters and our conclusions do not change.</span></label>
 </div>
 </li>
 </ul>
@@ -3272,7 +3272,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -3304,29 +3315,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -3334,7 +3323,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
