@@ -180,6 +180,28 @@ james_data %>%
 We can see the mean for group 2 and the mean differences align with exactly what we expect. It is important to work through the process now as the group means align with the model estimates. This will not be the case when we have multiple predictors since the coefficients become partial effects. 
 :::
 
+To reinforce this concept, we can visualise the data to show how the comparisons work under a dummy coding scheme. 
+
+```{r echo=FALSE}
+james_means <- james_data %>% 
+  group_by(Condition) %>% 
+  summarise(mean_intrusions = mean(post_intrusions))
+
+james_means %>% 
+  ggplot(aes(x = Condition, y = mean_intrusions))  + 
+  geom_point(size = 3)  + 
+  geom_hline(yintercept = RT_mean, linetype = 2, linewidth = 1, colour = "red") + 
+  geom_segment(aes(x = Condition, y = mean_intrusions, yend = RT_mean)) + 
+  scale_y_continuous(name = "Mean Number of Intrusive Memories",
+                     breaks = seq(0, 6, 1),
+                     limits = c(0,6)) +
+  scale_x_discrete(name = "Experimental Task", 
+                   label = c("Control", "Reactivation + Tetris", "Tetris", "Reactivation")) + 
+  theme_classic() + 
+  labs(title = "Dummy coding is relative to your choice of reference group.")
+```
+
+
 ### Deviation coding
 
 Finally, we have deviation coding. This is more useful once we get to interactions later, but it is easier to see the logic behind what it is doing when we have no other predictors to worry about. 
@@ -188,7 +210,7 @@ Remember, in dummy coding, the intercept is the reference group mean, and each d
 
 In deviation coding, the interpretation of the intercept changes to be the grand mean of all observations, i.e., taking the mean of all four groups. The coefficients are then the difference between each comparison group with the grand mean for a main effect. We still need to create a new predictor for *k*-1 groups, but instead of coding 0 and 1, we use 0.5 and -0.5. 
 
-You might see different ways of deviation coding. When you use 0.5/-0.5, you can calculate the effect of the group as 0.5 times the slope, which tells you the difference to the grand mean. For 1/-1. you calculate the effect of the group as 1 times the slope, which tells you the difference to the grand mean. We will typically use 0.5/-0.5 for consistency with other materials, but be aware you might see each approach.
+You might see different ways of deviation coding. When you use 0.5/-0.5, you can calculate the effect of the group as 0.5 times the slope (i.e., halving the coefficient), which tells you the difference to the grand mean. For 1/-1. you calculate the effect of the group as 1 times the slope (i.e., it does not change), which tells you the difference to the grand mean. We will typically use 0.5/-0.5 for consistency with other materials, but be aware you might see each approach.
  
 ```{r}
 # Create deviation coding for k-1 groups
@@ -205,7 +227,6 @@ james_data <- james_data %>%
          reactivation_deviation = case_when(Condition == 4 ~ 0.5,
                                        Condition %in% c(1, 3) ~ 0,
                                        Condition == 2 ~ -0.5))
-
 ```
 
 As before, we can get an overview of how this looks by checking the distinct values against `Condition`. 
@@ -221,7 +242,7 @@ james_data %>%
 The three predictors show how each comparison is deviation coded. For `control_deviation`, group 1 is coded 0.5, the predictors to ignore are coded 0, and the target group is coded -0.5. For `tetris_deviation`, group 3 is coded 0.5 etc. Group 2 is always coded -0.5 in this case. 
 
 ::: {.callout-note}
-Remember the interpretation of the intercept is what the outcome value is when the predictors are set to 0. The interpretation shifts here as the intercept represents the grand mean across the group. When the predictors are set to 0, the outcome is in the middle of -0.5 and 0.5, so its the mid point or average. When you do not have interactions, this might not be as useful, but its easier to understand the logic when there are no partial effects.  
+Remember the interpretation of the intercept is what the outcome value is when the predictors are set to 0. The interpretation shifts here as the intercept represents the grand mean across the group. When the predictors are set to 0, the outcome is in the middle of -0.5 and 0.5, so its the mid point or average of all observations. When you do not have interactions, this might not be as useful, but its easier to understand the logic when there are no partial effects.  
 :::
 
 We can now see what this looks like for our regression model containing deviation coded predictors. 
@@ -244,18 +265,45 @@ grand_mean <- james_data %>%
   pluck(1)
 
 # Calculate the mean number of intrusions for each group
-# Then calculate the deviations as 2 times the mean difference 
+# deviations to interpret 
+# Then recreating the 0.5 deviations as 2 times the mean difference 
 james_data %>% 
   group_by(Condition) %>% 
-  summarise(mean_intrusions = mean(post_intrusions),
-            deviations = (grand_mean - mean(post_intrusions)) * 2)
+  summarise(grand_mean = grand_mean,
+            mean_intrusions = mean(post_intrusions),
+            deviations = (grand_mean - mean(post_intrusions)),
+            `0.5/-0.5 coded` = (grand_mean - mean(post_intrusions)) * 2)
 ```
 
 ::: {.callout-warning}
-We can see the grand mean and deviations align with exactly what we expect. It is trickier than dummy coding, but this is what deviation coding does. Note in the model you do not get the group 2 contrast as that's always the reference group and we are ignoring the sign of the deviation to check its consistency. Also pay attention to calculating 2 times the difference, since we used 0.5/-0.5 as the coding scheme. 
+We can see the grand mean and deviations align with exactly what we expect. It is trickier than dummy coding, but this is what deviation coding does. Note in the model you do not get the group 2 contrast as that's always the reference group and we are ignoring the sign of the deviation to check its consistency. Also pay attention to calculating 2 times the difference between the grand mean and the group mean, since we used 0.5/-0.5 as the coding scheme. Coefficients represent a 1-unit change in the outcome given the predictor, so in essence this doubles the difference in a 0.5/-0.5 coding scheme. If you want to recalculate group means in relation to the intercept, you must *halve* the coefficients. For example, if wanted to calculate the estimated group mean for control, you would calculate: 
+
+$$intrustions_\mathrm{control} = 3.93 + \dfrac{2.36}{2} = 3.93 + 1.18 = 5.11$$
 
 It is important to work through the process now as the deviations align with the model estimates. This will not be the case when we have multiple predictors since the coefficients become partial predictors. 
 :::
+
+Alternatively, you might find a plot helpful to understand how deviation coding works. 
+
+```{r echo=FALSE}
+deviation_data <- james_data %>% 
+  group_by(Condition) %>% 
+  summarise(mean_intrusions = mean(post_intrusions),
+            deviations = (grand_mean - mean(post_intrusions)))
+
+deviation_data %>% 
+  ggplot(aes(x = Condition, y = mean_intrusions))  + 
+  geom_point(size = 3)  + 
+  geom_hline(yintercept = grand_mean, linetype = 2, linewidth = 1, colour = "red") + 
+  geom_segment(aes(x = Condition, y = mean_intrusions, yend = grand_mean)) + 
+  scale_y_continuous(name = "Mean Number of Intrusive Memories",
+                     breaks = seq(0, 6, 1),
+                     limits = c(0,6)) +
+  scale_x_discrete(name = "Experimental Task", 
+                   label = c("Control", "Reactivation + Tetris", "Tetris", "Reactivation")) + 
+  theme_classic() + 
+  labs(title = "Deviation coding is relative to the grand mean of all responses.")
+```
 
 ## Multiple linear regression with individual predictors
 
