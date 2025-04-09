@@ -371,7 +371,7 @@ window.Quarto = {
 <li><p>Create data visualisation to graphically communication the results of your Bayesian regression models.</p></li>
 </ol>
 <p>To follow along to this chapter and try the code yourself, please download the data files we will be using in <a href="data/Bayes_estimation_data.zip">this zip file</a>.</p>
-<p>In this chapter, we need a few extra packages. The one most likely to cause trouble is the main <pkg>brms</pkg> package since it uses Stan and you need a C++ compiler. See the <a href="#install-brms">installing R appendix</a> for guidance. If you are really struggling or its very slow on your computer, please contact one of the course team as soon as possible.</p>
+<p>In this chapter, we need a few extra packages. The one most likely to cause trouble is the main <pkg>brms</pkg> package since it uses Stan and you need a C++ compiler. See the <a href="appendix-a-installing-brms.html">installing R appendix</a> for guidance. If you are really struggling or its very slow on your computer, please contact one of the course team as soon as possible.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(brms) <span class="co"># fitting Bayesian models</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(bayestestR) <span class="co"># helper functions for plotting and understanding the models</span></span>
@@ -1161,26 +1161,26 @@ Try this
 <option value="x">Negative</option></select></p></li>
 <li>
 <p>Can we be confident in the direction of the coefficient?</p>
-<div id="radio_CDDZUKZODV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CDDZUKZODV" value="x"><span>Yes, the 95% HDI excludes 0</span></label><label><input type="radio" autocomplete="off" name="radio_CDDZUKZODV" value="answer"><span>No, the 95% HDI crosses 0</span></label>
+<div id="radio_ZVSPSPEXBK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZVSPSPEXBK" value="x"><span>Yes, the 95% HDI excludes 0</span></label><label><input type="radio" autocomplete="off" name="radio_ZVSPSPEXBK" value="answer"><span>No, the 95% HDI crosses 0</span></label>
 </div>
 </li>
 <li>
 <p>What would your conclusion be for the research question?</p>
-<div id="radio_ENGXTPGBOM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ENGXTPGBOM" value="x"><span>Recalling unethical behaviour lead people to perceive a room as darker.</span></label><label><input type="radio" autocomplete="off" name="radio_ENGXTPGBOM" value="answer"><span>The effect was in the opposite direction but we would not be confident that the manipulation had an effect.</span></label>
+<div id="radio_SFQFKRVWMZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_SFQFKRVWMZ" value="x"><span>Recalling unethical behaviour lead people to perceive a room as darker.</span></label><label><input type="radio" autocomplete="off" name="radio_SFQFKRVWMZ" value="answer"><span>The effect was in the opposite direction but we would not be confident that the manipulation had an effect.</span></label>
 </div>
 </li>
 <li>
 <p>Are the results sensitive to the choice between default and user priors?</p>
-<div id="radio_LLIVCZRKIZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LLIVCZRKIZ" value="answer"><span>No, there is little difference in the parameters and our conclusions do not change.</span></label><label><input type="radio" autocomplete="off" name="radio_LLIVCZRKIZ" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label>
+<div id="radio_RGCGVVYXKF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RGCGVVYXKF" value="answer"><span>No, there is little difference in the parameters and our conclusions do not change.</span></label><label><input type="radio" autocomplete="off" name="radio_RGCGVVYXKF" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label>
 </div>
 </li>
 <li>
 <p>Does the normal model capture the features of the data?</p>
-<div id="radio_BJKUNKSEQB" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BJKUNKSEQB" value="answer"><span>No, assuming a normal distribution misses key features of the data.</span></label><label><input type="radio" autocomplete="off" name="radio_BJKUNKSEQB" value="x"><span>Yes, assuming a normal distribution captures key features of the data.</span></label>
+<div id="radio_DWFWWYKAAO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DWFWWYKAAO" value="answer"><span>No, assuming a normal distribution misses key features of the data.</span></label><label><input type="radio" autocomplete="off" name="radio_DWFWWYKAAO" value="x"><span>Yes, assuming a normal distribution captures key features of the data.</span></label>
 </div>
 </li>
 </ul>
@@ -2181,27 +2181,27 @@ Try this
 <option value="x">Negative</option></select></p></li>
 <li>
 <p>Can we be confident in the direction of the individual predictors?</p>
-<div id="radio_RCGXNGNFMT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="x"><span>No, the 95% HDI of both coefficients contain 0.</span></label><label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="x"><span>The 95% HDI of absorption contains 0, but theory of mind is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="x"><span>The 95% HDI of theory of mind contains 0, but absorption is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_RCGXNGNFMT" value="answer"><span>Yes, both individual predictors are positive and their 95% HDI excludes 0.</span></label>
+<div id="radio_EAZSJZJSST" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EAZSJZJSST" value="x"><span>No, the 95% HDI of both coefficients contain 0.</span></label><label><input type="radio" autocomplete="off" name="radio_EAZSJZJSST" value="x"><span>The 95% HDI of absorption contains 0, but theory of mind is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_EAZSJZJSST" value="x"><span>The 95% HDI of theory of mind contains 0, but absorption is positive and excludes 0.</span></label><label><input type="radio" autocomplete="off" name="radio_EAZSJZJSST" value="answer"><span>Yes, both individual predictors are positive and their 95% HDI excludes 0.</span></label>
 </div>
 </li>
 <li>
 <p>How can you interpret the interaction?</p>
-<div id="radio_QHQKBSQOBE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QHQKBSQOBE" value="x"><span>There is no clear interaction.</span></label><label><input type="radio" autocomplete="off" name="radio_QHQKBSQOBE" value="answer"><span>For lower values of theory of mind, the slope becomes more positive.</span></label><label><input type="radio" autocomplete="off" name="radio_QHQKBSQOBE" value="x"><span>For lower values of theory of mind, the slope becomes more negative.</span></label>
+<div id="radio_IRCLJXBONL" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IRCLJXBONL" value="x"><span>There is no clear interaction.</span></label><label><input type="radio" autocomplete="off" name="radio_IRCLJXBONL" value="answer"><span>For lower values of theory of mind, the slope becomes more positive.</span></label><label><input type="radio" autocomplete="off" name="radio_IRCLJXBONL" value="x"><span>For lower values of theory of mind, the slope becomes more negative.</span></label>
 </div>
 </li>
 </ul>
 <p><strong>Hint: </strong> You will need to look at the conditional effects plot and see how one predictor moderates the effect of the other predictor.</p>
 <ul>
 <li>Comparing the models with and without the interaction term, which would you retain?
-<div id="radio_SUHPRWGKEU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SUHPRWGKEU" value="x"><span>The model with the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_SUHPRWGKEU" value="x"><span>The model without the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_SUHPRWGKEU" value="answer"><span>There is little difference between the two models, but we would retain the interaction for theoretical interest.</span></label>
+<div id="radio_WGERGPFIQG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WGERGPFIQG" value="x"><span>The model with the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_WGERGPFIQG" value="x"><span>The model without the interaction term clearly has the better fit.</span></label><label><input type="radio" autocomplete="off" name="radio_WGERGPFIQG" value="answer"><span>There is little difference between the two models, but we would retain the interaction for theoretical interest.</span></label>
 </div>
 </li>
 <li>Are the results sensitive to the choice between default and user priors?
-<div id="radio_JCTJGOBTRM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JCTJGOBTRM" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label><label><input type="radio" autocomplete="off" name="radio_JCTJGOBTRM" value="answer"><span>No, there is almost no difference in the parameters and our conclusions do not change.</span></label>
+<div id="radio_OQEDXSZMYY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OQEDXSZMYY" value="x"><span>Yes, there is a qualitative difference in our conclusions and the parameters change substantially.</span></label><label><input type="radio" autocomplete="off" name="radio_OQEDXSZMYY" value="answer"><span>No, there is almost no difference in the parameters and our conclusions do not change.</span></label>
 </div>
 </li>
 </ul>
@@ -2730,39 +2730,39 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span class="header-section-number">10.6</span> Bonus content</h2>
 <section id="Brandt-bonus" class="level3" data-number="10.6.1"><h3 data-number="10.6.1" class="anchored" data-anchor-id="Brandt-bonus">
 <span class="header-section-number">10.6.1</span> Ordinal model of Brandt et al.&nbsp;</h3>
-<p>Instead of assuming a Gaussian distribution, we can fit a cumulative probit model, assuming there is some normally distributed latent variable behind the ordinal item. For this demonstration, we will just use default priors and see <span class="citation" data-cites="burkner_ordinal_2019">Bürkner &amp; Vuorre (<a href="references.html#ref-burkner_ordinal_2019" role="doc-biblioref">2019</a>)</span> for a full discussion of Bayesian ordinal regression models. Almost all the other arguments are identical to our previous models, apart from one feature.</p>
+<p>Instead of assuming a regular normal or Gaussian distribution, we can fit a cumulative link model, assuming there is some latent variable behind the ordinal item. For this demonstration, we will just use default priors and see <span class="citation" data-cites="burkner_ordinal_2019">Bürkner &amp; Vuorre (<a href="references.html#ref-burkner_ordinal_2019" role="doc-biblioref">2019</a>)</span> for a full discussion of Bayesian ordinal regression models. Remember from generalised linear regression models in Chapter 5, you can model ordinal regression using a logit or probit link <span class="citation" data-cites="gambarota_ordinal_2024">(see <a href="references.html#ref-gambarota_ordinal_2024" role="doc-biblioref">Gambarota &amp; Altoè, 2024</a> for the difference in interpretation)</span>. We will specify the model as a logit link here, but you can play around with a probit link by referring back to Chapter 5. Almost all the other arguments are identical to our previous models, apart from one feature.</p>
 <p>In the regular models, we avoided many fitting problems. In this model though, we get some warnings if you leave the default settings. One is “Warning: There were X divergent transitions after warmup. Increasing adapt_delta above 0.8 may help”. This means when we are sampling from the posterior, there can be divergent transitions that cause bias. Increasing delta to 0.9 or 0.99 (it must be smaller than 1) slows down the fitting process, but often helps avoid these issues. At least on my computer, increasing delta to 0.99 fixed the warnings.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>brandt_fit3 <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
 <span id="cb88-2"><a href="#cb88-2"></a>  <span class="at">formula =</span> brandt_model,</span>
 <span id="cb88-3"><a href="#cb88-3"></a>  <span class="at">data =</span> brandt_data,</span>
-<span id="cb88-4"><a href="#cb88-4"></a>  <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="st">"probit"</span>), <span class="co"># cumulative probit model for ordinal values</span></span>
+<span id="cb88-4"><a href="#cb88-4"></a>  <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="st">"logit"</span>), <span class="co"># cumulative logit model for ordinal values</span></span>
 <span id="cb88-5"><a href="#cb88-5"></a>  <span class="at">seed =</span> <span class="dv">80323</span>,</span>
 <span id="cb88-6"><a href="#cb88-6"></a>  <span class="at">file =</span> <span class="st">"Models/Brandt_model3"</span>,</span>
 <span id="cb88-7"><a href="#cb88-7"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.99</span>) <span class="co"># Change from default to decrease divergent transitions </span></span>
 <span id="cb88-8"><a href="#cb88-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now we have our model, we can get a summary like before. This might look a little different as we no longer have just one intercept and one coefficient for this model. Our scale has 7 response options, so for the cumulative probit model, we get successive thresholds between the response options.</p>
-<p>We then have our primary estimate of interest which is the coefficient for experimental condition. We have a categorical predictor, so this represents the shift in our latent outcome from ethical (0) to unethical (1). As we covered in a previous chapter, it is expressed in logit units, so the unethical group lead to a 0.16 log odds increase in brightness rating.</p>
+<p>Now we have our model, we can get a summary like before. This might look a little different as we no longer have just one intercept and one coefficient for this model. Our scale has 7 response options, so for the ordinal model, we get successive thresholds between the response options.</p>
+<p>We then have our primary estimate of interest which is the coefficient for experimental condition. We have a categorical predictor, so this represents the shift in our latent outcome from ethical (0) to unethical (1). As we covered in Chapter 5, it is expressed in logit units, so the unethical group lead to a 0.26 log odds increase in brightness rating but with a lot of uncertainty.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="fu">summary</span>(brandt_fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: cumulative 
-  Links: mu = probit; disc = identity 
+  Links: mu = logit; disc = identity 
 Formula: welllit ~ ExpCond 
-   Data: Brandt_data (Number of observations: 100) 
+   Data: brandt_data (Number of observations: 100) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
 Regression Coefficients:
              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept[1]    -2.55      0.45    -3.51    -1.79 1.00     2415     2405
-Intercept[2]    -2.26      0.38    -3.10    -1.60 1.00     3239     2753
-Intercept[3]    -1.06      0.18    -1.42    -0.71 1.00     4224     2850
-Intercept[4]    -0.65      0.17    -1.00    -0.33 1.00     3871     3024
-Intercept[5]     0.09      0.16    -0.24     0.40 1.00     3756     2812
-Intercept[6]     1.18      0.19     0.82     1.55 1.00     3825     3134
-ExpCond1         0.16      0.21    -0.26     0.58 1.00     3555     2854
+Intercept[1]    -4.93      1.18    -7.77    -3.09 1.00     2080     1736
+Intercept[2]    -4.22      0.89    -6.25    -2.79 1.00     2645     2204
+Intercept[3]    -1.76      0.34    -2.46    -1.14 1.00     3783     3060
+Intercept[4]    -1.05      0.29    -1.62    -0.49 1.00     3296     2761
+Intercept[5]     0.16      0.27    -0.35     0.70 1.00     3834     2715
+Intercept[6]     1.99      0.34     1.35     2.68 1.00     4011     3059
+ExpCond1         0.26      0.36    -0.45     0.95 1.00     3809     2632
 
 Further Distributional Parameters:
      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -2776,22 +2776,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>To be easier to interpret, we can take the exponential to convert log odds to an odds ratio for the estimate and 95% credibility interval.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a><span class="co"># point estimate</span></span>
-<span id="cb91-2"><a href="#cb91-2"></a><span class="fu">exp</span>(<span class="fl">0.16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb91-2"><a href="#cb91-2"></a><span class="fu">exp</span>(<span class="fl">0.26</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.173511</code></pre>
+<pre><code>[1] 1.29693</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="co"># lower bound </span></span>
-<span id="cb93-2"><a href="#cb93-2"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.26</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb93-2"><a href="#cb93-2"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7710516</code></pre>
+<pre><code>[1] 0.6376282</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a><span class="co"># upper bound </span></span>
-<span id="cb95-2"><a href="#cb95-2"></a><span class="fu">exp</span>(<span class="fl">0.58</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb95-2"><a href="#cb95-2"></a><span class="fu">exp</span>(<span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.786038</code></pre>
+<pre><code>[1] 2.58571</code></pre>
 </div>
 </div>
-<p>We can see the effect is quite weak for an odds ratio of 1.17 in favour of the ethical group, but there is a lot of uncertainty here.</p>
+<p>We can see the effect is quite weak for an odds ratio of 1.30 in favour of the ethical group, but there is a lot of uncertainty here.</p>
 <p>For this model, we can look at the posterior predictive check to see if it represents the data better. Compared to the normal model, this is much better and we are capturing the ordinal features when we draw from the posterior.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">pp_check</span>(brandt_fit3, </span>
@@ -2803,7 +2803,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </div>
-<p>After the model summary, we can think about what the model looks like visually. We can get the conditional effects for the response options by experimental condition. We have the estimated probabilities of the 7 response options and there is very little to support a difference between the two groups. The pattern of responses is similar for both groups. This means we make a similar conclusion to the normal distribution model, but it respects the underlying distribution better.</p>
+<p>After the model summary, we can think about what the model looks like visually. We can get the conditional effects for the response options by experimental condition. We have the estimated probabilities of the 7 response options and there is very little to support a difference between the two groups. The pattern of responses is similar for both groups. This means we make a similar conclusion to the normal distribution model, but it respects the ordinal outcome much better.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">conditional_effects</span>(<span class="at">x =</span> brandt_fit3, </span>
 <span id="cb98-2"><a href="#cb98-2"></a>                    <span class="at">effects =</span> <span class="st">"ExpCond"</span>, </span>
@@ -2832,6 +2832,9 @@ Coleman, T. J., Bartlett, J. E., Holcombe, J., Swanson, S. B., Atkinson, A. R., 
 </div>
 <div id="ref-flores_beforeafter_2022" class="csl-entry" role="listitem">
 Flores, R. D., Sanders, C. A., Duan, S. X., Bishop-Chrzanowski, B. M., Oyler, D. L., Shim, H., Clocksin, H. E., Miller, A. P., &amp; Merkle, E. C. (2022). Before/after <span>Bayes</span>: <span>A</span> comparison of frequentist and <span>Bayesian</span> mixed-effects models in applied psychological research. <em>British Journal of Psychology</em>, <em>113</em>(4), 1164–1194. <a href="https://doi.org/10.1111/bjop.12585">https://doi.org/10.1111/bjop.12585</a>
+</div>
+<div id="ref-gambarota_ordinal_2024" class="csl-entry" role="listitem">
+Gambarota, F., &amp; Altoè, G. (2024). Ordinal regression models made easy: <span>A</span> tutorial on parameter interpretation, data simulation and power analysis. <em>International Journal of Psychology</em>, <em>59</em>(6), 1263–1292. <a href="https://doi.org/10.1002/ijop.13243">https://doi.org/10.1002/ijop.13243</a>
 </div>
 <div id="ref-heino_bayesian_2018" class="csl-entry" role="listitem">
 Heino, M. T. J., Vuorre, M., &amp; Hankonen, N. (2018). Bayesian evaluation of behavior change interventions: A brief introduction and a practical example. <em>Health Psychology and Behavioral Medicine</em>, <em>6</em>(1), 49–78. <a href="https://doi.org/10.1080/21642850.2018.1428102">https://doi.org/10.1080/21642850.2018.1428102</a>

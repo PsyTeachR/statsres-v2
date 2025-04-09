@@ -1471,7 +1471,7 @@ The content in this chapter scales well to different use cases, so hopefully you
 
 ### Ordinal model of Brandt et al. {#Brandt-bonus}
 
-Instead of assuming a Gaussian distribution, we can fit a cumulative probit model, assuming there is some normally distributed latent variable behind the ordinal item. For this demonstration, we will just use default priors and see @burkner_ordinal_2019 for a full discussion of Bayesian ordinal regression models. Almost all the other arguments are identical to our previous models, apart from one feature. 
+Instead of assuming a regular normal or Gaussian distribution, we can fit a cumulative link model, assuming there is some latent variable behind the ordinal item. For this demonstration, we will just use default priors and see @burkner_ordinal_2019 for a full discussion of Bayesian ordinal regression models. Remember from generalised linear regression models in Chapter 5, you can model ordinal regression using a logit or probit link [see @gambarota_ordinal_2024 for the difference in interpretation]. We will specify the model as a logit link here, but you can play around with a probit link by referring back to Chapter 5. Almost all the other arguments are identical to our previous models, apart from one feature.  
 
 In the regular models, we avoided many fitting problems. In this model though, we get some warnings if you leave the default settings. One is "Warning: There were X divergent transitions after warmup. Increasing adapt_delta above 0.8 may help". This means when we are sampling from the posterior, there can be divergent transitions that cause bias. Increasing delta to 0.9 or 0.99 (it must be smaller than 1) slows down the fitting process, but often helps avoid these issues. At least on my computer, increasing delta to 0.99 fixed the warnings. 
 
@@ -1479,7 +1479,7 @@ In the regular models, we avoided many fitting problems. In this model though, w
 brandt_fit3 <- brm(
   formula = brandt_model,
   data = brandt_data,
-  family = cumulative("probit"), # cumulative probit model for ordinal values
+  family = cumulative("logit"), # cumulative logit model for ordinal values
   seed = 80323,
   file = "Models/Brandt_model3",
   control = list(adapt_delta = 0.99) # Change from default to decrease divergent transitions 
@@ -1492,9 +1492,9 @@ brandt_fit3 <- read_rds("Models/Brandt_model3.rds")
 
 ```
 
-Now we have our model, we can get a summary like before. This might look a little different as we no longer have just one intercept and one coefficient for this model. Our scale has 7 response options, so for the cumulative probit model, we get successive thresholds between the response options. 
+Now we have our model, we can get a summary like before. This might look a little different as we no longer have just one intercept and one coefficient for this model. Our scale has 7 response options, so for the ordinal model, we get successive thresholds between the response options. 
 
-We then have our primary estimate of interest which is the coefficient for experimental condition. We have a categorical predictor, so this represents the shift in our latent outcome from ethical (0) to unethical (1). As we covered in a previous chapter, it is expressed in logit units, so the unethical group lead to a 0.16 log odds increase in brightness rating. 
+We then have our primary estimate of interest which is the coefficient for experimental condition. We have a categorical predictor, so this represents the shift in our latent outcome from ethical (0) to unethical (1). As we covered in Chapter 5, it is expressed in logit units, so the unethical group lead to a 0.26 log odds increase in brightness rating but with a lot of uncertainty. 
 
 ```{r Brandt ordinal summary}
 
@@ -1506,16 +1506,16 @@ To be easier to interpret, we can take the exponential to convert log odds to an
 
 ```{r}
 # point estimate
-exp(0.16)
+exp(0.26)
 
 # lower bound 
-exp(-0.26)
+exp(-0.45)
 
 # upper bound 
-exp(0.58)
+exp(0.95)
 ```
 
-We can see the effect is quite weak for an odds ratio of 1.17 in favour of the ethical group, but there is a lot of uncertainty here. 
+We can see the effect is quite weak for an odds ratio of 1.30 in favour of the ethical group, but there is a lot of uncertainty here. 
 
 For this model, we can look at the posterior predictive check to see if it represents the data better. Compared to the normal model, this is much better and we are capturing the ordinal features when we draw from the posterior. 
 
@@ -1524,7 +1524,7 @@ pp_check(brandt_fit3,
          ndraws = 100)
 ```
 
-After the model summary, we can think about what the model looks like visually. We can get the conditional effects for the response options by experimental condition. We have the estimated probabilities of the 7 response options and there is very little to support a difference between the two groups. The pattern of responses is similar for both groups. This means we make a similar conclusion to the normal distribution model, but it respects the underlying distribution better. 
+After the model summary, we can think about what the model looks like visually. We can get the conditional effects for the response options by experimental condition. We have the estimated probabilities of the 7 response options and there is very little to support a difference between the two groups. The pattern of responses is similar for both groups. This means we make a similar conclusion to the normal distribution model, but it respects the ordinal outcome much better. 
 
 ```{r}
 conditional_effects(x = brandt_fit3, 
