@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./appendix-a-installing-brms.html" rel="next">
-<link href="./03-01-hypothesis.html" rel="prev">
+<link href="./03-02-estimation.html" rel="prev">
 <link href="./images/logos/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -175,7 +175,7 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-03-lm-multiple.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -187,7 +187,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-05-glm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
   </div>
 </li>
       </ul>
@@ -204,13 +210,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confidence Intervals</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
   </div>
 </li>
       </ul>
@@ -227,7 +233,13 @@ gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -314,9 +326,29 @@ Brandt, M. J., IJzerman, H., &amp; Blanken, I. (2014). Does
 <span>Brightness</span>? <em>Social Psychology</em>, <em>45</em>(3),
 246–252. <a href="https://doi.org/10.1027/1864-9335/a000191">https://doi.org/10.1027/1864-9335/a000191</a>
 </div>
+<div id="ref-burkner_brms_2017" class="csl-entry" role="listitem">
+Bürkner, P.-C. (2017). Brms: <span>An</span> <span>R</span>
+<span>Package</span> for <span>Bayesian</span> <span>Multilevel</span>
+<span>Models</span> <span>Using</span> <span>Stan</span>. <em>Journal of
+Statistical Software</em>, <em>80</em>(1). <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
+</div>
+<div id="ref-burkner_ordinal_2019" class="csl-entry" role="listitem">
+Bürkner, P.-C., &amp; Vuorre, M. (2019). Ordinal <span>Regression</span>
+<span>Models</span> in <span>Psychology</span>: <span>A</span>
+<span>Tutorial</span>. <em>Advances in Methods and Practices in
+Psychological Science</em>, <em>2</em>(1), 77–101. <a href="https://doi.org/10.1177/2515245918823199">https://doi.org/10.1177/2515245918823199</a>
+</div>
 <div id="ref-Christensen2023" class="csl-entry" role="listitem">
 Christensen, R. H. B. (2023). <em>Ordinal—regression models for ordinal
 data</em>. <a href="https://CRAN.R-project.org/package=ordinal">https://CRAN.R-project.org/package=ordinal</a>
+</div>
+<div id="ref-coleman_absorption_2019" class="csl-entry" role="listitem">
+Coleman, T. J., Bartlett, J. E., Holcombe, J., Swanson, S. B., Atkinson,
+A. R., Silver, C., &amp; Hood, R. (2019). Absorption,
+<span>Mentalizing</span>, and <span>Mysticism</span>:
+<span>Sensing</span> the <span>Presence</span> of the
+<span>Divine</span>. <em>Journal for the Cognitive Science of
+Religion</em>, <em>5</em>(1), 63–84. <a href="https://doi.org/10.31234/osf.io/k5fp8">https://doi.org/10.31234/osf.io/k5fp8</a>
 </div>
 <div id="ref-dawtry_why_2015" class="csl-entry" role="listitem">
 Dawtry, R. J., Sutton, R. M., &amp; Sibley, C. G. (2015). Why
@@ -342,11 +374,31 @@ Evans, T. R. (2024). <em>Unethical <span>Behaviour</span> in the
 <span>Conceptual</span> <span>Replication</span> of <span>Jones</span>
 &amp; <span>Kavanagh</span> (1996)</em>. <a href="https://doi.org/10.31234/osf.io/a2rj9">https://doi.org/10.31234/osf.io/a2rj9</a>
 </div>
+<div id="ref-flores_beforeafter_2022" class="csl-entry" role="listitem">
+Flores, R. D., Sanders, C. A., Duan, S. X., Bishop-Chrzanowski, B. M.,
+Oyler, D. L., Shim, H., Clocksin, H. E., Miller, A. P., &amp; Merkle, E.
+C. (2022). Before/after <span>Bayes</span>: <span>A</span> comparison of
+frequentist and <span>Bayesian</span> mixed-effects models in applied
+psychological research. <em>British Journal of Psychology</em>,
+<em>113</em>(4), 1164–1194. <a href="https://doi.org/10.1111/bjop.12585">https://doi.org/10.1111/bjop.12585</a>
+</div>
+<div id="ref-gambarota_ordinal_2024" class="csl-entry" role="listitem">
+Gambarota, F., &amp; Altoè, G. (2024). Ordinal regression models made
+easy: <span>A</span> tutorial on parameter interpretation, data
+simulation and power analysis. <em>International Journal of
+Psychology</em>, <em>59</em>(6), 1263–1292. <a href="https://doi.org/10.1002/ijop.13243">https://doi.org/10.1002/ijop.13243</a>
+</div>
 <div id="ref-harms_making_2018" class="csl-entry" role="listitem">
 Harms, C., &amp; Lakens, D. (2018). Making ’null effects’ informative:
 Statistical techniques and inferential frameworks. <em>Journal of
 Clinical and Translational Research</em>, <em>3</em>(Suppl 2), 382–393.
 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6412612/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6412612/</a>
+</div>
+<div id="ref-heino_bayesian_2018" class="csl-entry" role="listitem">
+Heino, M. T. J., Vuorre, M., &amp; Hankonen, N. (2018). Bayesian
+evaluation of behavior change interventions: A brief introduction and a
+practical example. <em>Health Psychology and Behavioral Medicine</em>,
+<em>6</em>(1), 49–78. <a href="https://doi.org/10.1080/21642850.2018.1428102">https://doi.org/10.1080/21642850.2018.1428102</a>
 </div>
 <div id="ref-jakobsen_when_2017" class="csl-entry" role="listitem">
 Jakobsen, J. C., Gluud, C., Wetterslev, J., &amp; Winkel, P. (2017).
@@ -375,6 +427,17 @@ Knief, U., &amp; Forstmeier, W. (2021). Violating the normality
 assumption may be the lesser of two evils. <em>Behavior Research
 Methods</em>, <em>53</em>(6), 2576–2590. <a href="https://doi.org/10.3758/s13428-021-01587-5">https://doi.org/10.3758/s13428-021-01587-5</a>
 </div>
+<div id="ref-kruschke_doing_2015" class="csl-entry" role="listitem">
+Kruschke, J. K. (2015). <em>Doing <span>Bayesian</span>
+<span>Data</span> <span>Analysis</span>: <span>A</span>
+<span>Tutorial</span> with <span>R</span>, <span>JAGS</span>, and
+<span>Stan</span>.</em> (2nd ed.). Academic Press.
+</div>
+<div id="ref-kruschke_bayesian_2021" class="csl-entry" role="listitem">
+Kruschke, J. K. (2021). Bayesian <span>Analysis</span>
+<span>Reporting</span> <span>Guidelines</span>. <em>Nature Human
+Behaviour</em>, <em>5</em>(10), 1282–1291. <a href="https://doi.org/10.1038/s41562-021-01177-7">https://doi.org/10.1038/s41562-021-01177-7</a>
+</div>
 <div id="ref-kruschke_bayesian_2018-1" class="csl-entry" role="listitem">
 Kruschke, J. K., &amp; Liddell, T. M. (2018a). Bayesian data analysis
 for newcomers. <em>Psychonomic Bulletin &amp; Review</em>,
@@ -388,15 +451,15 @@ testing, estimation, meta-analysis, and power analysis from a
 Review</em>, <em>25</em>(1), 178–206. <a href="https://doi.org/10.3758/s13423-016-1221-4">https://doi.org/10.3758/s13423-016-1221-4</a>
 </div>
 <div id="ref-lakens_improving_2020" class="csl-entry" role="listitem">
-Lakens, Daniël, McLatchie, N., Isager, P. M., Scheel, A. M., &amp;
-Dienes, Z. (2020). Improving <span>Inferences</span> <span>About</span>
+Lakens, D., McLatchie, N., Isager, P. M., Scheel, A. M., &amp; Dienes,
+Z. (2020). Improving <span>Inferences</span> <span>About</span>
 <span>Null</span> <span>Effects</span> <span>With</span>
 <span>Bayes</span> <span>Factors</span> and <span>Equivalence</span>
 <span>Tests</span>. <em>The Journals of Gerontology: Series B</em>,
 <em>75</em>(1), 45–57. <a href="https://doi.org/10.1093/geronb/gby065">https://doi.org/10.1093/geronb/gby065</a>
 </div>
 <div id="ref-lakens_equivalence_2018" class="csl-entry" role="listitem">
-Lakens, Daniel, Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence
+Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence
 <span>Testing</span> for <span>Psychological</span>
 <span>Research</span>: <span>A</span> <span>Tutorial</span>.
 <em>Advances in Methods and Practices in Psychological Science</em>,
@@ -425,11 +488,39 @@ et al (2005). <em>Journal of Experimental Psychology: General</em>. <a href="htt
 Lüdecke, D. (2024). <em>sjPlot: Data visualization for statistics in
 social science</em>. <a href="https://CRAN.R-project.org/package=sjPlot">https://CRAN.R-project.org/package=sjPlot</a>
 </div>
+<div id="ref-luedecke_2021" class="csl-entry" role="listitem">
+Lüdecke, D., Patil, I., Ben-Shachar, M. S., Wiernik, B. M., Waggoner,
+P., &amp; Makowski, D. (2021). <span class="nocase">see</span>: An
+<span>R</span> package for visualizing statistical models. <em>Journal
+of Open Source Software</em>, <em>6</em>(64), 3393. <a href="https://doi.org/10.21105/joss.03393">https://doi.org/10.21105/joss.03393</a>
+</div>
+<div id="ref-Makowski2019" class="csl-entry" role="listitem">
+Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). bayestestR:
+Describing effects and their uncertainty, existence and significance
+within the bayesian framework. <em>Journal of Open Source Software</em>,
+<em>4</em>(40), 1541. <a href="https://doi.org/10.21105/joss.01541">https://doi.org/10.21105/joss.01541</a>
+</div>
+<div id="ref-mcelreath_statistical_2020" class="csl-entry" role="listitem">
+McElreath, R. (2020). <em>Statistical <span>Rethinking</span>:
+<span>A</span> <span>Bayesian</span> <span>Course</span> with
+<span>Examples</span> in <span>R</span> and <span>Stan</span></em> (2nd
+ed.). CRC Press.
+</div>
 <div id="ref-mehr_for_2016" class="csl-entry" role="listitem">
 Mehr, S. A., Song, L. A., &amp; Spelke, E. S. (2016). For
 5-<span>Month</span>-<span>Old</span> <span>Infants</span>,
 <span>Melodies</span> <span>Are</span> <span>Social</span>.
 <em>Psychological Science</em>, <em>27</em>(4), 486–501. <a href="https://doi.org/10.1177/0956797615626691">https://doi.org/10.1177/0956797615626691</a>
+</div>
+<div id="ref-MoreyRouder2022" class="csl-entry" role="listitem">
+Morey, R. D., &amp; Rouder, J. N. (2024). <em>BayesFactor: Computation
+of bayes factors for common designs</em>. <a href="https://CRAN.R-project.org/package=BayesFactor">https://CRAN.R-project.org/package=BayesFactor</a>
+</div>
+<div id="ref-van_ravenzwaaij_simple_2018" class="csl-entry" role="listitem">
+Ravenzwaaij, D. van, Cassey, P., &amp; Brown, S. D. (2018). A simple
+introduction to <span>Markov</span> <span>Chain</span>
+<span>Monte</span>-<span>Carlo</span> sampling. <em>Psychonomic Bulletin
+&amp; Review</em>, <em>25</em>(1), 143–154. <a href="https://doi.org/10.3758/s13423-016-1015-8">https://doi.org/10.3758/s13423-016-1015-8</a>
 </div>
 <div id="ref-reimers_presentation_2015" class="csl-entry" role="listitem">
 Reimers, S., &amp; Stewart, N. (2015). Presentation and response timing
@@ -461,6 +552,12 @@ Troy, A. S., Ford, B. Q., McRae, K., Zarolia, P., &amp; Mauss, I.
 more beneficial for people from lower than from higher socioeconomic
 status. <em>Emotion</em>, <em>17</em>(1), 141–154. <a href="https://doi.org/10.1037/emo0000210">https://doi.org/10.1037/emo0000210</a>
 </div>
+<div id="ref-van_de_schoot_bayesian_2021" class="csl-entry" role="listitem">
+Van De Schoot, R., Depaoli, S., King, R., Kramer, B., Märtens, K.,
+Tadesse, M. G., Vannucci, M., Gelman, A., Veen, D., Willemsen, J., &amp;
+Yau, C. (2021). Bayesian statistics and modelling. <em>Nature Reviews
+Methods Primers</em>, <em>1</em>(1), 1–26. <a href="https://doi.org/10.1038/s43586-020-00001-2">https://doi.org/10.1038/s43586-020-00001-2</a>
+</div>
 <div id="ref-voas_odds_2024" class="csl-entry" role="listitem">
 Voas, D., &amp; Watt, L. (2024). The odds are it’s wrong:
 <span>Correcting</span> a common mistake in statistics. <em>Teaching
@@ -472,6 +569,12 @@ der. (2011). Why psychologists must change the way they analyze their
 data: <span>The</span> case of psi: <span>Comment</span> on
 <span>Bem</span> (2011). <em>Journal of Personality and Social
 Psychology</em>, <em>100</em>(3), 426–432. <a href="https://doi.org/10.1037/a0022790">https://doi.org/10.1037/a0022790</a>
+</div>
+<div id="ref-winter_poisson_2021" class="csl-entry" role="listitem">
+Winter, B., &amp; Bürkner, P.-C. (2021). Poisson regression for
+linguists: <span>A</span> tutorial introduction to modelling count data
+with brms. <em>Language and Linguistics Compass</em>, <em>15</em>(11),
+e12439. <a href="https://doi.org/10.1111/lnc3.12439">https://doi.org/10.1111/lnc3.12439</a>
 </div>
 <div id="ref-wong_potential_2022" class="csl-entry" role="listitem">
 Wong, T. K., Kiers, H., &amp; Tendeiro, J. (2022). On the
@@ -1514,8 +1617,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03-01-hypothesis.html" class="pagination-link" aria-label="Bayesian Hypothesis Testing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Bayesian Hypothesis Testing</span></span>
+      <a href="./03-02-estimation.html" class="pagination-link" aria-label="Bayesian modelling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

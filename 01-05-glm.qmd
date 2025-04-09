@@ -449,9 +449,11 @@ Brandt_data %>%
 
 For each group, the lines corresponds with the cumulative percentage at each scale point. When the line is horizontal, there is no change. When the line moves vertically, it represents the next percentage increase, adding to the cumulative percentage from the previous shift, until you reach 100%. 
 
-Ordinal regression models estimate these shifts in probability and you get *k*-1 estimates for the thresholds, meaning you get one fewer estimate than the total number of scale points. Behind the scenes, the model interprets the outcome as a Gaussian looking latent variable, meaning the ordinal scale points are tapping into some kind of construct, but honouring there are discrete scale points. 
+Ordinal regression models estimate these shifts in probability and you get *k*-1 estimates for the thresholds, meaning you get one fewer estimate than the total number of scale points. Behind the scenes, the model interprets the outcome as a latent variable, meaning the ordinal scale points are tapping into some kind of construct, but honouring there are discrete scale points. We will explore how it models that latent variable shortly. 
 
-The coefficient in the model represents the probability shift of a 1 scale point increase from one distribution to another on the scale of your predictors. So, for every 1-unit increase in a continuous predictor, you see how the probability shifts, or how the probability shifts for the difference between two groups in a categorical predictor. A positive slope coefficient would mean an increase in probability along your predictor scale, while a negative slope coefficient would mean a decrease in probability along your predictor scale. 
+The coefficient in the model represents the probability shift of a 1 scale point increase from one distribution to another on the scale of your predictors. So, for every 1-unit increase in a continuous predictor, you see how the probability shifts, or how the probability shifts for the difference between two groups in a categorical predictor. A positive slope coefficient would mean an increase along your predictor scale, while a negative slope coefficient would mean a decrease along your predictor scale. 
+
+There are two ways of modelling this process depending on the link function. The default in the <pkg>ordinal</pkg> package is a logit link, where you model the data using a logistic function. With this approach, you interpret predictor coefficients in log odds to model a shift in probability and you must convert the estimates to an odds ratio or predicted probabilities to aid interpretation. In contrast, you can specify a probit link which models the data as a standard normal or Gaussian distribution. With this approach, you interpret predictor coefficients as changes in standard deviations or z-scores. The probit link function means you can interpret the estimates more like a regular linear regression model with standardised predictors. @gambarota_ordinal_2024 includes a nice explanation of interpreting ordinal regression model depending on the link function and when you would choose one over the other. 
 
 We will fit ordinal regression models using the <pkg>ordinal</pkg> [@Christensen2023] package as it nicely supports cumulative link models as regular regression models we have used until this point or scaled up to mixed effects models. 
 
@@ -464,11 +466,14 @@ Brandt_data <- Brandt_data %>%
 levels(Brandt_data$WellLitFactor)
 ```
 
-We can see here the scale points are in ascending order as we want them to be, and no one in the data ever responded 2. Next, we can fit our ordinal regression model using the same format as all our regression models. 
+We can see here the scale points are in ascending order as we want them to be, and no one in the data ever responded 2. Next, we can fit our ordinal regression model using the same format as all our regression models. By default, the function uses a logit link, but we will specify it as an argument to make it clearer how things change for a probit link later. 
 
 ```{r}
 # clm = cumulative link model
-brandt_model2 <- clm(WellLitFactor ~ ExpCond, data = Brandt_data)
+# logit = standard logistic distribution 
+brandt_model2 <- clm(WellLitFactor ~ ExpCond, 
+                     data = Brandt_data, 
+                     link = "logit")
 
 summary(brandt_model2)
 
@@ -477,7 +482,7 @@ confint(brandt_model2)
 
 In the first segment of the output, its somewhat similar to the other models we have fitted, but there is no intercept at the top. We just have the slope coefficients for each predictor (1 in this case), then the threshold coefficients for *k*-1 scale points. 
 
-As this is an adapted version of logistic regression, the units are in log odds. So, they are easier to interpret as an odds ratio by taking the exponential. 
+As this is an adapted version of logistic regression with a logit link, the units are in log odds. So, they are easier to interpret as an odds ratio by taking the exponential. 
 
 ```{r}
 exp(brandt_model2$beta)
@@ -563,6 +568,24 @@ exp(coef(brandt_model3)[1] + 1 * coef(brandt_model3)[2]) / (1 + exp(coef(brandt_
 
 # Etc. 
 ```
+
+#### Using a probit link 
+
+Finally, we can explore the flexible threshold cumulative link model with a probit link. Instead of modelling the outcome with a standard logistic distribution and interpret the units in log odds, we model the outcome with a standard normal distribution and interpret the units in z-scores or standard deviations. 
+
+```{r}
+# clm = cumulative link model
+# probit = standard normal distribution 
+brandt_probit_model <- clm(WellLitFactor ~ ExpCond, 
+                     data = Brandt_data, 
+                     link = "probit")
+
+summary(brandt_probit_model)
+
+confint(brandt_probit_model)
+```
+
+We can see here that the output and structure is almost identical, but the estimates are slightly different and it confirms we used probit as the link function. Instead of working with log odds, the estimates represents z-score or standard deviation changes for a 1-unit change. The effect of the experimental condition is still non-significant, but this time the unethical condition is associated with a 0.15 (95% CI = [-0.26, 0.56]) standard deviation increase in brightness rating compared to the ethical condition. 
 
 ## Test Yourself
 
