@@ -570,7 +570,7 @@ Its always about your research question and what information you want to know.
 
 In these examples, the data set is great for a large sample of different variables, but there are not really any meaningful interactions to explore. But, we can still demonstrate what you would do if there *was* an interaction to explore. 
 
-First, plotting is your friend. Sometimes you can plot your design fine using <pkg>ggplot2</pkg>, but you often miss out on the inferential parts for the confidence intervals around estimates, particularly when there are interactions to explore. So, the <pkg>sjPlot</pkg> package can be useful as it can take regression models and plot the model predictions. To decompose an interaction, it is normally more useful to use the original / dummy-coded variables, as we are interested in the simple effects here, and the units will be more interpretable for the average reader. 
+First, plotting is your friend. Sometimes you can plot your design fine using <pkg>ggplot2</pkg>, but you often miss out on the inferential parts for the confidence intervals around estimates, particularly when there are interactions to explore. So, the <pkg>sjPlot</pkg> package can be useful as it can take regression models and plot the model predictions. To decompose an interaction, it is normally more useful to use the original / dummy-coded variables as the units will be more interpretable for the average reader. 
 
 ```{r}
 # sjPlot makes it easy to plot estimates from the model
@@ -631,7 +631,7 @@ One final warning, you can look at these variables in many ways, but think about
 
 Second, we have categorical by continuous interactions. This is where you have one categorical predictor and one continuous predictor. It tells you whether the relationship between your continuous predictor and your outcome is moderated by your categorical predictor. 
 
-For this model, we will focus on whether workplace quality (`QWE_deviation`) moderates the relationship between Machiavellianism (`MachTot_center`) and unethical behaviour intentions (`BehIntTot`). Now you know the difference between raw and centered predictors, make sure you use the centered variables to interpret the individual predictors as main effects.
+For this model, we will focus on whether workplace quality (`QWE_deviation`) moderates the relationship between Machiavellianism (`MachTot_center`) and unethical behaviour intentions (`BehIntTot`). Now you know the difference between raw and centered predictors, make sure you use the centered variables to interpret the individual predictors as main effects, like we used the deviation-coded categorical variables in the previous example.
 
 ```{r}
 interaction_model2_deviation <- lm(BehIntTot ~ QWE_deviation * MachTot_center, 
@@ -652,6 +652,18 @@ plot_model(interaction_model2_dummy,
 ```
 
 In a continuous by categorical interaction, it will tell you whether the slope between your outcome and continuous predictor is different/moderated by the levels of your categorical predictor. For example, whether the relationship flips from positive to negative, one is very weak, or the gradient of the slopes are just different. Here, we can see the relationship is slightly weaker in high quality workplaces compared to low quality, but ultimately that difference is not statistically significant as shown by the interaction term in the model. 
+
+Now we have a continuous predictor in the interaction, we cannot use `emmeans()` to break things down. We need a related function called `emtrends()` (estimated marginal trends) which will tell us the slope between our outcome and continuous predictor, for each level of the categorical moderator. 
+
+To get estimates and their confidence intervals for each slope, we can apply `emtrends()` to the model. Again, it's best to use the dummy-coded version rather than the deviation-coded version, so things are easier to interpret in their original units. 
+
+```{r}
+emtrends(interaction_model2_dummy, # model object
+         specs = "QWE", # categorical predictor
+         var = "MachTot") # continuous predictor
+```
+
+We can see here the slope is slightly stronger for low-quality workplaces than high-quality workplaces, but this was not a statistically significant difference in slopes given the interaction. 
 
 ### Continuous by continuous interactions
 
@@ -680,6 +692,30 @@ plot_model(interaction_model3_dummy,
 ```
 
 In a simple slopes analysis, it will tell you whether the slope between your outcome and continuous predictor is different/moderated by the fixed points of your second predictor. For example, whether the relationship flips from positive to negative, one is very weak, or the gradient of the slopes are just different. Here, the interaction was non-significant, and there is very little difference between the three lines, they are almost exactly parallel to each other. 
+
+If you did need to break down a significant interaction, we can use `emtrends()` again, but this time with an extra step. We need to pass the function the moderator break points that we want to use. For simple slopes analysis, this is one standard deviation below the mean, the mean, and one standard deviation above the mean. 
+
+```{r}
+# Calculate the mean
+mean <- mean(evans_data$LOCTot)
+
+# Calculate one standard deviation below the mean
+SD_mean <- mean(evans_data$LOCTot) - sd(evans_data$LOCTot)
+
+# Calculate one standard deviation above the mean
+mean_SD <- mean(evans_data$LOCTot) + sd(evans_data$LOCTot)
+```
+
+We can then use these three values in a list within the function. This is like the continuous by categorical interaction, but we are using different set levels of the moderator. 
+
+```{r}
+emtrends(interaction_model3_dummy, # model object
+         specs = "LOCTot", # moderator
+         var = "MachTot", # predictor
+         at = list(LOCTot = c(SD_mean, mean, mean_SD))) # simple slopes
+```
+
+As values of locus of control increase, the relationship between Machiavellianism and unethical behaviour intentions decreases (i.e., the slope decreases). The interaction here was not statistically significant, but this is the process you *would* follow to break it down. 
 
 ## Test Yourself
 
