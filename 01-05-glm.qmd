@@ -249,19 +249,6 @@ Expressed this way, there are 2.16 (95% CI = [1.13, 4.12]) lower odds of making 
 In this scenario, you would get the same reciprocal odds ratio if you changed the groups around with correction as the reference group. Taking the reciprocal is the same information expressed differently, but its important you are clear about the model estimates to avoid confusing your reader. If you do this yourself, make sure you explain what the model estimates were and how you took the reciprocal. 
 :::
 
-Returning to the idea of model comparison, we could compare the two GLM models using `anova()` and it will tell you the change in deviance (relating the maximum likelihood fitting process), but we can focus on comparing the AIC values for model fit between the two models. Lower values of AIC are better and if we subtract model 1 (the linear model) from model 2 (the logistic model), a negative difference would indicate better model fit from the ordinal model. 
-
-```{r}
-# AIC of model 1
-AIC(bostyn_model1_glm)
-# AIC of model 2
-AIC(bostyn_model2)
-# difference in AIC values
-AIC(bostyn_model2) - AIC(bostyn_model1_glm)
-```
-
-Interestingly, the second model actually has worse fit! There is less prediction error when we use the regular linear regression model compared to the logistic regression model. Given the assumptions and what we know of the design though, the logistic regression model would still be the sensible choice here. This reinforces why it is so important to recognise you as the decision maker and considering different sources of information. 
-
 #### Calculating the model probability estimates
 
 Finally, there is a relationship between probability, odds, and log odds. We can use the coefficients to produce model estimates for the probability of a consequentialist decision in each group. @voas_odds_2024 recommend this as the key output of a logistic regression model for helping to communicate your findings. 
@@ -306,28 +293,12 @@ Another way of getting model estimates is using the `emmeans()` function from th
 ```{r}
 # logistic regression model as the object
 # Specifying Condition as the predictor we want marginal effects for
-emmeans(bostyn_model2, specs = "study")
+emmeans(bostyn_model2, 
+        specs = "study", 
+        type = "response") # transform from logit
 ```
 
-These are still in log odds units, so you can calculate the probability using the same equation as before: 
-
-$$ p = \dfrac{e}{1 + e}$$
-
-To make it less repetitive, you can use the following user-generated function and enter all the relevant values as a vector: 
-
-```{r}
-probability_from_logit <- function(x){
-  return(
-    exp(x) / (1 + exp(x))
-  )
-}
-
-probability_from_logit(c(1.85, # estimate
-                         1.44, # lower 95% CI
-                         2.27)) # upper 95% CI
-```
-
-Which corresponds nicely with what we reconstructed from the model coefficients. 
+By adding the `type = "response"` argument, it transforms the estimates from the logit scale to the response scale, i.e., probabilities. These estimates correspond nicely with what we reconstructed from the model coefficients. 
 
 #### Plotting logistic regression models
 
@@ -456,7 +427,6 @@ The coefficient in the model represents the probability shift of a 1 scale point
 There are two ways of modelling this process depending on the link function. The default in the <pkg>ordinal</pkg> package is a logit link, where you model the data using a logistic function. With this approach, you interpret predictor coefficients in log odds to model a shift in probability and you must convert the estimates to an odds ratio or predicted probabilities to aid interpretation. In contrast, you can specify a probit link which models the data as a standard normal or Gaussian distribution. With this approach, you interpret predictor coefficients as changes in standard deviations or z-scores. The probit link function means you can interpret the estimates more like a regular linear regression model with standardised predictors. @gambarota_ordinal_2024 includes a nice explanation of interpreting ordinal regression model depending on the link function and when you would choose one over the other. 
 
 We will fit ordinal regression models using the <pkg>ordinal</pkg> [@Christensen2023] package as it nicely supports cumulative link models as regular regression models we have used until this point or scaled up to mixed effects models. 
-
 First, we need to convert the outcome into a factor, so there are a discrete ordered number of points.
 
 ```{r}
@@ -480,7 +450,7 @@ summary(brandt_model2)
 confint(brandt_model2)
 ```
 
-In the first segment of the output, its somewhat similar to the other models we have fitted, but there is no intercept at the top. We just have the slope coefficients for each predictor (1 in this case), then the threshold coefficients for *k*-1 scale points. 
+In the first segment of the output, its somewhat similar to the other models we have fitted, but there is no intercept at the top. We just have the slope coefficients for each predictor (one in this case), then the threshold coefficients for *k*-1 scale points. 
 
 As this is an adapted version of logistic regression with a logit link, the units are in log odds. So, they are easier to interpret as an odds ratio by taking the exponential. 
 
@@ -491,14 +461,6 @@ exp(confint(brandt_model2))
 ```
 
 The results correspond with what we plotted previously, we have an odds ratio of 1.30 [0.64, 2.64], meaning there are 1.3 higher odds of a brighter rating in the unethical condition compared to the ethical condition. However, the confidence interval is pretty wide here and the *p*-value is not statistically significant, so we cannot conclude there is a shift in probability between the two groups here.
-
-Returning to the idea of model comparison, it will not let us compare them using `anova()` as we cannot compare the same outcome when its numeric vs a factor. However, we can compare the AIC values for model fit between the two models. Lower values of AIC are better and if we subtract model 1 (the linear model) from model 2 (the ordinal model), a negative difference would indicate better model fit from the ordinal model. 
-
-```{r}
-AIC(brandt_model2) - AIC(brandt_model1)
-```
-
-That does seem to be the case here. Although both models were non-significant, modelling the outcome as ordinal - reassuringly - fits the data better with less prediction error. 
 
 #### Breaking down threshold coefficients
 
@@ -544,7 +506,7 @@ This means the cumulative probability estimate for less than 3 is .0087 or 0.87%
 
 #### Different threshold assumptions
 
-Finally, the default option in <pkg>ordinal</pkg> is for `flexible` thresholds between scale points. This estimates a coefficient for threshold and makes the fewest assumptions about the outcome. Alternative options are `equidistant` which assume evenly spaced scale points, or `symmetric` which assume scale points are evenly spaced above and below the scale center. These two make stronger assumptions about the outcome but require fewer parameters, so you would need to think carefully about whether they would suit the outcome you are modelling. 
+The default option in <pkg>ordinal</pkg> is for `flexible` thresholds between scale points. This estimates a coefficient for threshold and makes the fewest assumptions about the outcome. Alternative options are `equidistant` which assume evenly spaced scale points, or `symmetric` which assume scale points are evenly spaced above and below the scale center. These two make stronger assumptions about the outcome but require fewer parameters, so you would need to think carefully about whether they would suit the outcome you are modelling. 
 
 To see how the `equidistant` option would compare: 
 
@@ -586,6 +548,16 @@ confint(brandt_probit_model)
 ```
 
 We can see here that the output and structure is almost identical, but the estimates are slightly different and it confirms we used probit as the link function. Instead of working with log odds, the estimates represents z-score or standard deviation changes for a 1-unit change. The effect of the experimental condition is still non-significant, but this time the unethical condition is associated with a 0.15 (95% CI = [-0.26, 0.56]) standard deviation increase in brightness rating compared to the ethical condition. 
+
+## Poisson Regression{#poisson-regression}
+
+### Introduction to the dataset
+
+### Exploratory data analysis
+
+### Would linear regression work? 
+
+#### Poisson regression in `glm()`
 
 ## Test Yourself
 
