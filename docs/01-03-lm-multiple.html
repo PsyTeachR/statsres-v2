@@ -1318,7 +1318,7 @@ F-statistic: 6.347 on 3 and 2214 DF,  p-value: 0.0002781</code></pre>
 </section><section id="plotting-interactions" class="level4" data-number="3.4.2.3"><h4 data-number="3.4.2.3" class="anchored" data-anchor-id="plotting-interactions">
 <span class="header-section-number">3.4.2.3</span> Plotting interactions</h4>
 <p>In these examples, the data set is great for a large sample of different variables, but there are not really any meaningful interactions to explore. But, we can still demonstrate what you would do if there <em>was</em> an interaction to explore.</p>
-<p>First, plotting is your friend. Sometimes you can plot your design fine using <pkg>ggplot2</pkg>, but you often miss out on the inferential parts for the confidence intervals around estimates, particularly when there are interactions to explore. So, the <pkg>sjPlot</pkg> package can be useful as it can take regression models and plot the model predictions. To decompose an interaction, it is normally more useful to use the original / dummy-coded variables, as we are interested in the simple effects here, and the units will be more interpretable for the average reader.</p>
+<p>First, plotting is your friend. Sometimes you can plot your design fine using <pkg>ggplot2</pkg>, but you often miss out on the inferential parts for the confidence intervals around estimates, particularly when there are interactions to explore. So, the <pkg>sjPlot</pkg> package can be useful as it can take regression models and plot the model predictions. To decompose an interaction, it is normally more useful to use the original / dummy-coded variables as the units will be more interpretable for the average reader.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># sjPlot makes it easy to plot estimates from the model</span></span>
 <span id="cb39-2"><a href="#cb39-2"></a><span class="fu">plot_model</span>(interaction_model1_dummy, <span class="co"># You enter the model object</span></span>
@@ -1422,7 +1422,7 @@ Important
 </section></section><section id="continuous-by-categorical-interactions" class="level3" data-number="3.4.3"><h3 data-number="3.4.3" class="anchored" data-anchor-id="continuous-by-categorical-interactions">
 <span class="header-section-number">3.4.3</span> Continuous by categorical interactions</h3>
 <p>Second, we have categorical by continuous interactions. This is where you have one categorical predictor and one continuous predictor. It tells you whether the relationship between your continuous predictor and your outcome is moderated by your categorical predictor.</p>
-<p>For this model, we will focus on whether workplace quality (<code>QWE_deviation</code>) moderates the relationship between Machiavellianism (<code>MachTot_center</code>) and unethical behaviour intentions (<code>BehIntTot</code>). Now you know the difference between raw and centered predictors, make sure you use the centered variables to interpret the individual predictors as main effects.</p>
+<p>For this model, we will focus on whether workplace quality (<code>QWE_deviation</code>) moderates the relationship between Machiavellianism (<code>MachTot_center</code>) and unethical behaviour intentions (<code>BehIntTot</code>). Now you know the difference between raw and centered predictors, make sure you use the centered variables to interpret the individual predictors as main effects, like we used the deviation-coded categorical variables in the previous example.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>interaction_model2_deviation <span class="ot">&lt;-</span> <span class="fu">lm</span>(BehIntTot <span class="sc">~</span> QWE_deviation <span class="sc">*</span> MachTot_center, </span>
 <span id="cb47-2"><a href="#cb47-2"></a>                                   <span class="at">data =</span> evans_data)</span>
@@ -1467,15 +1467,30 @@ F-statistic: 72.28 on 3 and 2214 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>In a continuous by categorical interaction, it will tell you whether the slope between your outcome and continuous predictor is different/moderated by the levels of your categorical predictor. For example, whether the relationship flips from positive to negative, one is very weak, or the gradient of the slopes are just different. Here, we can see the relationship is slightly weaker in high quality workplaces compared to low quality, but ultimately that difference is not statistically significant as shown by the interaction term in the model.</p>
+<p>Now we have a continuous predictor in the interaction, we cannot use <code>emmeans()</code> to break things down. We need a related function called <code>emtrends()</code> (estimated marginal trends) which will tell us the slope between our outcome and continuous predictor, for each level of the categorical moderator.</p>
+<p>To get estimates and their confidence intervals for each slope, we can apply <code>emtrends()</code> to the model. Again, it’s best to use the dummy-coded version rather than the deviation-coded version, so things are easier to interpret in their original units.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">emtrends</span>(interaction_model2_dummy, <span class="co"># model object</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a>         <span class="at">specs =</span> <span class="st">"QWE"</span>, <span class="co"># categorical predictor</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a>         <span class="at">var =</span> <span class="st">"MachTot"</span>) <span class="co"># continuous predictor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> QWE  MachTot.trend     SE   df lower.CL upper.CL
+ low          0.252 0.0219 2214    0.209    0.295
+ high         0.204 0.0231 2214    0.159    0.249
+
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p>We can see here the slope is slightly stronger for low-quality workplaces than high-quality workplaces, but this was not a statistically significant difference in slopes given the interaction.</p>
 </section><section id="continuous-by-continuous-interactions" class="level3" data-number="3.4.4"><h3 data-number="3.4.4" class="anchored" data-anchor-id="continuous-by-continuous-interactions">
 <span class="header-section-number">3.4.4</span> Continuous by continuous interactions</h3>
 <p>Finally, we have continuous by continuous interactions. This is where you have two continuous predictors. It tells you whether the relationship between your first continuous predictor and your outcome is moderated by your second continuous predictor.</p>
 <p>For this model, we will focus on whether locus of control (<code>LOCTot_center</code>) moderates the relationship between Machiavellianism (<code>MachTot_center</code>) and unethical behaviour intentions (<code>BehIntTot</code>). Make sure you use the centered variables to interpret the individual predictors as main effects.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>interaction_model3_deviation <span class="ot">&lt;-</span> <span class="fu">lm</span>(BehIntTot <span class="sc">~</span> LOCTot_center <span class="sc">*</span> MachTot_center, </span>
-<span id="cb50-2"><a href="#cb50-2"></a>                                   <span class="at">data =</span> evans_data)</span>
-<span id="cb50-3"><a href="#cb50-3"></a></span>
-<span id="cb50-4"><a href="#cb50-4"></a><span class="fu">summary</span>(interaction_model3_deviation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>interaction_model3_deviation <span class="ot">&lt;-</span> <span class="fu">lm</span>(BehIntTot <span class="sc">~</span> LOCTot_center <span class="sc">*</span> MachTot_center, </span>
+<span id="cb52-2"><a href="#cb52-2"></a>                                   <span class="at">data =</span> evans_data)</span>
+<span id="cb52-3"><a href="#cb52-3"></a></span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="fu">summary</span>(interaction_model3_deviation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1502,20 +1517,47 @@ F-statistic: 70.62 on 3 and 2214 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Plotting is always helpful for interpreting interactions, but it is <em>crucial</em> for continuous by continuous interactions.</p>
 <p>The interpretation relies on simple slopes analysis. As there are not discrete values of your moderator, simple slopes works by creating discrete values from your continuous predictor. Typically, this is 1 standard deviation below the mean, the mean, and 1 standard deviation above the mean. This tells you as you increase levels of your moderator, how does it affect the relationship between your first predictor and the outcome?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>interaction_model3_dummy <span class="ot">&lt;-</span> <span class="fu">lm</span>(BehIntTot <span class="sc">~</span> LOCTot <span class="sc">*</span> MachTot, </span>
-<span id="cb52-2"><a href="#cb52-2"></a>                               <span class="at">data =</span> evans_data)</span>
-<span id="cb52-3"><a href="#cb52-3"></a></span>
-<span id="cb52-4"><a href="#cb52-4"></a><span class="fu">plot_model</span>(interaction_model3_dummy, </span>
-<span id="cb52-5"><a href="#cb52-5"></a>           <span class="at">type =</span> <span class="st">"pred"</span>, </span>
-<span id="cb52-6"><a href="#cb52-6"></a>           <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"MachTot"</span>, <span class="st">"LOCTot"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>interaction_model3_dummy <span class="ot">&lt;-</span> <span class="fu">lm</span>(BehIntTot <span class="sc">~</span> LOCTot <span class="sc">*</span> MachTot, </span>
+<span id="cb54-2"><a href="#cb54-2"></a>                               <span class="at">data =</span> evans_data)</span>
+<span id="cb54-3"><a href="#cb54-3"></a></span>
+<span id="cb54-4"><a href="#cb54-4"></a><span class="fu">plot_model</span>(interaction_model3_dummy, </span>
+<span id="cb54-5"><a href="#cb54-5"></a>           <span class="at">type =</span> <span class="st">"pred"</span>, </span>
+<span id="cb54-6"><a href="#cb54-6"></a>           <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">"MachTot"</span>, <span class="st">"LOCTot"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-03-lm-multiple_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-03-lm-multiple_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>In a simple slopes analysis, it will tell you whether the slope between your outcome and continuous predictor is different/moderated by the fixed points of your second predictor. For example, whether the relationship flips from positive to negative, one is very weak, or the gradient of the slopes are just different. Here, the interaction was non-significant, and there is very little difference between the three lines, they are almost exactly parallel to each other.</p>
+<p>If you did need to break down a significant interaction, we can use <code>emtrends()</code> again, but this time with an extra step. We need to pass the function the moderator break points that we want to use. For simple slopes analysis, this is one standard deviation below the mean, the mean, and one standard deviation above the mean.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="co"># Calculate the mean</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a>mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(evans_data<span class="sc">$</span>LOCTot)</span>
+<span id="cb55-3"><a href="#cb55-3"></a></span>
+<span id="cb55-4"><a href="#cb55-4"></a><span class="co"># Calculate one standard deviation below the mean</span></span>
+<span id="cb55-5"><a href="#cb55-5"></a>SD_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(evans_data<span class="sc">$</span>LOCTot) <span class="sc">-</span> <span class="fu">sd</span>(evans_data<span class="sc">$</span>LOCTot)</span>
+<span id="cb55-6"><a href="#cb55-6"></a></span>
+<span id="cb55-7"><a href="#cb55-7"></a><span class="co"># Calculate one standard deviation above the mean</span></span>
+<span id="cb55-8"><a href="#cb55-8"></a>mean_SD <span class="ot">&lt;-</span> <span class="fu">mean</span>(evans_data<span class="sc">$</span>LOCTot) <span class="sc">+</span> <span class="fu">sd</span>(evans_data<span class="sc">$</span>LOCTot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can then use these three values in a list within the function. This is like the continuous by categorical interaction, but we are using different set levels of the moderator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">emtrends</span>(interaction_model3_dummy, <span class="co"># model object</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a>         <span class="at">specs =</span> <span class="st">"LOCTot"</span>, <span class="co"># moderator</span></span>
+<span id="cb56-3"><a href="#cb56-3"></a>         <span class="at">var =</span> <span class="st">"MachTot"</span>, <span class="co"># predictor</span></span>
+<span id="cb56-4"><a href="#cb56-4"></a>         <span class="at">at =</span> <span class="fu">list</span>(<span class="at">LOCTot =</span> <span class="fu">c</span>(SD_mean, mean, mean_SD))) <span class="co"># simple slopes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> LOCTot MachTot.trend     SE   df lower.CL upper.CL
+   23.5         0.221 0.0213 2214    0.179    0.263
+   28.5         0.217 0.0168 2214    0.184    0.250
+   33.4         0.213 0.0216 2214    0.171    0.256
+
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p>As values of locus of control increase, the relationship between Machiavellianism and unethical behaviour intentions decreases (i.e., the slope decreases). The interaction here was not statistically significant, but this is the process you <em>would</em> follow to break it down.</p>
 </section></section><section id="test-yourself" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="test-yourself">
 <span class="header-section-number">3.5</span> Test Yourself</h2>
 <p>Now you have followed along to a guided example, it is important you can transfer your knowledge to a new scenario. So, we have a new data set for you to try out your understanding of these techniques on. Follow the instructions below and answer the questions. The solution is there to check your answers against, but make sure you try the activities independently first.</p>
@@ -1541,16 +1583,16 @@ F-statistic: 70.62 on 3 and 2214 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>Does socioeconomic status moderate the relationship between cognitive reappraisal ability and depressive symptoms?</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co"># Load data for coding schemes</span></span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="co"># We are applying the coding scheme, just so its crystal clear whether your answers align</span></span>
-<span id="cb53-3"><a href="#cb53-3"></a>tulloch_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Tulloch_2022.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-4"><a href="#cb53-4"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="fu">factor</span>(Country, </span>
-<span id="cb53-5"><a href="#cb53-5"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Malaysia"</span>, <span class="st">"UK"</span>)),</span>
-<span id="cb53-6"><a href="#cb53-6"></a>         <span class="at">Country_deviation =</span> <span class="fu">case_when</span>(Country <span class="sc">==</span> <span class="st">"UK"</span> <span class="sc">~</span> <span class="fl">0.5</span>, </span>
-<span id="cb53-7"><a href="#cb53-7"></a>                                       <span class="at">.default =</span> <span class="sc">-</span><span class="fl">0.5</span>),</span>
-<span id="cb53-8"><a href="#cb53-8"></a>         <span class="at">SES_center =</span> SES <span class="sc">-</span> <span class="fu">mean</span>(SES), </span>
-<span id="cb53-9"><a href="#cb53-9"></a>         <span class="at">CRA_center =</span> CRA_mean <span class="sc">-</span> <span class="fu">mean</span>(CRA_mean),</span>
-<span id="cb53-10"><a href="#cb53-10"></a>         <span class="at">LS_center =</span> LS_mean <span class="sc">-</span> <span class="fu">mean</span>(LS_mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="co"># Load data for coding schemes</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="co"># We are applying the coding scheme, just so its crystal clear whether your answers align</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a>tulloch_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Tulloch_2022.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-4"><a href="#cb58-4"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="fu">factor</span>(Country, </span>
+<span id="cb58-5"><a href="#cb58-5"></a>                          <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Malaysia"</span>, <span class="st">"UK"</span>)),</span>
+<span id="cb58-6"><a href="#cb58-6"></a>         <span class="at">Country_deviation =</span> <span class="fu">case_when</span>(Country <span class="sc">==</span> <span class="st">"UK"</span> <span class="sc">~</span> <span class="fl">0.5</span>, </span>
+<span id="cb58-7"><a href="#cb58-7"></a>                                       <span class="at">.default =</span> <span class="sc">-</span><span class="fl">0.5</span>),</span>
+<span id="cb58-8"><a href="#cb58-8"></a>         <span class="at">SES_center =</span> SES <span class="sc">-</span> <span class="fu">mean</span>(SES), </span>
+<span id="cb58-9"><a href="#cb58-9"></a>         <span class="at">CRA_center =</span> CRA_mean <span class="sc">-</span> <span class="fu">mean</span>(CRA_mean),</span>
+<span id="cb58-10"><a href="#cb58-10"></a>         <span class="at">LS_center =</span> LS_mean <span class="sc">-</span> <span class="fu">mean</span>(LS_mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1605,10 +1647,10 @@ Show me the solution
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>tulloch_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(DS_sum <span class="sc">~</span> Country_deviation <span class="sc">+</span> LS_center <span class="sc">+</span> CRA_center <span class="sc">+</span> SES_center,</span>
-<span id="cb54-2"><a href="#cb54-2"></a>                     <span class="at">data =</span> tulloch_data) </span>
-<span id="cb54-3"><a href="#cb54-3"></a></span>
-<span id="cb54-4"><a href="#cb54-4"></a><span class="fu">summary</span>(tulloch_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>tulloch_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(DS_sum <span class="sc">~</span> Country_deviation <span class="sc">+</span> LS_center <span class="sc">+</span> CRA_center <span class="sc">+</span> SES_center,</span>
+<span id="cb59-2"><a href="#cb59-2"></a>                     <span class="at">data =</span> tulloch_data) </span>
+<span id="cb59-3"><a href="#cb59-3"></a></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="fu">summary</span>(tulloch_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1635,7 +1677,7 @@ F-statistic: 15.46 on 4 and 180 DF,  p-value: 6.901e-11</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">standardize_parameters</span>(tulloch_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">standardize_parameters</span>(tulloch_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -1723,10 +1765,10 @@ Show me the solution
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>tulloch_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(DS_sum <span class="sc">~</span> Country_deviation <span class="sc">+</span> LS_center <span class="sc">+</span> CRA_center<span class="sc">*</span>SES_center,</span>
-<span id="cb57-2"><a href="#cb57-2"></a>                     <span class="at">data =</span> tulloch_data) </span>
-<span id="cb57-3"><a href="#cb57-3"></a></span>
-<span id="cb57-4"><a href="#cb57-4"></a><span class="fu">summary</span>(tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>tulloch_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(DS_sum <span class="sc">~</span> Country_deviation <span class="sc">+</span> LS_center <span class="sc">+</span> CRA_center<span class="sc">*</span>SES_center,</span>
+<span id="cb62-2"><a href="#cb62-2"></a>                     <span class="at">data =</span> tulloch_data) </span>
+<span id="cb62-3"><a href="#cb62-3"></a></span>
+<span id="cb62-4"><a href="#cb62-4"></a><span class="fu">summary</span>(tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1754,7 +1796,7 @@ F-statistic: 12.32 on 5 and 179 DF,  p-value: 2.832e-10</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">standardize_parameters</span>(tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">standardize_parameters</span>(tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -1845,7 +1887,7 @@ Show me the solution
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">anova</span>(tulloch_model1, tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">anova</span>(tulloch_model1, tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="caption-top table table-sm table-striped small">
@@ -1880,11 +1922,11 @@ Show me the solution
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">AIC</span>(tulloch_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">AIC</span>(tulloch_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 937.9814</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">AIC</span>(tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">AIC</span>(tulloch_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 939.9021</code></pre>
 </div>
