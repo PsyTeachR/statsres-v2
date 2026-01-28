@@ -490,7 +490,7 @@ exp(coef(brandt_model2)[5]) / (1 + exp(coef(brandt_model2)[5]))
 
 This means choosing less than 3 (remember no one responded 2) represents .011 or 1.12%. Choosing less than 4 represents .144 or 14.4%, and so on. Once we get to the final threshold, this represents less than 7 at .875/87.5%. The cumulative probability of 7 or less is then 1/100%, which is why you get *k*-1 thresholds. So, you can work that final step out as 1 - .875 = .125/12.5%. 
 
-These cumulative percentage estimates are for the reference group (ethical), so you could calculate the estimate for the unethical group by subtracting the slope coefficient (0.2594) from each threshold. For example, for the first threshold: 
+These cumulative percentage estimates are for the reference group (ethical), so you could calculate the estimate for the unethical group by subtracting the slope coefficient (0.2594) from each threshold. This might sound unintuitive at first (because it is...) as you normally add the intercept and slope to calculate the target group, but here we are working with cumulative probabilities. This means we need to subtract the two to calculate the estimates for the unethical group as our target. For example, for the first threshold: 
 
 ```{r}
 # Cumulative percentage for unethical group choosing less than 3
@@ -503,6 +503,16 @@ As before, we are using the `coef()` function and subsetting (the `[1]`etc.) to 
 :::
 
 This means the cumulative probability estimate for less than 3 is .0087 or 0.87% in the unethical group. 
+
+Like previous models, once you have worked through the logic manually, you can use the functions to give you all the information at once. We can use `emmeans()` to give us the predicted probability for each scale point by the two groups. 
+
+```{r}
+emmeans(brandt_model2, # model object
+        ~ WellLitFactor | ExpCond, # ordinal outcome by group 
+        mode = "prob") # how we are expressing predictions
+```
+
+Now, we can see all of the values we have manually calculated for each group. For example, the value we just calculated for unethical less than 3 is the first entry: 0.009. Just keep in mind this provides the predicted probability at each rating level, you would need to calculate the cumulative probability yourself. 
 
 #### Different threshold assumptions
 
@@ -604,18 +614,11 @@ Given the model, you can take the reciprocal of the exponential for the slope es
 1 / exp(confint(bostyn_model3))
 ```
 
-Finally, you can calculate the estimated probability of making a consequentialist decision in each group by using the `emmeans()` function and our user-generated conversion function. If you calculated it manually with the other methods, that's fine too. 
+Finally, you can calculate the estimated probability of making a consequentialist decision in each group by using the `emmeans()` function. If you calculated it manually with the other methods, that's fine too. 
 
 ```{r}
 emmeans(bostyn_model3, specs = "study")
 
-probability_from_logit(c(1.94, # estimate
-                         1.49, # lower 95% CI
-                         2.39)) # upper 95% CI
-
-probability_from_logit(c(1.14, # estimate
-                         0.59, # lower 95% CI
-                         1.69)) # upper 95% CI
 ```
 
 :::

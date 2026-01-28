@@ -342,10 +342,18 @@ window.Quarto = {
   </ul>
 </li>
   <li>
-<a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">5.4</span> Test Yourself</a>
+<a href="#poisson-regression" id="toc-poisson-regression" class="nav-link" data-scroll-target="#poisson-regression"><span class="header-section-number">5.4</span> Poisson Regression</a>
   <ul class="collapse">
-<li><a href="#independent-logistic-regression" id="toc-independent-logistic-regression" class="nav-link" data-scroll-target="#independent-logistic-regression"><span class="header-section-number">5.4.1</span> Independent logistic regression</a></li>
-  <li><a href="#independent-ordinal-regression" id="toc-independent-ordinal-regression" class="nav-link" data-scroll-target="#independent-ordinal-regression"><span class="header-section-number">5.4.2</span> Independent ordinal regression</a></li>
+<li><a href="#introduction-to-the-dataset-2" id="toc-introduction-to-the-dataset-2" class="nav-link" data-scroll-target="#introduction-to-the-dataset-2"><span class="header-section-number">5.4.1</span> Introduction to the dataset</a></li>
+  <li><a href="#exploratory-data-analysis-2" id="toc-exploratory-data-analysis-2" class="nav-link" data-scroll-target="#exploratory-data-analysis-2"><span class="header-section-number">5.4.2</span> Exploratory data analysis</a></li>
+  <li><a href="#would-linear-regression-work-2" id="toc-would-linear-regression-work-2" class="nav-link" data-scroll-target="#would-linear-regression-work-2"><span class="header-section-number">5.4.3</span> Would linear regression work?</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">5.5</span> Test Yourself</a>
+  <ul class="collapse">
+<li><a href="#independent-logistic-regression" id="toc-independent-logistic-regression" class="nav-link" data-scroll-target="#independent-logistic-regression"><span class="header-section-number">5.5.1</span> Independent logistic regression</a></li>
+  <li><a href="#independent-ordinal-regression" id="toc-independent-ordinal-regression" class="nav-link" data-scroll-target="#independent-ordinal-regression"><span class="header-section-number">5.5.2</span> Independent ordinal regression</a></li>
   </ul>
 </li>
   </ul></nav>
@@ -739,25 +747,6 @@ Important
 <p>In this scenario, you would get the same reciprocal odds ratio if you changed the groups around with correction as the reference group. Taking the reciprocal is the same information expressed differently, but its important you are clear about the model estimates to avoid confusing your reader. If you do this yourself, make sure you explain what the model estimates were and how you took the reciprocal.</p>
 </div>
 </div>
-<p>Returning to the idea of model comparison, we could compare the two GLM models using <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> and it will tell you the change in deviance (relating the maximum likelihood fitting process), but we can focus on comparing the AIC values for model fit between the two models. Lower values of AIC are better and if we subtract model 1 (the linear model) from model 2 (the logistic model), a negative difference would indicate better model fit from the ordinal model.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># AIC of model 1</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">AIC</span>(bostyn_model1_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 243.3384</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># AIC of model 2</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">AIC</span>(bostyn_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 250.1702</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># difference in AIC values</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">AIC</span>(bostyn_model2) <span class="sc">-</span> <span class="fu">AIC</span>(bostyn_model1_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6.831779</code></pre>
-</div>
-</div>
-<p>Interestingly, the second model actually has worse fit! There is less prediction error when we use the regular linear regression model compared to the logistic regression model. Given the assumptions and what we know of the design though, the logistic regression model would still be the sensible choice here. This reinforces why it is so important to recognise you as the decision maker and considering different sources of information.</p>
 </section><section id="calculating-the-model-probability-estimates" class="level4" data-number="5.2.4.3"><h4 data-number="5.2.4.3" class="anchored" data-anchor-id="calculating-the-model-probability-estimates">
 <span class="header-section-number">5.2.4.3</span> Calculating the model probability estimates</h4>
 <p>Finally, there is a relationship between probability, odds, and log odds. We can use the coefficients to produce model estimates for the probability of a consequentialist decision in each group. <span class="citation" data-cites="voas_odds_2024">Voas &amp; Watt (<a href="references.html#ref-voas_odds_2024" role="doc-biblioref">2024</a>)</span> recommend this as the key output of a logistic regression model for helping to communicate your findings.</p>
@@ -778,9 +767,9 @@ Warning
 <p><span class="math display">\[ p = \dfrac{e^{b_0}}{1 + e^{b_0}}\]</span></p>
 <p>Or as code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># Estimated probability in the reference group</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="co"># We use coef() to isolate the model coefficients and subset the 1st item - the intercept</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Estimated probability in the reference group</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="co"># We use coef() to isolate the model coefficients and subset the 1st item - the intercept</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
   0.8645833 </code></pre>
@@ -791,10 +780,10 @@ Warning
 <p><span class="math display">\[ p = \dfrac{e^{b_0 + b_1}}{1 + e^{b_0 + b_1}}\]</span></p>
 <p>Then as code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># Estimated probability in the target group</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="co"># We use coef() to isolate the model coefficients and subset the 1st item - the intercept </span></span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="co"># We then add the 2nd item in coef() - the slope </span></span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bostyn_model2)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bostyn_model2)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Estimated probability in the target group</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co"># We use coef() to isolate the model coefficients and subset the 1st item - the intercept </span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co"># We then add the 2nd item in coef() - the slope </span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bostyn_model2)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model2)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(bostyn_model2)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
    0.746988 </code></pre>
@@ -805,68 +794,53 @@ Warning
 <span class="header-section-number">5.2.4.4</span> Using <code>emmeans</code> to get model estimates</h4>
 <p>Another way of getting model estimates is using the <code>emmeans()</code> function from the <pkg>emmeans</pkg> package <span class="citation" data-cites="Lenth2022">(<a href="references.html#ref-Lenth2022" role="doc-biblioref">Lenth, 2024</a>)</span>. This can be particularly useful in more complicated models when you want marginal effects across interactions, but you might prefer to see the estimates in this format instead of reconstructing them from the coefficients.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># logistic regression model as the object</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a><span class="co"># Specifying Condition as the predictor we want marginal effects for</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a><span class="fu">emmeans</span>(bostyn_model2, <span class="at">specs =</span> <span class="st">"study"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># logistic regression model as the object</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="co"># Specifying Condition as the predictor we want marginal effects for</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="fu">emmeans</span>(bostyn_model2, </span>
+<span id="cb29-4"><a href="#cb29-4"></a>        <span class="at">specs =</span> <span class="st">"study"</span>, </span>
+<span id="cb29-5"><a href="#cb29-5"></a>        <span class="at">type =</span> <span class="st">"response"</span>) <span class="co"># transform from logit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> study        emmean    SE  df asymp.LCL asymp.UCL
- Real           1.85 0.211 Inf     1.441      2.27
- Hypothetical   1.08 0.252 Inf     0.588      1.58
+<pre><code> study         prob     SE  df asymp.LCL asymp.UCL
+ Real         0.865 0.0247 Inf     0.809     0.906
+ Hypothetical 0.747 0.0477 Inf     0.643     0.829
 
-Results are given on the logit (not the response) scale. 
-Confidence level used: 0.95 </code></pre>
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale </code></pre>
 </div>
 </div>
-<p>These are still in log odds units, so you can calculate the probability using the same equation as before:</p>
-<p><span class="math display">\[ p = \dfrac{e}{1 + e}\]</span></p>
-<p>To make it less repetitive, you can use the following user-generated function and enter all the relevant values as a vector:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>probability_from_logit <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">return</span>(</span>
-<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x))</span>
-<span id="cb37-4"><a href="#cb37-4"></a>  )</span>
-<span id="cb37-5"><a href="#cb37-5"></a>}</span>
-<span id="cb37-6"><a href="#cb37-6"></a></span>
-<span id="cb37-7"><a href="#cb37-7"></a><span class="fu">probability_from_logit</span>(<span class="fu">c</span>(<span class="fl">1.85</span>, <span class="co"># estimate</span></span>
-<span id="cb37-8"><a href="#cb37-8"></a>                         <span class="fl">1.44</span>, <span class="co"># lower 95% CI</span></span>
-<span id="cb37-9"><a href="#cb37-9"></a>                         <span class="fl">2.27</span>)) <span class="co"># upper 95% CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8641271 0.8084547 0.9063618</code></pre>
-</div>
-</div>
-<p>Which corresponds nicely with what we reconstructed from the model coefficients.</p>
+<p>By adding the <code>type = "response"</code> argument, it transforms the estimates from the logit scale to the response scale, i.e., probabilities. These estimates correspond nicely with what we reconstructed from the model coefficients.</p>
 </section><section id="plotting-logistic-regression-models" class="level4" data-number="5.2.4.5"><h4 data-number="5.2.4.5" class="anchored" data-anchor-id="plotting-logistic-regression-models">
 <span class="header-section-number">5.2.4.5</span> Plotting logistic regression models</h4>
 <p>Like any model, it will make your life and the lives of your reader much easier to supplement your statistics with a plot informatively showing the model estimates. We can use the <pkg>sjPlot</pkg> function <span class="citation" data-cites="luedecke_2024">(<a href="references.html#ref-luedecke_2024" role="doc-biblioref">Lüdecke, 2024</a>)</span> to take the logistic regression model and plot the predicted probabilites.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># sjPlot makes it easy to plot estimates from the model</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">plot_model</span>(bostyn_model2, <span class="co"># You enter the model object</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a>           <span class="at">type =</span> <span class="st">"pred"</span>, <span class="co"># The type of plot you want to create</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a>           <span class="at">terms =</span> <span class="st">"study"</span>) <span class="co"># The predictor(s)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># sjPlot makes it easy to plot estimates from the model</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">plot_model</span>(bostyn_model2, <span class="co"># You enter the model object</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>           <span class="at">type =</span> <span class="st">"pred"</span>, <span class="co"># The type of plot you want to create</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>           <span class="at">terms =</span> <span class="st">"study"</span>) <span class="co"># The predictor(s)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Plus some additional arguments and <code>ggplot()</code> layers to tidy things up. Helpfully, it recognises the y-axis is a probability and amends the scale. Unhelpfully, if you want to change the limits etc., you need to tidy the scale up again or it reverts back to proportion.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">plot_model</span>(bostyn_model2,</span>
-<span id="cb40-2"><a href="#cb40-2"></a>           <span class="at">type =</span> <span class="st">"pred"</span>,</span>
-<span id="cb40-3"><a href="#cb40-3"></a>           <span class="at">terms =</span> <span class="st">"study"</span>,</span>
-<span id="cb40-4"><a href="#cb40-4"></a>           <span class="at">axis.title =</span> <span class="fu">c</span>(<span class="st">"Real or Hypothetical Scenario"</span>, <span class="st">"Probability Consequentialist Decision (%)"</span>)) <span class="sc">+</span> </span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="co"># setting to convert y to percent</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># original units are proportion</span></span>
-<span id="cb40-7"><a href="#cb40-7"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
-<span id="cb40-8"><a href="#cb40-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">plot_model</span>(bostyn_model2,</span>
+<span id="cb32-2"><a href="#cb32-2"></a>           <span class="at">type =</span> <span class="st">"pred"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3"></a>           <span class="at">terms =</span> <span class="st">"study"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4"></a>           <span class="at">axis.title =</span> <span class="fu">c</span>(<span class="st">"Real or Hypothetical Scenario"</span>, <span class="st">"Probability Consequentialist Decision (%)"</span>)) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="co"># setting to convert y to percent</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># original units are proportion</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb32-8"><a href="#cb32-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Scale for y is already present.
 Adding another scale for y, which will replace the existing scale.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -879,10 +853,10 @@ Adding another scale for y, which will replace the existing scale.</code></pre>
 <p>In common language, unethical behaviour is considered as “dark”, so the original authors designed a priming experiment where participants were randomly allocated to recall an unethical behaviour or an ethical behaviour from their past. Participants then completed a series of measures including their perception of how bright the testing room was. Brandt et al.&nbsp;were sceptical and wanted to replicate this study to see if they could find similar results.</p>
 <p>Participants were randomly allocated (<code>ExpCond</code>) to recall an unethical behaviour (<code>1</code>; n = 49) or an ethical behaviour (<code>0</code>; n = 51). The key outcome was their perception of how bright the room was (<code>welllit</code>), from 1 (not bright at all) to 7 (very bright). The research question was: Does recalling unethical behaviour lead people to perceive a room as darker than if they recall ethical behaviour?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Brandt data for ordinal regression</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>Brandt_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Brandt_unlit.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="fu">mutate</span>(<span class="at">ExpCond =</span> <span class="fu">as.factor</span>(<span class="fu">case_when</span>(ExpCond <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># Ethical </span></span>
-<span id="cb42-4"><a href="#cb42-4"></a>                             ExpCond <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>))) <span class="co"># Unethical</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Brandt data for ordinal regression</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>Brandt_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Brandt_unlit.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">mutate</span>(<span class="at">ExpCond =</span> <span class="fu">as.factor</span>(<span class="fu">case_when</span>(ExpCond <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">0</span>, <span class="co"># Ethical </span></span>
+<span id="cb34-4"><a href="#cb34-4"></a>                             ExpCond <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>))) <span class="co"># Unethical</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 100 Columns: 7
 ── Column specification ────────────────────────────────────────────────────────
@@ -897,30 +871,30 @@ dbl (7): BasicFollowedDirections, ExpCond, flagged, ppnr, bright, welllit, W...
 <span class="header-section-number">5.3.2</span> Exploratory data analysis</h3>
 <p>When starting any data analysis, it is important to visualise the data for some exploratory data analysis. Using the skills you developed in data skills for reproducible research, you can explore the data to understand its properties and look for potential patterns. We can create a boxplot to get a brief overview of how perceived brightness changes depending on the experimental condition.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>Brandt_data <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ExpCond, <span class="at">y =</span> welllit)) <span class="sc">+</span> </span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Ethical Group"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Ethical"</span>, <span class="st">"Unethical"</span>)) <span class="sc">+</span> </span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Brightness Rating"</span>, <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span> </span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>Brandt_data <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ExpCond, <span class="at">y =</span> welllit)) <span class="sc">+</span> </span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Ethical Group"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Ethical"</span>, <span class="st">"Unethical"</span>)) <span class="sc">+</span> </span>
+<span id="cb36-5"><a href="#cb36-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Brightness Rating"</span>, <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span> </span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>There are some signs of the outcome being ordinal, but its not super obvious. We can create a histogram showing the distribution of brightness rating by group, to see how discrete the data are.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>Brandt_data <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> welllit, <span class="at">fill =</span> ExpCond)) <span class="sc">+</span> </span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
-<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Brightness Rating"</span>, <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span> </span>
-<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)) <span class="sc">+</span> </span>
-<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>Brandt_data <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> welllit, <span class="at">fill =</span> ExpCond)) <span class="sc">+</span> </span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">name =</span> <span class="st">"Brightness Rating"</span>, <span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span> </span>
+<span id="cb37-5"><a href="#cb37-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Count"</span>, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)) <span class="sc">+</span> </span>
+<span id="cb37-6"><a href="#cb37-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -943,11 +917,11 @@ Warning
 </div>
 <p>R will happily let us apply simple linear regression to predict brightness rating (<code>welllit</code>) from the categorical predictor of experimental condition (<code>ExpCond</code>). This is by far the most common approach to tackling ordinal outcomes in psychology, particularly when you take the mean or sum of multiple ordinal items, so it looks a little more continuous. If you meet the other assumptions of linear regression, it can often be a pragmatic and robust approach.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># Linear model predicting brightness rating from condition </span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>brandt_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(welllit <span class="sc">~</span> ExpCond, <span class="at">data =</span> Brandt_data)</span>
-<span id="cb46-3"><a href="#cb46-3"></a></span>
-<span id="cb46-4"><a href="#cb46-4"></a><span class="co"># model summary</span></span>
-<span id="cb46-5"><a href="#cb46-5"></a><span class="fu">summary</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Linear model predicting brightness rating from condition </span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>brandt_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(welllit <span class="sc">~</span> ExpCond, <span class="at">data =</span> Brandt_data)</span>
+<span id="cb38-3"><a href="#cb38-3"></a></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="co"># model summary</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="fu">summary</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -968,8 +942,8 @@ Residual standard error: 1.27 on 98 degrees of freedom
 Multiple R-squared:  0.006953,  Adjusted R-squared:  -0.00318 
 F-statistic: 0.6861 on 1 and 98 DF,  p-value: 0.4095</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># Confidence intervals around estimates</span></span>
-<span id="cb48-2"><a href="#cb48-2"></a><span class="fu">confint</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># Confidence intervals around estimates</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="fu">confint</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %    97.5 %
 (Intercept)  4.8038772 5.5098483
@@ -980,14 +954,14 @@ ExpCond1    -0.2937809 0.7147492</code></pre>
 <p>The first problem comes in the interpretation. As a linear model expecting normally distributed residuals, we get means for the intercept and coefficient, and they could - at least theoretically - be any values. So, we get an average of 5.16 and 5.37 for our two groups, but the scale items could only be integers from 1-7. So, you can question how informative it is to treat these data as interval, when they are only labels for arbitrary numbers ranging from 1 (not bright at all) to 7 (very bright).</p>
 <p>The second problem comes in the assumptions of the model. If the means are around the middle of the scale, it can behave approximately normal. If the means are closer to the boundaries, then you start running into problems as the residuals that the model thinks are theoretically boundless, hit a boundary. Let’s look at the checks for this model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="co"># Change the panel layout to 2 x 2</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb50-3"><a href="#cb50-3"></a></span>
-<span id="cb50-4"><a href="#cb50-4"></a><span class="co"># plot the diagnostic plots</span></span>
-<span id="cb50-5"><a href="#cb50-5"></a><span class="fu">plot</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Change the panel layout to 2 x 2</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb42-3"><a href="#cb42-3"></a></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="co"># plot the diagnostic plots</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="fu">plot</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -999,15 +973,15 @@ ExpCond1    -0.2937809 0.7147492</code></pre>
 <p>Ordinal regression models are a kind of logistic regression model. They are also known as cumulative link or ordered logit models. They work on the same logic as logistic regression where we want to model the probability of a discrete outcome, but instead of only two possible outcomes, ordinal regression models split a scale up into an ordered series of discrete outcomes. Between each scale point, the model estimates the threshold and sees how the outcome shifts across your predictor(s).</p>
 <p>To get an idea of cumulative probability, we can plot the Brandt et al.&nbsp;data to see how the cumulative percentage of responses across the scale shifts for each group.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>Brandt_data <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> welllit, <span class="at">colour =</span> ExpCond)) <span class="sc">+</span> </span>
-<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span></span>
-<span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">name =</span> <span class="st">"Brightness Perception"</span>) <span class="sc">+</span> </span>
-<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="at">name =</span> <span class="st">"Cumulative Percent"</span>) <span class="sc">+</span> </span>
-<span id="cb51-6"><a href="#cb51-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>Brandt_data <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> welllit, <span class="at">colour =</span> ExpCond)) <span class="sc">+</span> </span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">name =</span> <span class="st">"Brightness Perception"</span>) <span class="sc">+</span> </span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="at">name =</span> <span class="st">"Cumulative Percent"</span>) <span class="sc">+</span> </span>
+<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1016,26 +990,25 @@ ExpCond1    -0.2937809 0.7147492</code></pre>
 <p>Ordinal regression models estimate these shifts in probability and you get <em>k</em>-1 estimates for the thresholds, meaning you get one fewer estimate than the total number of scale points. Behind the scenes, the model interprets the outcome as a latent variable, meaning the ordinal scale points are tapping into some kind of construct, but honouring there are discrete scale points. We will explore how it models that latent variable shortly.</p>
 <p>The coefficient in the model represents the probability shift of a 1 scale point increase from one distribution to another on the scale of your predictors. So, for every 1-unit increase in a continuous predictor, you see how the probability shifts, or how the probability shifts for the difference between two groups in a categorical predictor. A positive slope coefficient would mean an increase along your predictor scale, while a negative slope coefficient would mean a decrease along your predictor scale.</p>
 <p>There are two ways of modelling this process depending on the link function. The default in the <pkg>ordinal</pkg> package is a logit link, where you model the data using a logistic function. With this approach, you interpret predictor coefficients in log odds to model a shift in probability and you must convert the estimates to an odds ratio or predicted probabilities to aid interpretation. In contrast, you can specify a probit link which models the data as a standard normal or Gaussian distribution. With this approach, you interpret predictor coefficients as changes in standard deviations or z-scores. The probit link function means you can interpret the estimates more like a regular linear regression model with standardised predictors. <span class="citation" data-cites="gambarota_ordinal_2024">Gambarota &amp; Altoè (<a href="references.html#ref-gambarota_ordinal_2024" role="doc-biblioref">2024</a>)</span> includes a nice explanation of interpreting ordinal regression model depending on the link function and when you would choose one over the other.</p>
-<p>We will fit ordinal regression models using the <pkg>ordinal</pkg><span class="citation" data-cites="Christensen2023">(<a href="references.html#ref-Christensen2023" role="doc-biblioref">Christensen, 2023</a>)</span> package as it nicely supports cumulative link models as regular regression models we have used until this point or scaled up to mixed effects models.</p>
-<p>First, we need to convert the outcome into a factor, so there are a discrete ordered number of points.</p>
+<p>We will fit ordinal regression models using the <pkg>ordinal</pkg><span class="citation" data-cites="Christensen2023">(<a href="references.html#ref-Christensen2023" role="doc-biblioref">Christensen, 2023</a>)</span> package as it nicely supports cumulative link models as regular regression models we have used until this point or scaled up to mixed effects models. First, we need to convert the outcome into a factor, so there are a discrete ordered number of points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>Brandt_data <span class="ot">&lt;-</span> Brandt_data <span class="sc">%&gt;%</span> </span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="fu">mutate</span>(<span class="at">WellLitFactor =</span> <span class="fu">factor</span>(welllit))</span>
-<span id="cb52-3"><a href="#cb52-3"></a></span>
-<span id="cb52-4"><a href="#cb52-4"></a><span class="fu">levels</span>(Brandt_data<span class="sc">$</span>WellLitFactor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>Brandt_data <span class="ot">&lt;-</span> Brandt_data <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">mutate</span>(<span class="at">WellLitFactor =</span> <span class="fu">factor</span>(welllit))</span>
+<span id="cb44-3"><a href="#cb44-3"></a></span>
+<span id="cb44-4"><a href="#cb44-4"></a><span class="fu">levels</span>(Brandt_data<span class="sc">$</span>WellLitFactor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1" "3" "4" "5" "6" "7"</code></pre>
 </div>
 </div>
 <p>We can see here the scale points are in ascending order as we want them to be, and no one in the data ever responded 2. Next, we can fit our ordinal regression model using the same format as all our regression models. By default, the function uses a logit link, but we will specify it as an argument to make it clearer how things change for a probit link later.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="co"># clm = cumulative link model</span></span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="co"># logit = standard logistic distribution </span></span>
-<span id="cb54-3"><a href="#cb54-3"></a>brandt_model2 <span class="ot">&lt;-</span> <span class="fu">clm</span>(WellLitFactor <span class="sc">~</span> ExpCond, </span>
-<span id="cb54-4"><a href="#cb54-4"></a>                     <span class="at">data =</span> Brandt_data, </span>
-<span id="cb54-5"><a href="#cb54-5"></a>                     <span class="at">link =</span> <span class="st">"logit"</span>)</span>
-<span id="cb54-6"><a href="#cb54-6"></a></span>
-<span id="cb54-7"><a href="#cb54-7"></a><span class="fu">summary</span>(brandt_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># clm = cumulative link model</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="co"># logit = standard logistic distribution </span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>brandt_model2 <span class="ot">&lt;-</span> <span class="fu">clm</span>(WellLitFactor <span class="sc">~</span> ExpCond, </span>
+<span id="cb46-4"><a href="#cb46-4"></a>                     <span class="at">data =</span> Brandt_data, </span>
+<span id="cb46-5"><a href="#cb46-5"></a>                     <span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb46-6"><a href="#cb46-6"></a></span>
+<span id="cb46-7"><a href="#cb46-7"></a><span class="fu">summary</span>(brandt_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>formula: WellLitFactor ~ ExpCond
 data:    Brandt_data
@@ -1055,35 +1028,27 @@ Threshold coefficients:
 5|6   0.1309     0.2703   0.484
 6|7   1.9504     0.3460   5.637</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">confint</span>(brandt_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">confint</span>(brandt_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              2.5 %    97.5 %
 ExpCond1 -0.4465061 0.9702407</code></pre>
 </div>
 </div>
-<p>In the first segment of the output, its somewhat similar to the other models we have fitted, but there is no intercept at the top. We just have the slope coefficients for each predictor (1 in this case), then the threshold coefficients for <em>k</em>-1 scale points.</p>
+<p>In the first segment of the output, its somewhat similar to the other models we have fitted, but there is no intercept at the top. We just have the slope coefficients for each predictor (one in this case), then the threshold coefficients for <em>k</em>-1 scale points.</p>
 <p>As this is an adapted version of logistic regression with a logit link, the units are in log odds. So, they are easier to interpret as an odds ratio by taking the exponential.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">exp</span>(brandt_model2<span class="sc">$</span>beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">exp</span>(brandt_model2<span class="sc">$</span>beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ExpCond1 
 1.296112 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(brandt_model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(brandt_model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             2.5 %  97.5 %
 ExpCond1 0.6398599 2.63858</code></pre>
 </div>
 </div>
 <p>The results correspond with what we plotted previously, we have an odds ratio of 1.30 [0.64, 2.64], meaning there are 1.3 higher odds of a brighter rating in the unethical condition compared to the ethical condition. However, the confidence interval is pretty wide here and the <em>p</em>-value is not statistically significant, so we cannot conclude there is a shift in probability between the two groups here.</p>
-<p>Returning to the idea of model comparison, it will not let us compare them using <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> as we cannot compare the same outcome when its numeric vs a factor. However, we can compare the AIC values for model fit between the two models. Lower values of AIC are better and if we subtract model 1 (the linear model) from model 2 (the ordinal model), a negative difference would indicate better model fit from the ordinal model.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">AIC</span>(brandt_model2) <span class="sc">-</span> <span class="fu">AIC</span>(brandt_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -18.67021</code></pre>
-</div>
-</div>
-<p>That does seem to be the case here. Although both models were non-significant, modelling the outcome as ordinal - reassuringly - fits the data better with less prediction error.</p>
 <section id="breaking-down-threshold-coefficients" class="level4" data-number="5.3.4.1"><h4 data-number="5.3.4.1" class="anchored" data-anchor-id="breaking-down-threshold-coefficients">
 <span class="header-section-number">5.3.4.1</span> Breaking down threshold coefficients</h4>
 <p>We would normally focus on the coefficient as the main outcome of the modelling, but we can also break down the threshold coefficients so they are not a mystery. These represent the estimates for the cumulative probability of choosing a given scale point. These relate to the reference group, so we see the cumulative probability of the ethical condition. Remember, these are still in log odds, so we can calculate the probability like we did for logistic regression by dividing the odds ratio by 1 plus the odds ratio.</p>
@@ -1101,43 +1066,43 @@ Note
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 3 - coefficient 1</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 3 - coefficient 1</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1|3 
 0.01126058 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 4 - coefficient 2</span></span>
-<span id="cb66-2"><a href="#cb66-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 4 - coefficient 2</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      3|4 
 0.1443283 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 5- coefficient 3</span></span>
-<span id="cb68-2"><a href="#cb68-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">3</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">3</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 5- coefficient 3</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">3</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">3</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      4|5 
 0.2526636 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 6- coefficient 4</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">4</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">4</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 6- coefficient 4</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">4</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">4</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      5|6 
 0.5326661 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 7- coefficient 5</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">5</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">5</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 7- coefficient 5</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">5</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">5</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      6|7 
 0.8754855 </code></pre>
 </div>
 </div>
 <p>This means choosing less than 3 (remember no one responded 2) represents .011 or 1.12%. Choosing less than 4 represents .144 or 14.4%, and so on. Once we get to the final threshold, this represents less than 7 at .875/87.5%. The cumulative probability of 7 or less is then 1/100%, which is why you get <em>k</em>-1 thresholds. So, you can work that final step out as 1 - .875 = .125/12.5%.</p>
-<p>These cumulative percentage estimates are for the reference group (ethical), so you could calculate the estimate for the unethical group by subtracting the slope coefficient (0.2594) from each threshold. For example, for the first threshold:</p>
+<p>These cumulative percentage estimates are for the reference group (ethical), so you could calculate the estimate for the unethical group by subtracting the slope coefficient (0.2594) from each threshold. This might sound unintuitive at first (because it is…) as you normally add the intercept and slope to calculate the target group, but here we are working with cumulative probabilities. This means we need to subtract the two to calculate the estimates for the unethical group as our target. For example, for the first threshold:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co"># Cumulative percentage for unethical group choosing less than 3</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="co"># Coefficient 1 minus coefficient 6 as the slope is weirdly the last one here, not the first</span></span>
-<span id="cb74-3"><a href="#cb74-3"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">coef</span>(brandt_model2)[<span class="dv">6</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">coef</span>(brandt_model2)[<span class="dv">6</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co"># Cumulative percentage for unethical group choosing less than 3</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="co"># Coefficient 1 minus coefficient 6 as the slope is weirdly the last one here, not the first</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">coef</span>(brandt_model2)[<span class="dv">6</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model2)[<span class="dv">1</span>] <span class="sc">-</span> <span class="fu">coef</span>(brandt_model2)[<span class="dv">6</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        1|3 
 0.008710377 </code></pre>
@@ -1157,17 +1122,45 @@ Note
 </div>
 </div>
 <p>This means the cumulative probability estimate for less than 3 is .0087 or 0.87% in the unethical group.</p>
+<p>Like previous models, once you have worked through the logic manually, you can use the functions to give you all the information at once. We can use <code>emmeans()</code> to give us the predicted probability for each scale point by the two groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">emmeans</span>(brandt_model2, <span class="co"># model object</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>        <span class="sc">~</span> WellLitFactor <span class="sc">|</span> ExpCond, <span class="co"># ordinal outcome by group </span></span>
+<span id="cb66-3"><a href="#cb66-3"></a>        <span class="at">mode =</span> <span class="st">"prob"</span>) <span class="co"># how we are expressing predictions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ExpCond = 0:
+ WellLitFactor    prob      SE  df asymp.LCL asymp.UCL
+ 1             0.01126 0.01134 Inf  -0.01096    0.0335
+ 3             0.13307 0.04009 Inf   0.05450    0.2116
+ 4             0.10834 0.03425 Inf   0.04121    0.1755
+ 5             0.28000 0.04736 Inf   0.18717    0.3728
+ 6             0.34282 0.05298 Inf   0.23899    0.4467
+ 7             0.12451 0.03771 Inf   0.05060    0.1984
+
+ExpCond = 1:
+ WellLitFactor    prob      SE  df asymp.LCL asymp.UCL
+ 1             0.00871 0.00885 Inf  -0.00863    0.0260
+ 3             0.10644 0.03449 Inf   0.03884    0.1740
+ 4             0.09173 0.03005 Inf   0.03283    0.1506
+ 5             0.26103 0.04549 Inf   0.17187    0.3502
+ 6             0.37644 0.05385 Inf   0.27089    0.4820
+ 7             0.15565 0.04397 Inf   0.06947    0.2418
+
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p>Now, we can see all of the values we have manually calculated for each group. For example, the value we just calculated for unethical less than 3 is the first entry: 0.009. Just keep in mind this provides the predicted probability at each rating level, you would need to calculate the cumulative probability yourself.</p>
 </section><section id="different-threshold-assumptions" class="level4" data-number="5.3.4.2"><h4 data-number="5.3.4.2" class="anchored" data-anchor-id="different-threshold-assumptions">
 <span class="header-section-number">5.3.4.2</span> Different threshold assumptions</h4>
-<p>Finally, the default option in <pkg>ordinal</pkg> is for <code>flexible</code> thresholds between scale points. This estimates a coefficient for threshold and makes the fewest assumptions about the outcome. Alternative options are <code>equidistant</code> which assume evenly spaced scale points, or <code>symmetric</code> which assume scale points are evenly spaced above and below the scale center. These two make stronger assumptions about the outcome but require fewer parameters, so you would need to think carefully about whether they would suit the outcome you are modelling.</p>
+<p>The default option in <pkg>ordinal</pkg> is for <code>flexible</code> thresholds between scale points. This estimates a coefficient for threshold and makes the fewest assumptions about the outcome. Alternative options are <code>equidistant</code> which assume evenly spaced scale points, or <code>symmetric</code> which assume scale points are evenly spaced above and below the scale center. These two make stronger assumptions about the outcome but require fewer parameters, so you would need to think carefully about whether they would suit the outcome you are modelling.</p>
 <p>To see how the <code>equidistant</code> option would compare:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="co"># clm = cumulative link model with equidistant thresholds</span></span>
-<span id="cb76-2"><a href="#cb76-2"></a>brandt_model3 <span class="ot">&lt;-</span> <span class="fu">clm</span>(WellLitFactor <span class="sc">~</span> ExpCond, </span>
-<span id="cb76-3"><a href="#cb76-3"></a>                     <span class="at">data =</span> Brandt_data, </span>
-<span id="cb76-4"><a href="#cb76-4"></a>                     <span class="at">threshold =</span> <span class="st">"equidistant"</span>)</span>
-<span id="cb76-5"><a href="#cb76-5"></a></span>
-<span id="cb76-6"><a href="#cb76-6"></a><span class="fu">summary</span>(brandt_model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="co"># clm = cumulative link model with equidistant thresholds</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a>brandt_model3 <span class="ot">&lt;-</span> <span class="fu">clm</span>(WellLitFactor <span class="sc">~</span> ExpCond, </span>
+<span id="cb68-3"><a href="#cb68-3"></a>                     <span class="at">data =</span> Brandt_data, </span>
+<span id="cb68-4"><a href="#cb68-4"></a>                     <span class="at">threshold =</span> <span class="st">"equidistant"</span>)</span>
+<span id="cb68-5"><a href="#cb68-5"></a></span>
+<span id="cb68-6"><a href="#cb68-6"></a><span class="fu">summary</span>(brandt_model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>formula: WellLitFactor ~ ExpCond
 data:    Brandt_data
@@ -1187,31 +1180,31 @@ spacing       1.3626     0.1280  10.647</code></pre>
 </div>
 <p>This time, you only get one threshold estimate and a spacing parameter. Instead of calculating the cumulative probability at each threshold, you must successively add them together:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 3 equally spaced</span></span>
-<span id="cb78-2"><a href="#cb78-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 3 equally spaced</span></span>
+<span id="cb70-2"><a href="#cb70-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>threshold.1 
  0.02248644 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 4 equally spaced</span></span>
-<span id="cb80-2"><a href="#cb80-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="co"># Cumulative percentage for ethical group choosing less than 4 equally spaced</span></span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(brandt_model3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span> <span class="sc">*</span> <span class="fu">coef</span>(brandt_model3)[<span class="dv">2</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>threshold.1 
  0.08245417 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="co"># Etc. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co"># Etc. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="using-a-probit-link" class="level4" data-number="5.3.4.3"><h4 data-number="5.3.4.3" class="anchored" data-anchor-id="using-a-probit-link">
 <span class="header-section-number">5.3.4.3</span> Using a probit link</h4>
 <p>Finally, we can explore the flexible threshold cumulative link model with a probit link. Instead of modelling the outcome with a standard logistic distribution and interpret the units in log odds, we model the outcome with a standard normal distribution and interpret the units in z-scores or standard deviations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="co"># clm = cumulative link model</span></span>
-<span id="cb83-2"><a href="#cb83-2"></a><span class="co"># probit = standard normal distribution </span></span>
-<span id="cb83-3"><a href="#cb83-3"></a>brandt_probit_model <span class="ot">&lt;-</span> <span class="fu">clm</span>(WellLitFactor <span class="sc">~</span> ExpCond, </span>
-<span id="cb83-4"><a href="#cb83-4"></a>                     <span class="at">data =</span> Brandt_data, </span>
-<span id="cb83-5"><a href="#cb83-5"></a>                     <span class="at">link =</span> <span class="st">"probit"</span>)</span>
-<span id="cb83-6"><a href="#cb83-6"></a></span>
-<span id="cb83-7"><a href="#cb83-7"></a><span class="fu">summary</span>(brandt_probit_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="co"># clm = cumulative link model</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a><span class="co"># probit = standard normal distribution </span></span>
+<span id="cb75-3"><a href="#cb75-3"></a>brandt_probit_model <span class="ot">&lt;-</span> <span class="fu">clm</span>(WellLitFactor <span class="sc">~</span> ExpCond, </span>
+<span id="cb75-4"><a href="#cb75-4"></a>                     <span class="at">data =</span> Brandt_data, </span>
+<span id="cb75-5"><a href="#cb75-5"></a>                     <span class="at">link =</span> <span class="st">"probit"</span>)</span>
+<span id="cb75-6"><a href="#cb75-6"></a></span>
+<span id="cb75-7"><a href="#cb75-7"></a><span class="fu">summary</span>(brandt_probit_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>formula: WellLitFactor ~ ExpCond
 data:    Brandt_data
@@ -1231,18 +1224,29 @@ Threshold coefficients:
 5|6  0.07626    0.16309   0.468
 6|7  1.15814    0.18901   6.128</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">confint</span>(brandt_probit_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">confint</span>(brandt_probit_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              2.5 %    97.5 %
 ExpCond1 -0.2574905 0.5643664</code></pre>
 </div>
 </div>
 <p>We can see here that the output and structure is almost identical, but the estimates are slightly different and it confirms we used probit as the link function. Instead of working with log odds, the estimates represents z-score or standard deviation changes for a 1-unit change. The effect of the experimental condition is still non-significant, but this time the unethical condition is associated with a 0.15 (95% CI = [-0.26, 0.56]) standard deviation increase in brightness rating compared to the ethical condition.</p>
-</section></section></section><section id="test-yourself" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="test-yourself">
-<span class="header-section-number">5.4</span> Test Yourself</h2>
+</section></section></section><section id="poisson-regression" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="poisson-regression">
+<span class="header-section-number">5.4</span> Poisson Regression</h2>
+<section id="introduction-to-the-dataset-2" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="introduction-to-the-dataset-2">
+<span class="header-section-number">5.4.1</span> Introduction to the dataset</h3>
+</section><section id="exploratory-data-analysis-2" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="exploratory-data-analysis-2">
+<span class="header-section-number">5.4.2</span> Exploratory data analysis</h3>
+</section><section id="would-linear-regression-work-2" class="level3" data-number="5.4.3"><h3 data-number="5.4.3" class="anchored" data-anchor-id="would-linear-regression-work-2">
+<span class="header-section-number">5.4.3</span> Would linear regression work?</h3>
+<section id="poisson-regression-in-glm" class="level4" data-number="5.4.3.1"><h4 data-number="5.4.3.1" class="anchored" data-anchor-id="poisson-regression-in-glm">
+<span class="header-section-number">5.4.3.1</span> Poisson regression in <code>glm()</code>
+</h4>
+</section></section></section><section id="test-yourself" class="level2" data-number="5.5"><h2 data-number="5.5" class="anchored" data-anchor-id="test-yourself">
+<span class="header-section-number">5.5</span> Test Yourself</h2>
 <p>Now you have followed along to a guided example, it is important you can transfer your knowledge to a new scenario. So, we have a new data set for you to try out your understanding of these techniques on. Follow the instructions below and answer the questions. The solution is there to check your answers against, but make sure you try the activities independently first.</p>
-<section id="independent-logistic-regression" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="independent-logistic-regression">
-<span class="header-section-number">5.4.1</span> Independent logistic regression</h3>
+<section id="independent-logistic-regression" class="level3" data-number="5.5.1"><h3 data-number="5.5.1" class="anchored" data-anchor-id="independent-logistic-regression">
+<span class="header-section-number">5.5.1</span> Independent logistic regression</h3>
 <p>For an independent activity, we will use the same data set from <span class="citation" data-cites="bostyn_mice_2018">Bostyn et al. (<a href="references.html#ref-bostyn_mice_2018" role="doc-biblioref">2018</a>)</span>, but this time using a couple of extra predictors. If you are coming to this fresh, make sure to remind yourself of the data set outlined in the <a href="#logistic-regression">logistic regression section</a> and load the data.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1258,16 +1262,16 @@ Try this
 <p>In <span class="citation" data-cites="bostyn_mice_2018">Bostyn et al. (<a href="references.html#ref-bostyn_mice_2018" role="doc-biblioref">2018</a>)</span>, they actually fit a multiple logistic regression model where they include three predictors. They include <code>study</code> as the key predictor of interest, but they also control for <code>AGE</code> and <code>GENDER</code> as additional predictors. Fit this model to create a new object called <code>bostyn_model3</code> and answer the following questions.</p>
 <ul>
 <li><p>In the new model, our key predictor of <code>study</code> is statistically <select class="webex-select"><option value="blank"></option>
-<option value="answer">significant</option>
-<option value="">non-significant</option></select>. The two new predictors of <code>AGE</code> and <code>GENDER</code> are statistically <select class="webex-select"><option value="blank"></option>
+<option value="">non-significant</option>
+<option value="answer">significant</option></select>. The two new predictors of <code>AGE</code> and <code>GENDER</code> are statistically <select class="webex-select"><option value="blank"></option>
 <option value="">significant</option>
 <option value="answer">non-significant</option></select>.</p></li>
 <li><p>The slope for <code>study</code> is still in log odds and negative (unless you flipped the groups). If you take the reciprocal of the exponential slope, the odds ratio for the predictor to 2 decimals is <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;2.23&quot;]"> [lower 95% CI = <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;1.15&quot;]">, upper 95% CI = <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;4.31&quot;]">].</p></li>
 <li><p>This suggests there are <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;2.23&quot;]"> lower odds of making a consequential decision in the <select class="webex-select"><option value="blank"></option>
-<option value="">real</option>
-<option value="answer">hypothetical</option></select> group compared to the <select class="webex-select"><option value="blank"></option>
-<option value="answer">real</option>
-<option value="">hypothetical</option></select> group.</p></li>
+<option value="answer">hypothetical</option>
+<option value="">real</option></select> group compared to the <select class="webex-select"><option value="blank"></option>
+<option value="">hypothetical</option>
+<option value="answer">real</option></select> group.</p></li>
 <li><p>Rounding to 1 decimal, the estimated probability of making a consequential decision in the real group is <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;87.4&quot;]">% (95% CI = <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;81.6&quot;]">, <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;91.6&quot;]">) and the estimated probability in the hypothetical group is <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;75.8&quot;]">% (95% CI = <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;64.3&quot;]">, <input class="webex-solveme nospaces" data-tol="0.001" size="4" data-answer="[&quot;84.4&quot;]">).</p></li>
 </ul>
 </div>
@@ -1286,11 +1290,11 @@ Show me the solution
 <div class="callout-body-container callout-body">
 <p>The first step is fitting the model with three individual predictors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a>bostyn_model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(DECISION <span class="sc">~</span> study <span class="sc">+</span> AGE <span class="sc">+</span> GENDER,</span>
-<span id="cb87-2"><a href="#cb87-2"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>),</span>
-<span id="cb87-3"><a href="#cb87-3"></a>                     <span class="at">data =</span> bostyn_data)</span>
-<span id="cb87-4"><a href="#cb87-4"></a></span>
-<span id="cb87-5"><a href="#cb87-5"></a><span class="fu">summary</span>(bostyn_model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a>bostyn_model3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(DECISION <span class="sc">~</span> study <span class="sc">+</span> AGE <span class="sc">+</span> GENDER,</span>
+<span id="cb79-2"><a href="#cb79-2"></a>                     <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>),</span>
+<span id="cb79-3"><a href="#cb79-3"></a>                     <span class="at">data =</span> bostyn_data)</span>
+<span id="cb79-4"><a href="#cb79-4"></a></span>
+<span id="cb79-5"><a href="#cb79-5"></a><span class="fu">summary</span>(bostyn_model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1317,12 +1321,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <p>Given the model, you can take the reciprocal of the exponential for the slope estimate and its 95% confidence interval. You do not need the reciprocal if you flipped the groups and estimate is above 1.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model3)[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="fu">exp</span>(<span class="fu">coef</span>(bostyn_model3)[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>studyHypothetical 
           2.22971 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="fu">exp</span>(<span class="fu">confint</span>(bostyn_model3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="fu">exp</span>(<span class="fu">confint</span>(bostyn_model3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Waiting for profiling to be done...</code></pre>
 </div>
@@ -1334,9 +1338,9 @@ AGE                   1.040199 0.48957669
 GENDER1               1.737032 0.36872266</code></pre>
 </div>
 </div>
-<p>Finally, you can calculate the estimated probability of making a consequentialist decision in each group by using the <code>emmeans()</code> function and our user-generated conversion function. If you calculated it manually with the other methods, that’s fine too.</p>
+<p>Finally, you can calculate the estimated probability of making a consequentialist decision in each group by using the <code>emmeans()</code> function. If you calculated it manually with the other methods, that’s fine too.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a><span class="fu">emmeans</span>(bostyn_model3, <span class="at">specs =</span> <span class="st">"study"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">emmeans</span>(bostyn_model3, <span class="at">specs =</span> <span class="st">"study"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> study        emmean    SE  df asymp.LCL asymp.UCL
  Real           1.94 0.228 Inf     1.493      2.39
@@ -1346,30 +1350,18 @@ Results are averaged over the levels of: GENDER
 Results are given on the logit (not the response) scale. 
 Confidence level used: 0.95 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a><span class="fu">probability_from_logit</span>(<span class="fu">c</span>(<span class="fl">1.94</span>, <span class="co"># estimate</span></span>
-<span id="cb96-2"><a href="#cb96-2"></a>                         <span class="fl">1.49</span>, <span class="co"># lower 95% CI</span></span>
-<span id="cb96-3"><a href="#cb96-3"></a>                         <span class="fl">2.39</span>)) <span class="co"># upper 95% CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8743521 0.8160783 0.9160616</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">probability_from_logit</span>(<span class="fu">c</span>(<span class="fl">1.14</span>, <span class="co"># estimate</span></span>
-<span id="cb98-2"><a href="#cb98-2"></a>                         <span class="fl">0.59</span>, <span class="co"># lower 95% CI</span></span>
-<span id="cb98-3"><a href="#cb98-3"></a>                         <span class="fl">1.69</span>)) <span class="co"># upper 95% CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7576796 0.6433651 0.8442242</code></pre>
 </div>
 </div>
 </div>
 </div>
-</div>
-</section><section id="independent-ordinal-regression" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="independent-ordinal-regression">
-<span class="header-section-number">5.4.2</span> Independent ordinal regression</h3>
+</section><section id="independent-ordinal-regression" class="level3" data-number="5.5.2"><h3 data-number="5.5.2" class="anchored" data-anchor-id="independent-ordinal-regression">
+<span class="header-section-number">5.5.2</span> Independent ordinal regression</h3>
 <p>For an independent activity, we will use data from <span class="citation" data-cites="schroeder_sound_2015">Schroeder &amp; Epley (<a href="references.html#ref-schroeder_sound_2015" role="doc-biblioref">2015</a>)</span>. The aim of the study was to investigate whether delivering a short speech to a potential employer would be more effective at landing you a job than writing the speech down and the employer reading it themselves. Thirty-nine professional recruiters were randomly assigned to receive a job application speech as either a transcript for them to read, or an audio recording of the applicant reading the speech.</p>
 <p>The recruiters then rated the applicants on perceived intellect, their impression of the applicant, and whether they would recommend hiring the candidate. All ratings were originally on a rating scale ranging from 0 (low intellect, impression etc.) to 10 (high impression, recommendation etc.), with the final value representing the mean across several items.</p>
 <p>For this example, we will focus on the hire rating (variable <code>Hire_Rating</code> to see whether the audio condition had a would lead to higher ratings than the transcript condition (variable <code>CONDITION</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a>schroeder_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Schroeder_hiring.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb100-2"><a href="#cb100-2"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">as.factor</span>(CONDITION))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>schroeder_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Schroeder_hiring.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">as.factor</span>(CONDITION))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1412,43 +1404,43 @@ Show me the solution
 <div class="callout-body-container callout-body">
 <p>First, we need to convert hire rating to a factor for the ordinal model to work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a>schroeder_data <span class="ot">&lt;-</span> schroeder_data <span class="sc">%&gt;%</span> </span>
-<span id="cb101-2"><a href="#cb101-2"></a>  <span class="fu">mutate</span>(<span class="at">hire_factor =</span> <span class="fu">factor</span>(Hire_Rating))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a>schroeder_data <span class="ot">&lt;-</span> schroeder_data <span class="sc">%&gt;%</span> </span>
+<span id="cb89-2"><a href="#cb89-2"></a>  <span class="fu">mutate</span>(<span class="at">hire_factor =</span> <span class="fu">factor</span>(Hire_Rating))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can explore the distribution of the two groups and see there is a clearer difference here, with more low ratings in the transcript (<code>0</code>) group and more high ratings in the audio (<code>1</code>) group.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a>schroeder_data <span class="sc">%&gt;%</span> </span>
-<span id="cb102-2"><a href="#cb102-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Hire_Rating, <span class="at">fill =</span> condition)) <span class="sc">+</span> </span>
-<span id="cb102-3"><a href="#cb102-3"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
-<span id="cb102-4"><a href="#cb102-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">name =</span> <span class="st">"Hire Rating"</span>) <span class="sc">+</span></span>
-<span id="cb102-5"><a href="#cb102-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>schroeder_data <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Hire_Rating, <span class="at">fill =</span> condition)) <span class="sc">+</span> </span>
+<span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
+<span id="cb90-4"><a href="#cb90-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">name =</span> <span class="st">"Hire Rating"</span>) <span class="sc">+</span></span>
+<span id="cb90-5"><a href="#cb90-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Alternatively, we can visualise the cumulative probability and see how it climbs steeper for the transcript group (more lower responses) and shallow for the audio group (more higher responses).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a>schroeder_data <span class="sc">%&gt;%</span> </span>
-<span id="cb103-2"><a href="#cb103-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Hire_Rating, <span class="at">colour =</span> condition)) <span class="sc">+</span> </span>
-<span id="cb103-3"><a href="#cb103-3"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span></span>
-<span id="cb103-4"><a href="#cb103-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">name =</span> <span class="st">"Hire Rating"</span>) <span class="sc">+</span> </span>
-<span id="cb103-5"><a href="#cb103-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="at">name =</span> <span class="st">"Cumulative Percent"</span>) <span class="sc">+</span> </span>
-<span id="cb103-6"><a href="#cb103-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>schroeder_data <span class="sc">%&gt;%</span> </span>
+<span id="cb91-2"><a href="#cb91-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Hire_Rating, <span class="at">colour =</span> condition)) <span class="sc">+</span> </span>
+<span id="cb91-3"><a href="#cb91-3"></a>  <span class="fu">stat_ecdf</span>() <span class="sc">+</span></span>
+<span id="cb91-4"><a href="#cb91-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">name =</span> <span class="st">"Hire Rating"</span>) <span class="sc">+</span> </span>
+<span id="cb91-5"><a href="#cb91-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="at">name =</span> <span class="st">"Cumulative Percent"</span>) <span class="sc">+</span> </span>
+<span id="cb91-6"><a href="#cb91-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="01-05-glm_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Finally, we can fit our ordinal regression model and see the slope coefficient is positive and it is statistically significant.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a>schroeder_model2 <span class="ot">&lt;-</span> <span class="fu">clm</span>(hire_factor <span class="sc">~</span> condition, <span class="at">data =</span> schroeder_data)</span>
-<span id="cb104-2"><a href="#cb104-2"></a></span>
-<span id="cb104-3"><a href="#cb104-3"></a><span class="fu">summary</span>(schroeder_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>schroeder_model2 <span class="ot">&lt;-</span> <span class="fu">clm</span>(hire_factor <span class="sc">~</span> condition, <span class="at">data =</span> schroeder_data)</span>
+<span id="cb92-2"><a href="#cb92-2"></a></span>
+<span id="cb92-3"><a href="#cb92-3"></a><span class="fu">summary</span>(schroeder_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>formula: hire_factor ~ condition
 data:    schroeder_data
@@ -1473,7 +1465,7 @@ Threshold coefficients:
 6|7  2.357000   0.589496   3.998
 7|8  3.976969   0.861277   4.618</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a><span class="fu">confint</span>(schroeder_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a><span class="fu">confint</span>(schroeder_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               2.5 %   97.5 %
 condition1 0.3669235 2.791582</code></pre>
@@ -1481,14 +1473,14 @@ condition1 0.3669235 2.791582</code></pre>
 </div>
 <p>To be easier to interpret, we can convert the log odds to the odds ratio by taking the exponential for the slope coefficient and its 95% confidence interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="co"># Get beta as odds ratio instead of logit</span></span>
-<span id="cb108-2"><a href="#cb108-2"></a><span class="fu">exp</span>(schroeder_model2<span class="sc">$</span>beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a><span class="co"># Get beta as odds ratio instead of logit</span></span>
+<span id="cb96-2"><a href="#cb96-2"></a><span class="fu">exp</span>(schroeder_model2<span class="sc">$</span>beta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>condition1 
   4.668953 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="co"># Convert CI to odds ratio</span></span>
-<span id="cb110-2"><a href="#cb110-2"></a><span class="fu">exp</span>(<span class="fu">confint</span>(schroeder_model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="co"># Convert CI to odds ratio</span></span>
+<span id="cb98-2"><a href="#cb98-2"></a><span class="fu">exp</span>(<span class="fu">confint</span>(schroeder_model2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              2.5 %  97.5 %
 condition1 1.443288 16.3068</code></pre>
@@ -1496,14 +1488,14 @@ condition1 1.443288 16.3068</code></pre>
 </div>
 <p>Finally, as a demonstration, we can calculate the estimated cumulative probability of choosing a rating of less than 3 (0-2) for the transcript group and the audio group. Note we are using coefficient 3 as that is the third threshold. We then subtract coefficient 9 as the slope coefficient is added on to the end.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="co"># Cumulative percentage for transcript group choosing less than 3 - coefficient 1</span></span>
-<span id="cb112-2"><a href="#cb112-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="co"># Cumulative percentage for transcript group choosing less than 3 - coefficient 1</span></span>
+<span id="cb100-2"><a href="#cb100-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      2|3 
 0.4975119 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a><span class="co"># Cumulative percentage for audio group choosing less than 3 - coefficient 1 minus coefficient 9</span></span>
-<span id="cb114-2"><a href="#cb114-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>] <span class="sc">-</span> <span class="fu">coef</span>(schroeder_model2)[<span class="dv">9</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>] <span class="sc">-</span> <span class="fu">coef</span>(schroeder_model2)[<span class="dv">9</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="co"># Cumulative percentage for audio group choosing less than 3 - coefficient 1 minus coefficient 9</span></span>
+<span id="cb102-2"><a href="#cb102-2"></a><span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>] <span class="sc">-</span> <span class="fu">coef</span>(schroeder_model2)[<span class="dv">9</span>]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="fu">coef</span>(schroeder_model2)[<span class="dv">3</span>] <span class="sc">-</span> <span class="fu">coef</span>(schroeder_model2)[<span class="dv">9</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      2|3 
 0.1749581 </code></pre>
