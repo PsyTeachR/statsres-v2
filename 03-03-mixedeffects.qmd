@@ -1,0 +1,309 @@
+# Frequentist and Bayesian Mixed Effects Models
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(webexercises)
+```
+
+In the recordings, James walked through the building blocks of fitting and interpreting mixed effects models, first from a frequentist perspective and then from a Bayesian perspective. The data come from @brown_introduction_2021 who developed a tutorial for mixed effects models. Part 1 here uses the <pkg>lme4</pkg> package to fit frequentist mixed effects models. These take a little longer than normal, but still fit in a few seconds. Part 2 uses the <pkg>brms</pkg> package to fit Bayesian mixed effects models. You are welcome to fit these in your own time, but for the practical, I have provided the saved model objects as they take 15-30 minutes to fit depending on your computer. 
+
+Make sure you have the following packages installed and loaded.
+
+```{r message=FALSE, warning=FALSE}
+# general data functions
+library(tidyverse)
+
+# frequentist 
+library(lme4)
+library(lmerTest)
+library(sjPlot)
+
+# Bayesian 
+library(brms)
+library(bayestestR)
+library(see)
+library(tidybayes)
+
+```
+
+Now we have our packages, we need to read the data from Brown (2021) who report a repeated measures study on speech perception. Participants complete two tasks where they listen to words being spoken while they complete a response time task. The words are presented in two conditions: 1) just being spoken in an auditory condition and 2) being spoken and seeing the speaker in an audiovisual condition. Each participant completes the task for 543 words, split between the two conditions in a different order for each participant. They expected response times to be slower in the audiovisual condition compared to the audio condition due to the interference from listening. 
+
+This means we have a repeated measures / within-subjects design. The outcome is response time in milliseconds (ms). The predictor - or fixed effect - is the modality (audio and audiovisual). We will also explore the impact of participants and the word stimuli as random effects. 
+
+```{r message=FALSE, warning=FALSE}
+# read the raw data from Brown (2021)
+brown_data <- read_csv("Data/Brown_2021.csv")
+
+# create a simplified version of the data by averaging over the word stimuli
+brown_aggregate <- brown_data %>% 
+  group_by(PID, modality) %>% 
+  summarise(mean_RT = mean(RT)) %>% 
+  ungroup()
+```
+
+## Frequentist 
+
+In the first section, we will explore how to fit mixed effects models using frequentist statistics and the <pkg>lme4</pkg> package [@Bates_lme4]. 
+
+### Aggregate participants
+
+For demonstration purposes, we are going to start slow with aggregate data and averaging over the words, leaving us with only a mean response time per condition. 
+
+#### Standard linear model, no random effects
+
+We can try and fit a standard linear model using `mean_RT` as the outcome and `modality` as the predictor. 
+
+```{r}
+brown_model0 <- lm(mean_RT ~ modality,
+                     data = brown_aggregate)
+
+summary(brown_model0)
+```
+
+As you will see in upcoming models, the intercept and slope are "accurate" but the standard errors and degrees of freedom are all off. We have 53 participants but 104 degrees of freedom since we are not factoring in they contribute two observations. 
+
+#### Random intercept for participants
+
+After the brief demonstration, we can fit our first mixed effects model. We have a new function called `lmer()` instead of `lm()`. This time, we have a similar formula to define `mean_RT` as the outcome and `modality` is still our main predictor. In a mixed effects model, we refer to this as a fixed effect. The new component is the `(1 | PID)` which represents our random effect. This is a random intercepts only model, where we are telling R to allow the intercept (the 1 part) vary for each participant (the PID part). 
+
+```{r}
+brown_model1 <- lmer(mean_RT ~ modality + (1 | PID), 
+                     data = brown_aggregate)
+
+summary(brown_model1)
+```
+
+The output for a mixed effects model is similar, but we have some new sections. Since we loaded the `lmerTest` package, we get p-values via the Satterthwaite method. The two key sections are the random effects and fixed effects. 
+
+Starting with fixed effects, if you scroll up to the standard linear model, you will see the estimate the the intercept and slope are identical, but the standard error has decreased substantially now we have taken the within-subjects design into consideration. 
+
+Under random effects, we accurately code that there are 106 observations but 53 participants by defining the random effect. The standard deviation tells us that we expect the response time to vary by 161ms around the intercept of 1044ms, which relates to the response time towards audio stimuli. We only allowed the intercept to vary in this model, not the slope, so this tells us we fit a constant slope in the model but the intercept for each participant can move up and down. 
+
+You can see this clearer by accessing coefficient values which will print the random effects for each participant. 
+
+```{r}
+coef(brown_model1)
+```
+
+The intercept value changes for each participant as some are faster and some are slower on average. But then the slope estimate is identical for each participant. 
+
+You can also see this visually using the `sjPlot` package and `plot_model()` function. 
+
+```{r}
+plot_model(brown_model1, 
+           type = "re") # plot random effects
+```
+
+Zero on this plot represents the fixed effect intercept of 1044ms. Each participant then represents a deviation from this as the random effect. Participants in red are below the intercept (i.e., they respond faster), whereas those in blue are above the intercept (i.e., they respond slower).
+
+### Trial-level data
+
+Now the function is a little less of a mystery, we can step things up and use mixed effects models to their full capability on trial-level data. If you explore the data, you can see the difference. In the aggregate data, participants contribute two rows:
+
+```{r}
+head(brown_aggregate)
+```
+
+Whereas in the full data, participants contribute 543 rows, one for each word: 
+
+```{r}
+head(brown_data)
+```
+
+This means we can model the variability within both participants and different words, both of which we expect to sampled from wider distributions of participants and words. 
+
+#### Random intercepts only
+
+As we work towards fitting the "maximal" model, a useful starting point for conducting a likelihood ratio test later is fitting the random effects with no fixed effects. We are only modelling the variability of responses across participants and words. 
+
+```{r}
+brown_model2 <- lmer(RT ~ (1 | PID) + (1 | stim), 
+                     data = brown_data)
+
+summary(brown_model2)
+```
+
+The intercept represents the average across all trials - around 1086ms - by ignoring the fixed effect of modality. 
+
+#### Modality and random intercepts
+
+In the next model, we now add our fixed effect of modality. 
+
+```{r}
+brown_model3 <- lmer(RT ~ modality + (1 | PID) + (1 | stim), 
+                     data = brown_data)
+
+summary(brown_model3)
+```
+
+The estimates are pretty close to our aggregate model but now we are modelling the full study design from different sources of variables. The intercept for the audio modality is 1044ms and we expect the audiovisual modality to have 83ms slower responses on average. 
+
+If you look at random effects, we have two key standard deviations to explore. We estimate participants' intercepts to vary by around 168ms but only around 19ms for word stimuli. This means the responses of different participants are more variable than different stimuli. 
+
+As before, we can visualise the random effects to see the broad pattern of variability. Just keep in mind, when we have a huge number of stimuli like the words, the plot can be difficult to distinguish different elements. 
+
+```{r}
+plot_model(brown_model3, 
+           type = "re")
+```
+
+#### Modality, random intercepts, and slopes
+
+The final model we will fit is the "maximal" model for our design, where we allow both the intercept **and** slope to vary. You can see the different syntax where a random intercept has the format `(1 | random_effect)`, whereas random intercept and slopes has the format `(1 + fixed_effect | random_effect)`. 
+
+```{r}
+brown_model4 <- lmer(RT ~ modality + (1 + modality | PID) + (1 + modality | stim), 
+                     data = brown_data)
+
+summary(brown_model4)
+```
+
+The random effects structure now has four key rows. We can look at the standard deviation around the intercept for word stimuli (17ms) and it's slope (15ms). Likewise, we can explore the intercept for participants (169ms) and it's slope (88ms). We are now allowing both the response time for audio stimuli to vary for each participant and stimulus (intercepts) and the difference to audiovisual stimuli (slopes). 
+
+For a completely wild graph, you can now see four panels for the random intercept and slope for each random effect. The same interpretation applies where 0 represents the fixed effect value, and values above and below are deviations from this for each level of the random effect. 
+
+```{r}
+plot_model(brown_model4, 
+           type = "re")
+```
+
+#### Model comparison
+
+The final step here is considering model comparison. We can ask questions such as "does modality have an effect on response times?" and "is this more complicated model worthwhile?". 
+
+By fitting the three models to our trial-level data, we can pass them to the `anova()` function. This is known as a likelihood ratio test. 
+
+```{r}
+anova(brown_model2, 
+      brown_model3, 
+      brown_model4)
+```
+
+You can see the warning about it refitting the models using maximum likelihood instead of restricted maximum likelihood. We could do this manually by adding the argument `REML = FALSE` to the `lmer()` function. 
+
+We can see the difference between model 2 (random effects only) and model 3 (modality as a fixed effect and random intercepts) is statistically significant and we have a lower AIC value. Modality does have an effect on response times. The difference between model 3 and model 4 (random intercepts and slopes) is also significant. Even though model 4 is the most complex (9 parameters to estimate), it is a better fitting model relative to it's complexity. 
+
+## Bayesian 
+
+Now we have fitted the models using <pkg>lme4</pkg> and frequentist statistics, we can apply that understanding to fitting Bayesian mixed effects models using the <pkg>brms</pkg> package [@burkner_brms_2017]. 
+
+As an initial warning, these models are going to take 15-30 minutes to run on your computer. I have provided the model objects for you to work with quickly, but they are quite computationally expensive to run yourself. This is also why I have focused on the random intercept only model, purely for pragmatic reasons. It takes up to an hour to fit a random intercept and slope model for these data. The formula structure is identical though, so are you are welcome to try and fit the "maximal" model yourself. 
+
+### Default priors 
+
+We will start by fitting a model with default priors to explore the main difference in using <pkg>brms</pkg> compared to <pkg>lme4</pkg>. We can define our descriptive model as: 
+
+```{r}
+brown_intercept_model <- bf(RT ~ modality + (1 | PID) + (1 | stim)) 
+```
+
+We can pass that to the `brm()` function without specifying priors to update to our posterior probability distributions. You can download the model objects to speed things up, or it will save the model objects to your computer in a "Models" sub-folder if you do not have it saved. 
+
+```{r}
+brown_default_priors <- brm(formula = brown_intercept_model, 
+                            family = gaussian(), 
+                            data = brown_data, 
+                              file = "Models/brown_default_priors")
+
+summary(brown_default_priors)
+```
+
+The organisation of <pkg>brms</pkg> models is similar where we have model fitting information, random effects (but here called fancy multilevel hyperparameters), and fixed effects. The interpretation is identical but given we are working in a Bayesian framework, each parameter in the model is subject to it's own posterior distribution. 
+
+Our estimates are similar to the frequentist equivalents but there are some potential problems we have not encountered in previous Bayesian models, given we are now working with more complex models. The R-hat values are all good but several effect sample size values are far too small in the low hundreds. 
+
+We will not explore everything for this default prior model, but we can explore the posteriors and trace plots. The intercept seems to be the most problematic following the low effective sample size values, with the plot here looking particularly choppy. 
+
+```{r}
+plot(brown_default_priors)
+```
+
+The final thing we will look at here is the posterior predictive check to make sure assuming normality is a reasonable choice. 
+
+```{r}
+pp_check(brown_default_priors, 
+         ndraws = 100)
+```
+
+Brown (2021) notes in the tutorial that the response time data have been edited to be more suitable for teaching contexts. Presumably this is making them look a little more normal or the responses are just much slower here, as a normal distribution suits the data quite well. Normally, they have characteristic skew where you need to consider something like a gamma distribution. 
+
+### Informed priors
+
+The model we will explore in a little more detail is setting informed priors for the parameters we can set reasonable expectations on. Using our descriptive model and data, we can see what <pkg>brms</pkg> will let us set priors on. 
+
+```{r}
+get_prior(brown_intercept_model, 
+          data = brown_data)
+```
+
+In a mixed effects model, we have more parameters than we have set so far. We have our standard intercept, slope, and sigma. We also have standard deviation parameters for our two random effects. It looks busier than it really is as <pkg>brms</pkg> will allow you to set priors on all standard deviation parameters or specify individual parameters. 
+
+For our model, we can use Brown and Strand (2019), a previous article from the tutorial author where they reported a similar study. It is very rare to see people reporting values for sigma or standard deviations, so we are just going to focus on setting priors for the intercept and slope. We do not have enough subject knowledge to set the other priors. 
+
+In Brown and Strand (2019), they report descriptive statistics for the mean response time to audio stimuli between 998ms and 1089ms, with an SD between 161 and 203. We can use this information to set a prior for the intercept. There are other predictors in the models they fit, but modality ranged between 21ms and 48ms slower for audiovisual stimuli. The larger effects were statistically significant and the smaller effects were non-significant, so we can bake in a wide range of uncertainty to expect positive values for the slope, but include some negative values for the non-signicant effects. 
+
+```{r}
+brown_priors <- set_prior("normal(35, 20)", class = "b") + 
+  set_prior("normal(1040, 180)", class = "Intercept")
+
+brown_priors %>% 
+  parse_dist() %>% # Function from tidybayes/ggdist to turn prior into a dataframe
+  mutate(prior_label = paste0(class, ": ", prior)) %>% # add the class and prior
+  ggplot(aes(y = 0, dist = .dist, args = .args, fill = prior_label)) + # Fill in details from prior and add fill
+  stat_slab(normalize = "panels") + # ggdist layer to visualise distributions
+  scale_fill_viridis_d(option = "plasma", end = 0.9) + # Add colour scheme
+  guides(fill = "none") + # Remove legend for fill
+  facet_wrap(~prior_label, scales = "free") + # Split into a different panel for each prior
+  labs(x = "Value", y = "Density") +
+  theme_classic()
+```
+
+Now we have our priors, we can refit the model. Given the effect sample size values, I also increased the number of iterations. This will produce 8000 post-warmup draws instead of 4000 to try and increase the effective sample size.
+
+```{r}
+brown_informed_priors <- brm(formula = brown_intercept_model, 
+                             prior = brown_priors,
+                            family = gaussian(), 
+                            data = brown_data, 
+                            iter = 4000,
+                            file = "Models/brown_informed_priors")
+
+summary(brown_informed_priors)
+```
+
+Setting priors and increasing the number of iterations has helped the model, but it is still quite ideal. Really, you would want to keep on tweaking the model until the effect sample size was in the high hundreds for the intercept, but it is improved for all the other parameters. Low effective sample size points to potentially unreliable parameter estimates but we will explore this one in the interests of time given the estimates are so close to the frequentist versions. 
+
+The posteriors and trace plots look similar, with the intercept just looking a little choppy. 
+
+```{r}
+plot(brown_informed_priors)
+```
+
+One helpful type of plot is superimposing the prior with the probability of direction, to look at the consistency between the choice of prior and the posterior. If there is a mismatch, it does not automatically mean there is a problem, but it at least prompts you to reflect and ask questions of your model choices. 
+
+```{r}
+plot(p_direction(brown_informed_priors), 
+     priors = TRUE)
+```
+
+Here, we can see the slope estimate is firmly positive with quite a narrow posterior compared to the prior we set. We allowed a wide range given the previous study, so the data have been the dominant force here. 
+
+If we wanted to plot the model predictions and help communicate our findings, we can take the conditional effects plot and tidy things up a little. 
+
+```{r}
+conditional_plot <- conditional_effects(brown_informed_priors)
+
+plot(conditional_plot, 
+     plot = FALSE)[[1]] + #I don't know why you need this, but it doesn't work without
+  theme_classic() + 
+  scale_y_continuous(limits = c(900, 1200), 
+                     breaks = seq(900, 1200, 50)) + 
+  labs(x = "Modality", 
+       y = "Response Time (ms)")
+```
+
+There is not anything different to the descriptive model, but we can run the posterior predictive check just to follow the process. 
+
+```{r}
+pp_check(brown_informed_priors, 
+         ndraws = 100)
+```

@@ -65,6 +65,7 @@ book:
     chapters:
       - 03-01-hypothesis.qmd
       - 03-02-estimation.qmd
+      - 03-03-mixedeffects.qmd
   - references.qmd
   appendices:
   - appendix-a-installing-brms.qmd

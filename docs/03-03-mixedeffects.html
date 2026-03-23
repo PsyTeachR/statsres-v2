@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Materials for the MSc Statistics and Research Design course at the University of Glasgow.">
+<title>11&nbsp; Frequentist and Bayesian Mixed Effects Models – Statistics and Research Design</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./03-02-estimation.html" rel="prev">
+<link href="./images/logos/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-6NP3MF25W3"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6NP3MF25W3', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+<link rel="stylesheet" href="include/booktem.css">
+<link rel="stylesheet" href="include/webex.css">
+<link rel="stylesheet" href="include/glossary.css">
+<link rel="stylesheet" href="include/style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-03-mixedeffects.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Frequentist and Bayesian Mixed Effects Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statistics and Research Design</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./01-00-GLM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">General linear model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-01-lm-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Regression with one continuous predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-02-lm-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regression with one categorical predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-03-lm-multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Multiple linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-04-screening-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Missing data, outliers, and checking assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-05-glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Generalised linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-06-LMEM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introduction to linear mixed effects models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./02-00-graph_robust.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graphical representations and robust statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-07-gar-ci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-08-gar-gpcomp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Perspectives on group comparisons</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./03-00-bayes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian modelling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-01-hypothesis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Bayesian hypothesis testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-02-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-03-mixedeffects.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Frequentist and Bayesian Mixed Effects Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-a-installing-brms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installing the <code>brms</code> package</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#frequentist" id="toc-frequentist" class="nav-link active" data-scroll-target="#frequentist"><span class="header-section-number">11.1</span> Frequentist</a>
+  <ul class="collapse">
+<li><a href="#aggregate-participants" id="toc-aggregate-participants" class="nav-link" data-scroll-target="#aggregate-participants"><span class="header-section-number">11.1.1</span> Aggregate participants</a></li>
+  <li><a href="#trial-level-data" id="toc-trial-level-data" class="nav-link" data-scroll-target="#trial-level-data"><span class="header-section-number">11.1.2</span> Trial-level data</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#bayesian" id="toc-bayesian" class="nav-link" data-scroll-target="#bayesian"><span class="header-section-number">11.2</span> Bayesian</a>
+  <ul class="collapse">
+<li><a href="#default-priors" id="toc-default-priors" class="nav-link" data-scroll-target="#default-priors"><span class="header-section-number">11.2.1</span> Default priors</a></li>
+  <li><a href="#informed-priors" id="toc-informed-priors" class="nav-link" data-scroll-target="#informed-priors"><span class="header-section-number">11.2.2</span> Informed priors</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-00-bayes.html">Bayesian modelling</a></li><li class="breadcrumb-item"><a href="./03-03-mixedeffects.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Frequentist and Bayesian Mixed Effects Models</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Frequentist and Bayesian Mixed Effects Models</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>In the recordings, James walked through the building blocks of fitting and interpreting mixed effects models, first from a frequentist perspective and then from a Bayesian perspective. The data come from <span class="citation" data-cites="brown_introduction_2021">Brown (<a href="references.html#ref-brown_introduction_2021" role="doc-biblioref">2021</a>)</span> who developed a tutorial for mixed effects models. Part 1 here uses the <pkg>lme4</pkg> package to fit frequentist mixed effects models. These take a little longer than normal, but still fit in a few seconds. Part 2 uses the <pkg>brms</pkg> package to fit Bayesian mixed effects models. You are welcome to fit these in your own time, but for the practical, I have provided the saved model objects as they take 15-30 minutes to fit depending on your computer.</p>
+<p>Make sure you have the following packages installed and loaded.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># general data functions</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># frequentist </span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Bayesian </span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">library</span>(bayestestR)</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="fu">library</span>(see)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="fu">library</span>(tidybayes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we have our packages, we need to read the data from Brown (2021) who report a repeated measures study on speech perception. Participants complete two tasks where they listen to words being spoken while they complete a response time task. The words are presented in two conditions: 1) just being spoken in an auditory condition and 2) being spoken and seeing the speaker in an audiovisual condition. Each participant completes the task for 543 words, split between the two conditions in a different order for each participant. They expected response times to be slower in the audiovisual condition compared to the audio condition due to the interference from listening.</p>
+<p>This means we have a repeated measures / within-subjects design. The outcome is response time in milliseconds (ms). The predictor - or fixed effect - is the modality (audio and audiovisual). We will also explore the impact of participants and the word stimuli as random effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># read the raw data from Brown (2021)</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>brown_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Data/Brown_2021.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># create a simplified version of the data by averaging over the word stimuli</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>brown_aggregate <span class="ot">&lt;-</span> brown_data <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="fu">group_by</span>(PID, modality) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">summarise</span>(<span class="at">mean_RT =</span> <span class="fu">mean</span>(RT)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="frequentist" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="frequentist">
+<span class="header-section-number">11.1</span> Frequentist</h2>
+<p>In the first section, we will explore how to fit mixed effects models using frequentist statistics and the <pkg>lme4</pkg> package <span class="citation" data-cites="Bates_lme4">(<a href="references.html#ref-Bates_lme4" role="doc-biblioref">Bates et al., 2015</a>)</span>.</p>
+<section id="aggregate-participants" class="level3" data-number="11.1.1"><h3 data-number="11.1.1" class="anchored" data-anchor-id="aggregate-participants">
+<span class="header-section-number">11.1.1</span> Aggregate participants</h3>
+<p>For demonstration purposes, we are going to start slow with aggregate data and averaging over the words, leaving us with only a mean response time per condition.</p>
+<section id="standard-linear-model-no-random-effects" class="level4" data-number="11.1.1.1"><h4 data-number="11.1.1.1" class="anchored" data-anchor-id="standard-linear-model-no-random-effects">
+<span class="header-section-number">11.1.1.1</span> Standard linear model, no random effects</h4>
+<p>We can try and fit a standard linear model using <code>mean_RT</code> as the outcome and <code>modality</code> as the predictor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>brown_model0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mean_RT <span class="sc">~</span> modality,</span>
+<span id="cb3-2"><a href="#cb3-2"></a>                     <span class="at">data =</span> brown_aggregate)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">summary</span>(brown_model0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mean_RT ~ modality, data = brown_aggregate)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-319.57 -124.34  -24.35  107.35  605.71 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          1044.07      23.89  43.697   &lt;2e-16 ***
+modalityAudiovisual    83.16      33.79   2.461   0.0155 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 173.9 on 104 degrees of freedom
+Multiple R-squared:  0.05503,   Adjusted R-squared:  0.04595 
+F-statistic: 6.057 on 1 and 104 DF,  p-value: 0.0155</code></pre>
+</div>
+</div>
+<p>As you will see in upcoming models, the intercept and slope are “accurate” but the standard errors and degrees of freedom are all off. We have 53 participants but 104 degrees of freedom since we are not factoring in they contribute two observations.</p>
+</section><section id="random-intercept-for-participants" class="level4" data-number="11.1.1.2"><h4 data-number="11.1.1.2" class="anchored" data-anchor-id="random-intercept-for-participants">
+<span class="header-section-number">11.1.1.2</span> Random intercept for participants</h4>
+<p>After the brief demonstration, we can fit our first mixed effects model. We have a new function called <code>lmer()</code> instead of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. This time, we have a similar formula to define <code>mean_RT</code> as the outcome and <code>modality</code> is still our main predictor. In a mixed effects model, we refer to this as a fixed effect. The new component is the <code>(1 | PID)</code> which represents our random effect. This is a random intercepts only model, where we are telling R to allow the intercept (the 1 part) vary for each participant (the PID part).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>brown_model1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(mean_RT <span class="sc">~</span> modality <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> PID), </span>
+<span id="cb5-2"><a href="#cb5-2"></a>                     <span class="at">data =</span> brown_aggregate)</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">summary</span>(brown_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mean_RT ~ modality + (1 | PID)
+   Data: brown_aggregate
+
+REML criterion at convergence: 1305.6
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.59477 -0.46495 -0.00148  0.37616  2.64062 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ PID      (Intercept) 26066    161.45  
+ Residual              4192     64.74  
+Number of obs: 106, groups:  PID, 53
+
+Fixed effects:
+                    Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)          1044.07      23.89   59.70  43.697  &lt; 2e-16 ***
+modalityAudiovisual    83.16      12.58   52.00   6.612 2.05e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+modltyAdvsl -0.263</code></pre>
+</div>
+</div>
+<p>The output for a mixed effects model is similar, but we have some new sections. Since we loaded the <code>lmerTest</code> package, we get p-values via the Satterthwaite method. The two key sections are the random effects and fixed effects.</p>
+<p>Starting with fixed effects, if you scroll up to the standard linear model, you will see the estimate the the intercept and slope are identical, but the standard error has decreased substantially now we have taken the within-subjects design into consideration.</p>
+<p>Under random effects, we accurately code that there are 106 observations but 53 participants by defining the random effect. The standard deviation tells us that we expect the response time to vary by 161ms around the intercept of 1044ms, which relates to the response time towards audio stimuli. We only allowed the intercept to vary in this model, not the slope, so this tells us we fit a constant slope in the model but the intercept for each participant can move up and down.</p>
+<p>You can see this clearer by accessing coefficient values which will print the random effects for each participant.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">coef</span>(brown_model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$PID
+    (Intercept) modalityAudiovisual
+301    978.4349            83.16029
+302   1006.3888            83.16029
+303    882.0067            83.16029
+304   1167.7371            83.16029
+306   1019.0060            83.16029
+307   1063.8531            83.16029
+308   1230.6380            83.16029
+309    781.2698            83.16029
+310   1176.8249            83.16029
+311    990.6904            83.16029
+312   1137.5894            83.16029
+313   1084.9800            83.16029
+314   1088.1276            83.16029
+315    858.5082            83.16029
+316   1336.9827            83.16029
+318    940.9711            83.16029
+319   1026.4853            83.16029
+320    999.6693            83.16029
+321   1052.4284            83.16029
+324   1056.8015            83.16029
+325    819.4797            83.16029
+326   1028.3805            83.16029
+328   1244.5444            83.16029
+329   1008.8456            83.16029
+331   1417.8641            83.16029
+333   1589.9694            83.16029
+334    955.2190            83.16029
+335   1153.5106            83.16029
+337    924.7565            83.16029
+338    841.0854            83.16029
+340   1180.4104            83.16029
+341    898.8564            83.16029
+342   1214.5150            83.16029
+343   1049.2312            83.16029
+344   1035.4302            83.16029
+346    883.4886            83.16029
+348    823.7689            83.16029
+349    935.0100            83.16029
+350   1172.5127            83.16029
+351   1176.7303            83.16029
+352    811.5272            83.16029
+353   1132.9344            83.16029
+354   1106.1102            83.16029
+355   1185.4441            83.16029
+356   1062.5312            83.16029
+357    918.9947            83.16029
+358    945.6114            83.16029
+359   1028.0600            83.16029
+360   1042.4988            83.16029
+361   1008.7396            83.16029
+362    947.0871            83.16029
+363    910.8909            83.16029
+364   1002.4373            83.16029
+
+attr(,"class")
+[1] "coef.mer"</code></pre>
+</div>
+</div>
+<p>The intercept value changes for each participant as some are faster and some are slower on average. But then the slope estimate is identical for each participant.</p>
+<p>You can also see this visually using the <code>sjPlot</code> package and <code>plot_model()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">plot_model</span>(brown_model1, </span>
+<span id="cb9-2"><a href="#cb9-2"></a>           <span class="at">type =</span> <span class="st">"re"</span>) <span class="co"># plot random effects</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Zero on this plot represents the fixed effect intercept of 1044ms. Each participant then represents a deviation from this as the random effect. Participants in red are below the intercept (i.e., they respond faster), whereas those in blue are above the intercept (i.e., they respond slower).</p>
+</section></section><section id="trial-level-data" class="level3" data-number="11.1.2"><h3 data-number="11.1.2" class="anchored" data-anchor-id="trial-level-data">
+<span class="header-section-number">11.1.2</span> Trial-level data</h3>
+<p>Now the function is a little less of a mystery, we can step things up and use mixed effects models to their full capability on trial-level data. If you explore the data, you can see the difference. In the aggregate data, participants contribute two rows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">head</span>(brown_aggregate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;">PID</th>
+<th style="text-align: left;">modality</th>
+<th style="text-align: right;">mean_RT</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">301</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: right;">1027.4106</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">301</td>
+<td style="text-align: left;">Audiovisual</td>
+<td style="text-align: right;">1002.0642</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">302</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: right;">1047.3455</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">302</td>
+<td style="text-align: left;">Audiovisual</td>
+<td style="text-align: right;">1042.5323</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">303</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: right;">882.6735</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">303</td>
+<td style="text-align: left;">Audiovisual</td>
+<td style="text-align: right;">938.4381</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Whereas in the full data, participants contribute 543 rows, one for each word:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">head</span>(brown_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;">PID</th>
+<th style="text-align: right;">RT</th>
+<th style="text-align: left;">modality</th>
+<th style="text-align: left;">stim</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">1024</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: left;">gown</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">838</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: left;">might</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">1060</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: left;">fern</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">882</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: left;">vane</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">971</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: left;">pup</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">1064</td>
+<td style="text-align: left;">Audio-only</td>
+<td style="text-align: left;">rise</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>This means we can model the variability within both participants and different words, both of which we expect to sampled from wider distributions of participants and words.</p>
+<section id="random-intercepts-only" class="level4" data-number="11.1.2.1"><h4 data-number="11.1.2.1" class="anchored" data-anchor-id="random-intercepts-only">
+<span class="header-section-number">11.1.2.1</span> Random intercepts only</h4>
+<p>As we work towards fitting the “maximal” model, a useful starting point for conducting a likelihood ratio test later is fitting the random effects with no fixed effects. We are only modelling the variability of responses across participants and words.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>brown_model2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT <span class="sc">~</span> (<span class="dv">1</span> <span class="sc">|</span> PID) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> stim), </span>
+<span id="cb12-2"><a href="#cb12-2"></a>                     <span class="at">data =</span> brown_data)</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">summary</span>(brown_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT ~ (1 | PID) + (1 | stim)
+   Data: brown_data
+
+REML criterion at convergence: 303405.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.4561 -0.7030 -0.0292  0.5919  4.7565 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ stim     (Intercept)   330.6   18.18  
+ PID      (Intercept) 28075.5  167.56  
+ Residual             68943.6  262.57  
+Number of obs: 21679, groups:  stim, 543; PID, 53
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  1086.42      23.10   52.14   47.03   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The intercept represents the average across all trials - around 1086ms - by ignoring the fixed effect of modality.</p>
+</section><section id="modality-and-random-intercepts" class="level4" data-number="11.1.2.2"><h4 data-number="11.1.2.2" class="anchored" data-anchor-id="modality-and-random-intercepts">
+<span class="header-section-number">11.1.2.2</span> Modality and random intercepts</h4>
+<p>In the next model, we now add our fixed effect of modality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>brown_model3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT <span class="sc">~</span> modality <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> PID) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> stim), </span>
+<span id="cb14-2"><a href="#cb14-2"></a>                     <span class="at">data =</span> brown_data)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">summary</span>(brown_model3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT ~ modality + (1 | PID) + (1 | stim)
+   Data: brown_data
+
+REML criterion at convergence: 302861.5
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3572 -0.6949 -0.0205  0.5814  4.9120 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ stim     (Intercept)   360.2   18.98  
+ PID      (Intercept) 28065.7  167.53  
+ Residual             67215.3  259.26  
+Number of obs: 21679, groups:  stim, 543; PID, 53
+
+Fixed effects:
+                     Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)          1044.449     23.164    52.781   45.09   &lt;2e-16 ***
+modalityAudiovisual    82.525      3.529 21433.526   23.38   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+modltyAdvsl -0.078</code></pre>
+</div>
+</div>
+<p>The estimates are pretty close to our aggregate model but now we are modelling the full study design from different sources of variables. The intercept for the audio modality is 1044ms and we expect the audiovisual modality to have 83ms slower responses on average.</p>
+<p>If you look at random effects, we have two key standard deviations to explore. We estimate participants’ intercepts to vary by around 168ms but only around 19ms for word stimuli. This means the responses of different participants are more variable than different stimuli.</p>
+<p>As before, we can visualise the random effects to see the broad pattern of variability. Just keep in mind, when we have a huge number of stimuli like the words, the plot can be difficult to distinguish different elements.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">plot_model</span>(brown_model3, </span>
+<span id="cb16-2"><a href="#cb16-2"></a>           <span class="at">type =</span> <span class="st">"re"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="modality-random-intercepts-and-slopes" class="level4" data-number="11.1.2.3"><h4 data-number="11.1.2.3" class="anchored" data-anchor-id="modality-random-intercepts-and-slopes">
+<span class="header-section-number">11.1.2.3</span> Modality, random intercepts, and slopes</h4>
+<p>The final model we will fit is the “maximal” model for our design, where we allow both the intercept <strong>and</strong> slope to vary. You can see the different syntax where a random intercept has the format <code>(1 | random_effect)</code>, whereas random intercept and slopes has the format <code>(1 + fixed_effect | random_effect)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>brown_model4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT <span class="sc">~</span> modality <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> modality <span class="sc">|</span> PID) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> modality <span class="sc">|</span> stim), </span>
+<span id="cb19-2"><a href="#cb19-2"></a>                     <span class="at">data =</span> brown_data)</span>
+<span id="cb19-3"><a href="#cb19-3"></a></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="fu">summary</span>(brown_model4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: RT ~ modality + (1 + modality | PID) + (1 + modality | stim)
+   Data: brown_data
+
+REML criterion at convergence: 302385.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3646 -0.6964 -0.0140  0.5886  5.0003 
+
+Random effects:
+ Groups   Name                Variance Std.Dev. Corr 
+ stim     (Intercept)           304.0   17.44        
+          modalityAudiovisual   216.6   14.72   0.16 
+ PID      (Intercept)         28554.1  168.98        
+          modalityAudiovisual  7709.1   87.80   -0.17
+ Residual                     65258.8  255.46        
+Number of obs: 21679, groups:  stim, 543; PID, 53
+
+Fixed effects:
+                    Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)          1044.14      23.36   52.13  44.703  &lt; 2e-16 ***
+modalityAudiovisual    83.18      12.57   52.10   6.615 2.02e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr)
+modltyAdvsl -0.178</code></pre>
+</div>
+</div>
+<p>The random effects structure now has four key rows. We can look at the standard deviation around the intercept for word stimuli (17ms) and it’s slope (15ms). Likewise, we can explore the intercept for participants (169ms) and it’s slope (88ms). We are now allowing both the response time for audio stimuli to vary for each participant and stimulus (intercepts) and the difference to audiovisual stimuli (slopes).</p>
+<p>For a completely wild graph, you can now see four panels for the random intercept and slope for each random effect. The same interpretation applies where 0 represents the fixed effect value, and values above and below are deviations from this for each level of the random effect.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">plot_model</span>(brown_model4, </span>
+<span id="cb21-2"><a href="#cb21-2"></a>           <span class="at">type =</span> <span class="st">"re"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[[2]]</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="model-comparison" class="level4" data-number="11.1.2.4"><h4 data-number="11.1.2.4" class="anchored" data-anchor-id="model-comparison">
+<span class="header-section-number">11.1.2.4</span> Model comparison</h4>
+<p>The final step here is considering model comparison. We can ask questions such as “does modality have an effect on response times?” and “is this more complicated model worthwhile?”.</p>
+<p>By fitting the three models to our trial-level data, we can pass them to the <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code> function. This is known as a likelihood ratio test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">anova</span>(brown_model2, </span>
+<span id="cb24-2"><a href="#cb24-2"></a>      brown_model3, </span>
+<span id="cb24-3"><a href="#cb24-3"></a>      brown_model4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 3%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">npar</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">logLik</th>
+<th style="text-align: right;">deviance</th>
+<th style="text-align: right;">Chisq</th>
+<th style="text-align: right;">Df</th>
+<th style="text-align: right;">Pr(&gt;Chisq)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">brown_model2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">303421.9</td>
+<td style="text-align: right;">303453.9</td>
+<td style="text-align: right;">-151707.0</td>
+<td style="text-align: right;">303413.9</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">brown_model3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">302884.0</td>
+<td style="text-align: right;">302923.9</td>
+<td style="text-align: right;">-151437.0</td>
+<td style="text-align: right;">302874.0</td>
+<td style="text-align: right;">539.9420</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">brown_model4</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">302418.7</td>
+<td style="text-align: right;">302490.5</td>
+<td style="text-align: right;">-151200.3</td>
+<td style="text-align: right;">302400.7</td>
+<td style="text-align: right;">473.3161</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>You can see the warning about it refitting the models using maximum likelihood instead of restricted maximum likelihood. We could do this manually by adding the argument <code>REML = FALSE</code> to the <code>lmer()</code> function.</p>
+<p>We can see the difference between model 2 (random effects only) and model 3 (modality as a fixed effect and random intercepts) is statistically significant and we have a lower AIC value. Modality does have an effect on response times. The difference between model 3 and model 4 (random intercepts and slopes) is also significant. Even though model 4 is the most complex (9 parameters to estimate), it is a better fitting model relative to it’s complexity.</p>
+</section></section></section><section id="bayesian" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="bayesian">
+<span class="header-section-number">11.2</span> Bayesian</h2>
+<p>Now we have fitted the models using <pkg>lme4</pkg> and frequentist statistics, we can apply that understanding to fitting Bayesian mixed effects models using the <pkg>brms</pkg> package <span class="citation" data-cites="burkner_brms_2017">(<a href="references.html#ref-burkner_brms_2017" role="doc-biblioref">Bürkner, 2017</a>)</span>.</p>
+<p>As an initial warning, these models are going to take 15-30 minutes to run on your computer. I have provided the model objects for you to work with quickly, but they are quite computationally expensive to run yourself. This is also why I have focused on the random intercept only model, purely for pragmatic reasons. It takes up to an hour to fit a random intercept and slope model for these data. The formula structure is identical though, so are you are welcome to try and fit the “maximal” model yourself.</p>
+<section id="default-priors" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="default-priors">
+<span class="header-section-number">11.2.1</span> Default priors</h3>
+<p>We will start by fitting a model with default priors to explore the main difference in using <pkg>brms</pkg> compared to <pkg>lme4</pkg>. We can define our descriptive model as:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>brown_intercept_model <span class="ot">&lt;-</span> <span class="fu">bf</span>(RT <span class="sc">~</span> modality <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> PID) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> stim)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can pass that to the <code>brm()</code> function without specifying priors to update to our posterior probability distributions. You can download the model objects to speed things up, or it will save the model objects to your computer in a “Models” sub-folder if you do not have it saved.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>brown_default_priors <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> brown_intercept_model, </span>
+<span id="cb27-2"><a href="#cb27-2"></a>                            <span class="at">family =</span> <span class="fu">gaussian</span>(), </span>
+<span id="cb27-3"><a href="#cb27-3"></a>                            <span class="at">data =</span> brown_data, </span>
+<span id="cb27-4"><a href="#cb27-4"></a>                              <span class="at">file =</span> <span class="st">"Models/brown_default_priors"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="fu">summary</span>(brown_default_priors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: RT ~ modality + (1 | PID) + (1 | stim) 
+   Data: brown_data (Number of observations: 21679) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Multilevel Hyperparameters:
+~PID (Number of levels: 53) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)   169.56     16.59   141.56   205.40 1.00      634     1322
+
+~stim (Number of levels: 543) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)    18.22      3.72     9.25    24.62 1.00      942      670
+
+Regression Coefficients:
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept            1040.69     22.97   996.04  1087.17 1.01      263      604
+modalityAudiovisual    82.52      3.57    75.46    89.66 1.00    10771     2504
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma   259.30      1.25   256.86   261.75 1.00     6120     2854
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+<p>The organisation of <pkg>brms</pkg> models is similar where we have model fitting information, random effects (but here called fancy multilevel hyperparameters), and fixed effects. The interpretation is identical but given we are working in a Bayesian framework, each parameter in the model is subject to it’s own posterior distribution.</p>
+<p>Our estimates are similar to the frequentist equivalents but there are some potential problems we have not encountered in previous Bayesian models, given we are now working with more complex models. The R-hat values are all good but several effect sample size values are far too small in the low hundreds.</p>
+<p>We will not explore everything for this default prior model, but we can explore the posteriors and trace plots. The intercept seems to be the most problematic following the low effective sample size values, with the plot here looking particularly choppy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">plot</span>(brown_default_priors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The final thing we will look at here is the posterior predictive check to make sure assuming normality is a reasonable choice.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">pp_check</span>(brown_default_priors, </span>
+<span id="cb30-2"><a href="#cb30-2"></a>         <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Brown (2021) notes in the tutorial that the response time data have been edited to be more suitable for teaching contexts. Presumably this is making them look a little more normal or the responses are just much slower here, as a normal distribution suits the data quite well. Normally, they have characteristic skew where you need to consider something like a gamma distribution.</p>
+</section><section id="informed-priors" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="informed-priors">
+<span class="header-section-number">11.2.2</span> Informed priors</h3>
+<p>The model we will explore in a little more detail is setting informed priors for the parameters we can set reasonable expectations on. Using our descriptive model and data, we can see what <pkg>brms</pkg> will let us set priors on.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">get_prior</span>(brown_intercept_model, </span>
+<span id="cb31-2"><a href="#cb31-2"></a>          <span class="at">data =</span> brown_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 10%">
+<col style="width: 21%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 8%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">prior</th>
+<th style="text-align: left;">class</th>
+<th style="text-align: left;">coef</th>
+<th style="text-align: left;">group</th>
+<th style="text-align: left;">resp</th>
+<th style="text-align: left;">dpar</th>
+<th style="text-align: left;">nlpar</th>
+<th style="text-align: left;">lb</th>
+<th style="text-align: left;">ub</th>
+<th style="text-align: left;">source</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">b</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">b</td>
+<td style="text-align: left;">modalityAudiovisual</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">student_t(3, 1057, 289.1)</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">student_t(3, 0, 289.1)</td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">PID</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">PID</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">sd</td>
+<td style="text-align: left;">Intercept</td>
+<td style="text-align: left;">stim</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">student_t(3, 0, 289.1)</td>
+<td style="text-align: left;">sigma</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">default</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>In a mixed effects model, we have more parameters than we have set so far. We have our standard intercept, slope, and sigma. We also have standard deviation parameters for our two random effects. It looks busier than it really is as <pkg>brms</pkg> will allow you to set priors on all standard deviation parameters or specify individual parameters.</p>
+<p>For our model, we can use Brown and Strand (2019), a previous article from the tutorial author where they reported a similar study. It is very rare to see people reporting values for sigma or standard deviations, so we are just going to focus on setting priors for the intercept and slope. We do not have enough subject knowledge to set the other priors.</p>
+<p>In Brown and Strand (2019), they report descriptive statistics for the mean response time to audio stimuli between 998ms and 1089ms, with an SD between 161 and 203. We can use this information to set a prior for the intercept. There are other predictors in the models they fit, but modality ranged between 21ms and 48ms slower for audiovisual stimuli. The larger effects were statistically significant and the smaller effects were non-significant, so we can bake in a wide range of uncertainty to expect positive values for the slope, but include some negative values for the non-signicant effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>brown_priors <span class="ot">&lt;-</span> <span class="fu">set_prior</span>(<span class="st">"normal(35, 20)"</span>, <span class="at">class =</span> <span class="st">"b"</span>) <span class="sc">+</span> </span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">set_prior</span>(<span class="st">"normal(1040, 180)"</span>, <span class="at">class =</span> <span class="st">"Intercept"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3"></a></span>
+<span id="cb32-4"><a href="#cb32-4"></a>brown_priors <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a href="#cb32-5"></a>  <span class="fu">parse_dist</span>() <span class="sc">%&gt;%</span> <span class="co"># Function from tidybayes/ggdist to turn prior into a dataframe</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="fu">mutate</span>(<span class="at">prior_label =</span> <span class="fu">paste0</span>(class, <span class="st">": "</span>, prior)) <span class="sc">%&gt;%</span> <span class="co"># add the class and prior</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="dv">0</span>, <span class="at">dist =</span> .dist, <span class="at">args =</span> .args, <span class="at">fill =</span> prior_label)) <span class="sc">+</span> <span class="co"># Fill in details from prior and add fill</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a>  <span class="fu">stat_slab</span>(<span class="at">normalize =</span> <span class="st">"panels"</span>) <span class="sc">+</span> <span class="co"># ggdist layer to visualise distributions</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">end =</span> <span class="fl">0.9</span>) <span class="sc">+</span> <span class="co"># Add colour scheme</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span> <span class="co"># Remove legend for fill</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>prior_label, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="co"># Split into a different panel for each prior</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Value"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we have our priors, we can refit the model. Given the effect sample size values, I also increased the number of iterations. This will produce 8000 post-warmup draws instead of 4000 to try and increase the effective sample size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>brown_informed_priors <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> brown_intercept_model, </span>
+<span id="cb33-2"><a href="#cb33-2"></a>                             <span class="at">prior =</span> brown_priors,</span>
+<span id="cb33-3"><a href="#cb33-3"></a>                            <span class="at">family =</span> <span class="fu">gaussian</span>(), </span>
+<span id="cb33-4"><a href="#cb33-4"></a>                            <span class="at">data =</span> brown_data, </span>
+<span id="cb33-5"><a href="#cb33-5"></a>                            <span class="at">iter =</span> <span class="dv">4000</span>,</span>
+<span id="cb33-6"><a href="#cb33-6"></a>                            <span class="at">file =</span> <span class="st">"Models/brown_informed_priors"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7"></a></span>
+<span id="cb33-8"><a href="#cb33-8"></a><span class="fu">summary</span>(brown_informed_priors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: RT ~ modality + (1 | PID) + (1 | stim) 
+   Data: brown_data (Number of observations: 21679) 
+  Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
+         total post-warmup draws = 8000
+
+Multilevel Hyperparameters:
+~PID (Number of levels: 53) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)   171.76     16.76   143.16   208.65 1.00     1173     2384
+
+~stim (Number of levels: 543) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)    18.22      3.77     9.57    24.70 1.00     1713     1266
+
+Regression Coefficients:
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept            1043.64     23.27   998.27  1089.81 1.01      387      928
+modalityAudiovisual    81.08      3.45    74.28    87.85 1.00    21349     5464
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma   259.32      1.25   256.87   261.79 1.00    16344     5110
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+<p>Setting priors and increasing the number of iterations has helped the model, but it is still quite ideal. Really, you would want to keep on tweaking the model until the effect sample size was in the high hundreds for the intercept, but it is improved for all the other parameters. Low effective sample size points to potentially unreliable parameter estimates but we will explore this one in the interests of time given the estimates are so close to the frequentist versions.</p>
+<p>The posteriors and trace plots look similar, with the intercept just looking a little choppy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">plot</span>(brown_informed_priors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One helpful type of plot is superimposing the prior with the probability of direction, to look at the consistency between the choice of prior and the posterior. If there is a mismatch, it does not automatically mean there is a problem, but it at least prompts you to reflect and ask questions of your model choices.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">plot</span>(<span class="fu">p_direction</span>(brown_informed_priors), </span>
+<span id="cb36-2"><a href="#cb36-2"></a>     <span class="at">priors =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Here, we can see the slope estimate is firmly positive with quite a narrow posterior compared to the prior we set. We allowed a wide range given the previous study, so the data have been the dominant force here.</p>
+<p>If we wanted to plot the model predictions and help communicate our findings, we can take the conditional effects plot and tidy things up a little.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>conditional_plot <span class="ot">&lt;-</span> <span class="fu">conditional_effects</span>(brown_informed_priors)</span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="fu">plot</span>(conditional_plot, </span>
+<span id="cb37-4"><a href="#cb37-4"></a>     <span class="at">plot =</span> <span class="cn">FALSE</span>)[[<span class="dv">1</span>]] <span class="sc">+</span> <span class="co">#I don't know why you need this, but it doesn't work without</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb37-6"><a href="#cb37-6"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">900</span>, <span class="dv">1200</span>), </span>
+<span id="cb37-7"><a href="#cb37-7"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">900</span>, <span class="dv">1200</span>, <span class="dv">50</span>)) <span class="sc">+</span> </span>
+<span id="cb37-8"><a href="#cb37-8"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Modality"</span>, </span>
+<span id="cb37-9"><a href="#cb37-9"></a>       <span class="at">y =</span> <span class="st">"Response Time (ms)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There is not anything different to the descriptive model, but we can run the posterior predictive check just to follow the process.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">pp_check</span>(brown_informed_priors, </span>
+<span id="cb38-2"><a href="#cb38-2"></a>         <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="03-03-mixedeffects_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Bates_lme4" class="csl-entry" role="listitem">
+Bates, D., Mächler, M., Bolker, B., &amp; Walker, S. (2015). Fitting linear mixed-effects models using <span class="nocase">lme4</span>. <em>Journal of Statistical Software</em>, <em>67</em>(1), 1–48. <a href="https://doi.org/10.18637/jss.v067.i01">https://doi.org/10.18637/jss.v067.i01</a>
+</div>
+<div id="ref-brown_introduction_2021" class="csl-entry" role="listitem">
+Brown, V. A. (2021). An <span>Introduction</span> to <span>Linear</span> <span>Mixed</span>-<span>Effects</span> <span>Modeling</span> in <span>R</span>. <em>Advances in Methods and Practices in Psychological Science</em>, <em>4</em>(1), 2515245920960351. <a href="https://doi.org/10.1177/2515245920960351">https://doi.org/10.1177/2515245920960351</a>
+</div>
+<div id="ref-burkner_brms_2017" class="csl-entry" role="listitem">
+Bürkner, P.-C. (2017). Brms: <span>An</span> <span>R</span> <span>Package</span> for <span>Bayesian</span> <span>Multilevel</span> <span>Models</span> <span>Using</span> <span>Stan</span>. <em>Journal of Statistical Software</em>, <em>80</em>(1). <a href="https://doi.org/10.18637/jss.v080.i01">https://doi.org/10.18637/jss.v080.i01</a>
+</div>
+</div>
+</section></section></main><!-- /main --><script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script><script>
+// open rdrr links externally ----
+
+var exlinks = document.querySelectorAll("a[href^='https://rdrr.io']");
+var exlink_func = function(){
+  window.open(this.href);
+  return false;
+};
+for (var i = 0; i < exlinks.length; i++) {
+    exlinks[i].addEventListener('click', exlink_func, false);
+}
+
+// visible second sidebar in mobile ----
+
+function move_sidebar() {
+  var toc = document.getElementById("TOC");
+  var small_sidebar = document.querySelector("#quarto-sidebar .sidebar-menu-container");
+  var right_sidebar = document.getElementById("quarto-margin-sidebar");
+
+  if (window.innerWidth < 768) {
+    small_sidebar.append(toc);
+  } else {
+    right_sidebar.append(toc);
+  }
+}
+move_sidebar();
+window.onresize = move_sidebar;
+</script><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./03-02-estimation.html" class="pagination-link" aria-label="Bayesian modelling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Bayesian modelling</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>CC-BY (2025) Bartlett, Rousselet, &amp; DeBruine.</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>
