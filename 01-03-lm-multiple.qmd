@@ -1,4 +1,4 @@
-# Multiple linear regression
+# Multiple Predictors
 
 ```{r echo=FALSE}
 library(webexercises)
@@ -191,7 +191,7 @@ james_means %>%
   ggplot(aes(x = Condition, y = mean_intrusions))  + 
   geom_point(size = 3)  + 
   geom_hline(yintercept = RT_mean, linetype = 2, linewidth = 1, colour = "red") + 
-  geom_segment(aes(x = Condition, y = mean_intrusions, yend = RT_mean)) + 
+  geom_segment(aes(x = Condition, y = mean_intrusions, yend = RT_mean, xend = Condition)) + 
   scale_y_continuous(name = "Mean Number of Intrusive Memories",
                      breaks = seq(0, 6, 1),
                      limits = c(0,6)) +
@@ -295,7 +295,7 @@ deviation_data %>%
   ggplot(aes(x = Condition, y = mean_intrusions))  + 
   geom_point(size = 3)  + 
   geom_hline(yintercept = grand_mean, linetype = 2, linewidth = 1, colour = "red") + 
-  geom_segment(aes(x = Condition, y = mean_intrusions, yend = grand_mean)) + 
+  geom_segment(aes(x = Condition, y = mean_intrusions, yend = grand_mean, xend = Condition)) + 
   scale_y_continuous(name = "Mean Number of Intrusive Memories",
                      breaks = seq(0, 6, 1),
                      limits = c(0,6)) +

@@ -1,4 +1,4 @@
-# Perspectives on group comparisons
+# Perspectives on Group Comparisons
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

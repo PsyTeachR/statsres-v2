@@ -1,4 +1,4 @@
-# Missing data, outliers, and checking assumptions
+# Data Screening and Checking Assumptions
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, 

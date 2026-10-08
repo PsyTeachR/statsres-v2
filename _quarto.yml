@@ -46,26 +46,30 @@ book:
     header: ''
     footer: ''
   margin-header: ''
-  page-footer: CC-BY (2025) Bartlett, Rousselet, & DeBruine.
+  page-footer: CC-BY (2026) Bartlett, Rousselet, & DeBruine.
   chapters:
   - index.qmd
-  - part: 01-00-GLM.qmd
+  - part: "Regression Modeling"
     chapters:
       - 01-01-lm-continuous.qmd
       - 01-02-lm-categorical.qmd
       - 01-03-lm-multiple.qmd
       - 01-04-screening-data.qmd
-      - 01-05-glm.qmd
-      - 01-06-LMEM.qmd
-  - part: 02-00-graph_robust.qmd
+      - 01-05-logistic.qmd
+      - 01-06-ordinal.qmd
+      - 01-07-visualise-estimates.qmd
+      - 01-07-simulate-LMM.qmd
+      - 01-08-LMM.qmd
+  - part: "Robust Statistics"
     chapters:
       - 02-07-gar-ci.qmd
       - 02-08-gar-gpcomp.qmd
-  - part: 03-00-bayes.qmd
+  - part: "Bayesian Statistics"
     chapters:
-      - 03-01-hypothesis.qmd
-      - 03-02-estimation.qmd
-      - 03-03-mixedeffects.qmd
+      - 03-01-Bayes-understand.qmd
+      - 03-02-Bayesfactors.qmd
+      - 03-03-Bayes-modeling.qmd
+      - 03-04-Bayes-LMM.qmd
   - references.qmd
   appendices:
   - appendix-a-installing-brms.qmd

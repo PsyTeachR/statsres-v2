@@ -1,4 +1,4 @@
-# Regression with one continuous predictor
+# One Continuous Predictor
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, 
