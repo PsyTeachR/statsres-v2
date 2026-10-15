@@ -95,7 +95,7 @@ theme(axis.text.x = element_text(colour="grey20",size=16),
       legend.title = element_blank(),
       legend.text = element_text(colour="grey20",size=16),
       legend.key = element_rect(colour = "black",linewidth=.1),
-      legend.position.inside = c(.15, .90),
+      legend.position = c(.15, .90),
       plot.margin = unit(c(5.5,5.5,5.5,5.5), "pt"),
       plot.title = element_text(colour="grey20",size=20)) +
       labs(title="Mean +/- SEM") +

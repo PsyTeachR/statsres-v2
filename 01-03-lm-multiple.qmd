@@ -1,6 +1,6 @@
 # Multiple Predictors
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(webexercises)
 library(glossary)
 ```

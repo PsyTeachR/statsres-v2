@@ -1,6 +1,6 @@
 # Visualising Model Estimates
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(webexercises)
 library(glossary)
 ```
